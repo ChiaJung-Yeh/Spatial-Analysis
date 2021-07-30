@@ -1,5 +1,6 @@
-# bookdown-tutorial
-Mini tutorial for bookdown 
+# Spatial Analysis with R
+Spatial Analysis with R
 
 
-afdafadjl
+National Yang Ming Chiao Tung University
+Chia Jung, Yeh
