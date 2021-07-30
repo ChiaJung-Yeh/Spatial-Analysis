@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Spatial Operations | Spatial Analysis with R</title>
+  <meta name="description" content="A bookdown book on how to conduct spatial analysis on R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Spatial Operations | Spatial Analysis with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A bookdown book on how to conduct spatial analysis on R." />
+  <meta name="github-repo" content="openscapes/series" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Spatial Operations | Spatial Analysis with R" />
+  
+  <meta name="twitter:description" content="A bookdown book on how to conduct spatial analysis on R." />
+  
+
+<meta name="author" content="Chia Jung, Yeh" />
+
+
+<meta name="date" content="2021-07-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="geographic-data.html"/>
+
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Spatial Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html"><i class="fa fa-check"></i><b>2</b> <strong>Basic Knowledge on GIS</strong></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#geographic-information-systems"><i class="fa fa-check"></i><b>2.1</b> Geographic Information Systems</a></li>
+<li class="chapter" data-level="2.2" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#well-known-text-wkt"><i class="fa fa-check"></i><b>2.2</b> Well-Known Text (WKT)</a></li>
+<li class="chapter" data-level="2.3" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#shapefile"><i class="fa fa-check"></i><b>2.3</b> Shapefile</a></li>
+<li class="chapter" data-level="2.4" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#coordinate-reference-system-crs"><i class="fa fa-check"></i><b>2.4</b> Coordinate Reference System (CRS)</a></li>
+<li class="chapter" data-level="2.5" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#why-use-r"><i class="fa fa-check"></i><b>2.5</b> Why Use R?</a></li>
+<li class="chapter" data-level="2.6" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#required-packages"><i class="fa fa-check"></i><b>2.6</b> Required Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html"><i class="fa fa-check"></i><b>3</b> <strong>Data Visualization with Maps</strong></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#making-maps"><i class="fa fa-check"></i><b>3.1</b> Making Maps</a></li>
+<li class="chapter" data-level="3.2" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#attributes-of-shapefile"><i class="fa fa-check"></i><b>3.2</b> Attributes of Shapefile</a></li>
+<li class="chapter" data-level="3.3" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#labels-on-map"><i class="fa fa-check"></i><b>3.3</b> Labels on Map</a></li>
+<li class="chapter" data-level="3.4" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#graduated-symbol-map"><i class="fa fa-check"></i><b>3.4</b> Graduated Symbol Map</a></li>
+<li class="chapter" data-level="3.5" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#categorized-symbol-map"><i class="fa fa-check"></i><b>3.5</b> Categorized Symbol Map</a></li>
+<li class="chapter" data-level="3.6" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#rule-based-symbol-map"><i class="fa fa-check"></i><b>3.6</b> Rule-based Symbol Map</a></li>
+<li class="chapter" data-level="3.7" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#basic-operationselements-of-map"><i class="fa fa-check"></i><b>3.7</b> Basic Operations/Elements of Map</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#map-overlay"><i class="fa fa-check"></i><b>3.7.1</b> <strong>Map Overlay</strong></a></li>
+<li class="chapter" data-level="3.7.2" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#north-arrow-and-scale"><i class="fa fa-check"></i><b>3.7.2</b> <strong>North Arrow and Scale</strong></a></li>
+<li class="chapter" data-level="3.7.3" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#linetypeshape"><i class="fa fa-check"></i><b>3.7.3</b> <strong>Linetype/Shape</strong></a></li>
+<li class="chapter" data-level="3.7.4" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#theme"><i class="fa fa-check"></i><b>3.7.4</b> <strong>Theme</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#other-mapping-tools"><i class="fa fa-check"></i><b>3.8</b> Other Mapping Tools</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#tmap"><i class="fa fa-check"></i><b>3.8.1</b> <strong>tmap</strong></a></li>
+<li class="chapter" data-level="3.8.2" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#leaflet"><i class="fa fa-check"></i><b>3.8.2</b> <strong>leaflet</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#practice"><i class="fa fa-check"></i><b>3.9</b> <span style="border-bottom: 3px double black"><em><em>PRACTICE</em></em></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="geographic-data.html"><a href="geographic-data.html"><i class="fa fa-check"></i><b>4</b> <strong>Geographic Data</strong></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="geographic-data.html"><a href="geographic-data.html#simple-feature-geometries-sfg"><i class="fa fa-check"></i><b>4.1</b> Simple Feature Geometries (sfg)</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="geographic-data.html"><a href="geographic-data.html#point"><i class="fa fa-check"></i><b>4.1.1</b> <strong>Point</strong></a></li>
+<li class="chapter" data-level="4.1.2" data-path="geographic-data.html"><a href="geographic-data.html#linestring"><i class="fa fa-check"></i><b>4.1.2</b> <strong>Linestring</strong></a></li>
+<li class="chapter" data-level="4.1.3" data-path="geographic-data.html"><a href="geographic-data.html#polygon"><i class="fa fa-check"></i><b>4.1.3</b> <strong>Polygon</strong></a></li>
+<li class="chapter" data-level="4.1.4" data-path="geographic-data.html"><a href="geographic-data.html#multipoint"><i class="fa fa-check"></i><b>4.1.4</b> <strong>Multipoint</strong></a></li>
+<li class="chapter" data-level="4.1.5" data-path="geographic-data.html"><a href="geographic-data.html#multilinestring"><i class="fa fa-check"></i><b>4.1.5</b> <strong>Multilinestring</strong></a></li>
+<li class="chapter" data-level="4.1.6" data-path="geographic-data.html"><a href="geographic-data.html#multipolygon"><i class="fa fa-check"></i><b>4.1.6</b> <strong>Multipolygon</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="geographic-data.html"><a href="geographic-data.html#simple-feature-columns-sfc"><i class="fa fa-check"></i><b>4.2</b> Simple Feature Columns (sfc)</a></li>
+<li class="chapter" data-level="4.3" data-path="geographic-data.html"><a href="geographic-data.html#simple-feature-sf"><i class="fa fa-check"></i><b>4.3</b> Simple Feature (sf)</a></li>
+<li class="chapter" data-level="4.4" data-path="geographic-data.html"><a href="geographic-data.html#convert-text-file-to-shapefile"><i class="fa fa-check"></i><b>4.4</b> Convert Text File to Shapefile</a></li>
+<li class="chapter" data-level="4.5" data-path="geographic-data.html"><a href="geographic-data.html#reproject-geographic-data"><i class="fa fa-check"></i><b>4.5</b> Reproject Geographic Data</a></li>
+<li class="chapter" data-level="4.6" data-path="geographic-data.html"><a href="geographic-data.html#geographic-data-export"><i class="fa fa-check"></i><b>4.6</b> Geographic Data Export</a></li>
+<li class="chapter" data-level="4.7" data-path="geographic-data.html"><a href="geographic-data.html#geographic-data-format"><i class="fa fa-check"></i><b>4.7</b> Geographic Data Format</a></li>
+<li class="chapter" data-level="4.8" data-path="geographic-data.html"><a href="geographic-data.html#join-attribute-and-spatial-data"><i class="fa fa-check"></i><b>4.8</b> Join Attribute and Spatial Data</a></li>
+<li class="chapter" data-level="4.9" data-path="geographic-data.html"><a href="geographic-data.html#practice-1"><i class="fa fa-check"></i><b>4.9</b> <span style="border-bottom: 3px double black"><em><em>PRACTICE</em></em></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-operations.html"><a href="spatial-operations.html"><i class="fa fa-check"></i><b>5</b> <strong>Spatial Operations</strong></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-join"><i class="fa fa-check"></i><b>5.1</b> Spatial Join</a></li>
+<li class="chapter" data-level="5.2" data-path="spatial-operations.html"><a href="spatial-operations.html#attribute-aggregation"><i class="fa fa-check"></i><b>5.2</b> Attribute Aggregation</a></li>
+<li class="chapter" data-level="5.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-aggregation"><i class="fa fa-check"></i><b>5.3</b> Spatial Aggregation</a></li>
+<li class="chapter" data-level="5.4" data-path="spatial-operations.html"><a href="spatial-operations.html#interpolation"><i class="fa fa-check"></i><b>5.4</b> Interpolation</a></li>
+<li class="chapter" data-level="5.5" data-path="spatial-operations.html"><a href="spatial-operations.html#unions"><i class="fa fa-check"></i><b>5.5</b> Unions</a></li>
+<li class="chapter" data-level="5.6" data-path="spatial-operations.html"><a href="spatial-operations.html#centroid"><i class="fa fa-check"></i><b>5.6</b> Centroid</a></li>
+<li class="chapter" data-level="5.7" data-path="spatial-operations.html"><a href="spatial-operations.html#buffer"><i class="fa fa-check"></i><b>5.7</b> Buffer</a></li>
+<li class="chapter" data-level="5.8" data-path="spatial-operations.html"><a href="spatial-operations.html#boundary"><i class="fa fa-check"></i><b>5.8</b> Boundary</a></li>
+<li class="chapter" data-level="5.9" data-path="spatial-operations.html"><a href="spatial-operations.html#clipping"><i class="fa fa-check"></i><b>5.9</b> Clipping</a></li>
+<li class="chapter" data-level="5.10" data-path="spatial-operations.html"><a href="spatial-operations.html#simplification"><i class="fa fa-check"></i><b>5.10</b> Simplification</a></li>
+<li class="chapter" data-level="5.11" data-path="spatial-operations.html"><a href="spatial-operations.html#affine-transformations"><i class="fa fa-check"></i><b>5.11</b> Affine Transformations</a></li>
+<li class="chapter" data-level="5.12" data-path="spatial-operations.html"><a href="spatial-operations.html#geometric-measurement"><i class="fa fa-check"></i><b>5.12</b> Geometric Measurement</a></li>
+<li class="chapter" data-level="5.13" data-path="spatial-operations.html"><a href="spatial-operations.html#nearest-analysis"><i class="fa fa-check"></i><b>5.13</b> Nearest Analysis</a></li>
+<li class="chapter" data-level="5.14" data-path="spatial-operations.html"><a href="spatial-operations.html#convex-hull"><i class="fa fa-check"></i><b>5.14</b> Convex Hull</a></li>
+<li class="chapter" data-level="5.15" data-path="spatial-operations.html"><a href="spatial-operations.html#voronoi-polygon"><i class="fa fa-check"></i><b>5.15</b> Voronoi Polygon</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatial Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatial-operations" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> <strong>Spatial Operations</strong></h1>
+<p>We have learned how geographic datasets are structured in R, and how to join the spatial and attribute features. In this chapter, we would further discuss about the skills of spatial operations. Imagine that we want to know the number of schools in each villages, we should intersect the school point layer and village polygon layer, to identify the polygon for each point located on. “Intersection” is a type of spatial operations. Or imagine we want to know whether there are schools within 500 meters of MRT stations. We need to draw buffer of the stations in advance. “Buffer” is also a type of spatial operations. From the examples above, we find that spatial operations are vital in the spatial analysis.</p>
+<p>We would introduce some common spatial operation functions in package sf. But please note that we would also use some functions in package dplyr. If you are not acquainted with the package, please read the notebook attached <a href="https://rpubs.com/WeiLunChiang/dplyr">here</a>, which provides you with a quick learn on the major function in dplyr. More detailed information of dplyr is supplied in <a href="https://r4ds.had.co.nz/transform.html">Chapter 5 of R for Data Science</a>.</p>
+<p><span id="st_join"></span></p>
+<div id="spatial-join" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Spatial Join</h2>
+<p>As we have learned in the <a href="#join">previous chapter</a>, joining spatial and attribute data requires a primary key, namely a common column variable. But what if we want to join two spatial data? It applies the similar concept, but relies on the shared areas of geographic space (spatial overlay). We can apply function <code>st_join(x, y, left)</code>. The target object which would be in the left part of the new data frame is placed in the first parameter (x), while the joined object is placed in the second parameter (y). Parameter <code>left=</code> represents whether do the left join or not, which is <code>left=T</code> by default, and return all records of the x object with y fields. If <code>left=F</code>, then do the inner join instead.</p>
+<p>Take nz and nz_height in spData for instance. The former data is the map of New Zealand, while the latter is the top 101 highest points in the country. In the example below, we want to know which provinces those points are located in.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="spatial-operations.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_join</span>(nz_height, nz[<span class="st">&quot;Name&quot;</span>])</span></code></pre></div>
+<pre><code>## Simple feature collection with 101 features and 3 fields
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: 1204143 ymin: 5048309 xmax: 1822492 ymax: 5650492
+## Projected CRS: NZGD2000 / New Zealand Transverse Mercator 2000
+## First 10 features:
+##    t50_fid elevation       Name                geometry
+## 1  2353944      2723  Southland POINT (1204143 5049971)
+## 2  2354404      2820      Otago POINT (1234725 5048309)
+## 3  2354405      2830      Otago POINT (1235915 5048745)
+## 4  2369113      3033 West Coast POINT (1259702 5076570)
+## 5  2362630      2749 Canterbury POINT (1378170 5158491)
+## 6  2362814      2822 Canterbury POINT (1389460 5168749)
+## 7  2362817      2778 Canterbury POINT (1390166 5169466)
+## 8  2363991      3004 Canterbury POINT (1372357 5172729)
+## 9  2363993      3114 Canterbury POINT (1372062 5173236)
+## 10 2363994      2882 Canterbury POINT (1372810 5173419)</code></pre>
+<p>Please note that we should remain the class sf in two parameters. Thus, second parameter in function <code>st_join()</code> should not be <code>nz$name</code>, which is a numeric type. Use <code>nz["Name"]</code> instead, to remain the spatial data.</p>
+<p>You may be confused about the sequence of data placed in function <code>st_join()</code>. Let’s do a simple comparison. In <code>st_join(nz_height, nz)</code>, nz_height is target data, and hence the new data frame is based on all the highest points, and the geometry remains the form of nz_height (point). In <code>st_join(nz, nz_height)</code>, nz is the target data, and hence the new data frame is based on the province, and the geometry remains the form of nz (polygon). Try the code yourself might get a better knowing.</p>
+<p>Note that <code>st_join(..., join=st_intersects)</code> does the intersection operation by default. If we want to do other operations, we need to revise the parameter <code>join=</code> in <code>st_join(..., join=)</code>. Function used in <code>join=</code> is listed in documentation of <a href="https://www.rdocumentation.org/packages/sf/versions/0.9-7/topics/geos_binary_pred"><code>geos_binary_pred</code></a>. The features are simply introduced in the table below (not all the functions are appropriate to be applied in <code>st_join</code>).</p>
+<p><span id="geos_binary_pred"></span></p>
+<table class="table table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Function
+</th>
+<th style="text-align:left;">
+Features
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 5em; ">
+<strong><code>st_intersects(x,y)</code></strong>
+</td>
+<td style="text-align:left;width: 29em; ">
+identifies if x and y geometry share any space
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 5em; ">
+<strong><code>st_contains(x,y)</code></strong>
+</td>
+<td style="text-align:left;width: 29em; ">
+identifies if x is within y (i.e. point within polygon)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 5em; ">
+<strong><code>st_disjoint(x,y)</code></strong>
+</td>
+<td style="text-align:left;width: 29em; ">
+identifies when geometries from x do not share space with y
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 5em; ">
+<strong><code>st_crosses(x,y)</code></strong>
+</td>
+<td style="text-align:left;width: 29em; ">
+identifies if any geometry of x have commonalities with y
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 5em; ">
+<strong><code>st_covers(x,y)</code></strong>
+</td>
+<td style="text-align:left;width: 29em; ">
+identifies if any point from x is outside of y (i.e. polygon outside polygon)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 5em; ">
+<strong><code>st_covered_by(x,y)</code></strong>
+</td>
+<td style="text-align:left;width: 29em; ">
+identifies if x is completely within y (i.e. polygon completely within polygon)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 5em; ">
+<strong><code>st_within(x,y)</code></strong>
+</td>
+<td style="text-align:left;width: 29em; ">
+identifies if x is in a specified distance to y
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 5em; ">
+<strong><code>st_touches(x,y)</code></strong>
+</td>
+<td style="text-align:left;width: 29em; ">
+identifies if geometries of x and y share a common point but their interiors do not intersect
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="attribute-aggregation" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Attribute Aggregation</h2>
+<p>Aggregation operations summarize datasets (including attributes and spatial features) by a “grouping variable.” We can use function <code>group_by() %&gt;% summarise()</code> in dplyr to conduct aggregation. Let’s take data “world” for example. We want to group by the data by continent, and summarize the total population of each continent. The code and result are shown below.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="spatial-operations.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># map before aggregation</span></span>
+<span id="cb3-2"><a href="spatial-operations.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(world)<span class="sc">+</span></span>
+<span id="cb3-3"><a href="spatial-operations.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()<span class="sc">+</span></span>
+<span id="cb3-4"><a href="spatial-operations.html#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background=</span><span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="series_files/figure-html/aggregation_1-1.png" width="1200" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="spatial-operations.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregation operations</span></span>
+<span id="cb4-2"><a href="spatial-operations.html#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="spatial-operations.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># group_by(Data, Grouping_variable)%&gt;%</span></span>
+<span id="cb4-4"><a href="spatial-operations.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarise(New_column=Operation(Operated_variable))</span></span>
+<span id="cb4-5"><a href="spatial-operations.html#cb4-5" aria-hidden="true" tabindex="-1"></a>continent_pop<span class="ot">=</span><span class="fu">group_by</span>(world, continent)<span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="spatial-operations.html#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pop=</span><span class="fu">sum</span>(pop, <span class="at">na.rm=</span>T))</span>
+<span id="cb4-7"><a href="spatial-operations.html#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="spatial-operations.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># glance at new data</span></span>
+<span id="cb4-9"><a href="spatial-operations.html#cb4-9" aria-hidden="true" tabindex="-1"></a>continent_pop</span></code></pre></div>
+<pre><code>## Simple feature collection with 8 features and 2 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513
+## Geodetic CRS:  WGS 84
+## # A tibble: 8 x 3
+##   continent              pop                                                geom
+##   &lt;chr&gt;                &lt;dbl&gt;                         &lt;MULTIPOLYGON [arc_degree]&gt;
+## 1 Africa              1.15e9 (((-16.71373 13.59496, -17.12611 14.37352, -17.625~
+## 2 Antarctica          0      (((-48.66062 -78.04702, -48.1514 -78.04707, -46.66~
+## 3 Asia                4.31e9 (((27.19238 40.69057, 26.35801 40.15199, 26.04335 ~
+## 4 Europe              6.69e8 (((-177.6636 71.13277, -178.6938 70.89302, -180 70~
+## 5 North America       5.65e8 (((-169.5294 62.97693, -170.2906 63.19444, -170.67~
+## 6 Oceania             3.78e7 (((-179.7933 -16.02088, -179.9174 -16.50178, -180 ~
+## 7 Seven seas (open~   0      (((68.935 -48.625, 69.58 -48.94, 70.525 -49.065, 7~
+## 8 South America       4.12e8 (((-71.37525 -17.7738, -71.46204 -17.36349, -73.44~</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="spatial-operations.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># map after aggregation</span></span>
+<span id="cb6-2"><a href="spatial-operations.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(continent_pop)<span class="sc">+</span></span>
+<span id="cb6-3"><a href="spatial-operations.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()<span class="sc">+</span></span>
+<span id="cb6-4"><a href="spatial-operations.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background=</span><span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="series_files/figure-html/aggregation_1-2.png" width="1200" /></p>
+<p>After aggregation, we can find that the population (attribute) has been summed up based on the continent. The geometry is also aggregated by it, which eliminate the border of each country. The geometry of new map represents the border of each continent.</p>
+<p>Here let’s do more practice on the function of dplyr. Suppose we want to retrieve the data of total population, average life expectancy and the number of countries by subregion. Then, arrange the data by average life expectancy in descending order. The code is shown below.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="spatial-operations.html#cb7-1" aria-hidden="true" tabindex="-1"></a>subregion_info<span class="ot">=</span><span class="fu">group_by</span>(world, subregion)<span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="spatial-operations.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb7-3"><a href="spatial-operations.html#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">pop=</span><span class="fu">sum</span>(pop, <span class="at">na.rm=</span>T),              <span class="co"># use function sum() to calculate total population</span></span>
+<span id="cb7-4"><a href="spatial-operations.html#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lifeExp=</span><span class="fu">mean</span>(lifeExp, <span class="at">na.rm=</span>T),     <span class="co"># use function mean() to calculate average life expectancy</span></span>
+<span id="cb7-5"><a href="spatial-operations.html#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_cou=</span><span class="fu">n</span>()                         <span class="co"># use function n() to calculate total number in each group</span></span>
+<span id="cb7-6"><a href="spatial-operations.html#cb7-6" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="spatial-operations.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(lifeExp))                <span class="co"># use arrange to order data, and desc() means descending order</span></span>
+<span id="cb7-8"><a href="spatial-operations.html#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="spatial-operations.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># glance at new data</span></span>
+<span id="cb7-10"><a href="spatial-operations.html#cb7-10" aria-hidden="true" tabindex="-1"></a>subregion_info</span></code></pre></div>
+<pre><code>## Simple feature collection with 22 features and 4 fields
+## Geometry type: GEOMETRY
+## Dimension:     XY
+## Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513
+## Geodetic CRS:  WGS 84
+## # A tibble: 22 x 5
+##    subregion          pop lifeExp num_cou                                   geom
+##    &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;                &lt;GEOMETRY [arc_degree]&gt;
+##  1 Australia and~  2.80e7    81.9       2 MULTIPOLYGON (((124.2216 -32.95949, 1~
+##  2 Western Europe  1.26e8    81.8       7 MULTIPOLYGON (((-52.93966 2.124858, -~
+##  3 Northern Amer~  3.54e8    80.4       3 MULTIPOLYGON (((-169.5294 62.97693, -~
+##  4 Northern Euro~  9.66e7    79.5      10 MULTIPOLYGON (((-17.79444 63.67875, -~
+##  5 Southern Euro~  1.53e8    78.4      12 MULTIPOLYGON (((-8.898857 36.86881, -~
+##  6 Eastern Asia    1.57e9    76.3       6 MULTIPOLYGON (((121.586 39.36085, 121~
+##  7 Central Ameri~  1.70e8    74.7       8 POLYGON ((-93.87517 15.94016, -94.691~
+##  8 Western Asia    2.52e8    74.5      18 MULTIPOLYGON (((28.80644 41.05496, 27~
+##  9 Eastern Europe  2.93e8    74.5      10 MULTIPOLYGON (((-177.5779 71.26948, -~
+## 10 Caribbean       4.06e7    73.8       7 MULTIPOLYGON (((-79.28149 22.3992, -7~
+## # ... with 12 more rows</code></pre>
+<p>Function <code>sum()</code> obtains the total value; <code>mean()</code> obtains the average value; <code>n()</code> obtains the total number in the group. Parameter <code>na.rm=T</code> means that the calculation would skip the NA (not available). If we do not add this parameter, the result would be NA as well. Parameter <code>desc()</code> means arrange the data in descending order, or it would be in ascending order by default. As we can see in the result printed above, the first three highest life expectancy are Australia and New Zealand, Western Europe, and Northern America respectively.</p>
+<p>In addition to the application of dplyr, we can use function <code>aggregate()</code> provided by package sf to obtain the same result. The first parameter in the function is the data we want to summarize. Note the data should be remain the sf features. Thus, do not use the form like <code>world$pop</code>, whose type is “numeric.” Instead, we should write in the form as <code>world["pop"]</code>, whose type is “sf” and “dataframe.” Parameter <code>by=</code> should be filled in with the columns we want to group by. Note that the type of data should be a list. Parameter <code>FUN</code> is the spatial operation such as sum or average. Last, if the data contains NA, we should add the parameter <code>na.rm=T</code>, in order to skip NA. Again, take data “world” for example, and group by the data by continent, summarize the total population of each continent. The code and result are as follows.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="spatial-operations.html#cb9-1" aria-hidden="true" tabindex="-1"></a>continent_pop_ag<span class="ot">=</span><span class="fu">aggregate</span>(world[<span class="st">&quot;pop&quot;</span>], <span class="at">by=</span><span class="fu">list</span>(world<span class="sc">$</span>continent), <span class="at">FUN=</span>sum, <span class="at">na.rm=</span>T)</span>
+<span id="cb9-2"><a href="spatial-operations.html#cb9-2" aria-hidden="true" tabindex="-1"></a>continent_pop_ag</span></code></pre></div>
+<pre><code>## Simple feature collection with 8 features and 2 fields
+## Attribute-geometry relationship: 0 constant, 1 aggregate, 1 identity
+## Geometry type: GEOMETRY
+## Dimension:     XY
+## Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513
+## Geodetic CRS:  WGS 84
+##                   Group.1        pop                       geometry
+## 1                  Africa 1154946633 MULTIPOLYGON (((-16.71373 1...
+## 2              Antarctica          0 MULTIPOLYGON (((-180 -84.71...
+## 3                    Asia 4311408059 MULTIPOLYGON (((27.19238 40...
+## 4                  Europe  669036256 MULTIPOLYGON (((-177.6636 7...
+## 5           North America  565028684 MULTIPOLYGON (((-169.5294 6...
+## 6                 Oceania   37757833 MULTIPOLYGON (((-179.7933 -...
+## 7 Seven seas (open ocean)          0 POLYGON ((68.935 -48.625, 6...
+## 8           South America  412060811 MULTIPOLYGON (((-71.37525 -...</code></pre>
+<p>You may find that package dplyr provides more flexible functions for us in terms of attribute features calculation in spatial analysis. Hence, it is very helpful to use package “sf” and “dplyr” together.</p>
+</div>
+<div id="spatial-aggregation" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Spatial Aggregation</h2>
+<p>Similar to attribute data aggregation introduced in the previous section, spatial aggregation can be done by function <code>aggregate()</code>. In attribute aggregation, the first parameter should be in class sf, while the second parameter <code>by=</code> is a list with non-spatial data. There is a little difference on the data imported in parameter <code>by=</code>, which the data should also contain geometry in spatial aggregation. Briefly to say, in function <code>aggregate(x, by=y)</code>, spatial aggregation is the geometry of the source (y) that defines how values in the target object (x) are grouped.</p>
+<p>Take data nz and nz_height for example. We want to know the average height in each province of New Zealand. The code is shown below.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="spatial-operations.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(<span class="at">x=</span>nz_height, <span class="at">by=</span>nz, <span class="at">FUN=</span>mean)</span></code></pre></div>
+<pre><code>## Simple feature collection with 16 features and 2 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 1090144 ymin: 4748537 xmax: 2089533 ymax: 6191874
+## Projected CRS: NZGD2000 / New Zealand Transverse Mercator 2000
+## First 10 features:
+##    t50_fid elevation                       geometry
+## 1       NA        NA MULTIPOLYGON (((1745493 600...
+## 2       NA        NA MULTIPOLYGON (((1803822 590...
+## 3  2408405  2734.333 MULTIPOLYGON (((1860345 585...
+## 4       NA        NA MULTIPOLYGON (((2049387 583...
+## 5       NA        NA MULTIPOLYGON (((2024489 567...
+## 6       NA        NA MULTIPOLYGON (((2024489 567...
+## 7       NA        NA MULTIPOLYGON (((1740438 571...
+## 8  2408395  2777.000 MULTIPOLYGON (((1866732 566...
+## 9       NA        NA MULTIPOLYGON (((1881590 548...
+## 10 2368390  2889.455 MULTIPOLYGON (((1557042 531...</code></pre>
+<p>As the result shows, all of attribute features of data nz_height (first parameter) are average value of each province. And the geometry is based on the spatial data in second parameter <code>by=</code>. You may find that the data we obtain are not perfect, since it does not contain the features in second parameter <code>by=</code>. Also, it does not make sense to calculate the average of all attribute features. For instance, variable “t50_fid” is the identity number of the highest points, it does not make sense to derive its mean.</p>
+<p>In addition to function <code>aggregate()</code>, the same result can also be generated by function <code>group_by() %&gt;% summarise()</code> in dplyr. The code and result are shown below.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="spatial-operations.html#cb13-1" aria-hidden="true" tabindex="-1"></a>ave_height<span class="ot">=</span><span class="fu">st_join</span>(nz, nz_height)<span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="spatial-operations.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Name)<span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="spatial-operations.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">elevation=</span><span class="fu">mean</span>(elevation, <span class="at">na.rm=</span>T))</span>
+<span id="cb13-4"><a href="spatial-operations.html#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="spatial-operations.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the map of average height of each province</span></span>
+<span id="cb13-6"><a href="spatial-operations.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ave_height)<span class="sc">+</span></span>
+<span id="cb13-7"><a href="spatial-operations.html#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span>elevation))<span class="sc">+</span></span>
+<span id="cb13-8"><a href="spatial-operations.html#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">low=</span><span class="st">&quot;#CEFFCE&quot;</span>, <span class="at">high=</span><span class="st">&quot;#006000&quot;</span>)<span class="sc">+</span></span>
+<span id="cb13-9"><a href="spatial-operations.html#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb13-10"><a href="spatial-operations.html#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb13-11"><a href="spatial-operations.html#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb13-12"><a href="spatial-operations.html#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background=</span><span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="series_files/figure-html/aggregation_spatial_dplyr-1.png" width="1700" style="display: block; margin: auto;" /></p>
+<p>We need to join two spatial data (nz is the target data, which should be placed in the first parameter). Then, group by the variable “Name” and summarize the mean value of elevation in each group. Though the code is longer than function <code>aggregate()</code>, dplyr shows a readable and clear code to do the spatial aggregation.</p>
+<p>In this example, we can again find that use “dplyr” and “sf” package together might be a better method to do spatial aggregation.</p>
+</div>
+<div id="interpolation" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Interpolation</h2>
+<p>Interpolation is the process that calculate estimates from a source set of polygons to an overlapping but incongruent set of target polygons. Imagine that we want to derive the population in a specific area, which is defined by us. Since the boundary of study area we define does not align with the one of population data (most of the population data is based on the villages or Statistical Areas), we should use interpolation to produce estimates in this situation. The concept is simply illustrated in the figure below.</p>
+<p><img src="graph/interpolation.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>In the figure above, the study area contains three districts whose population have been surveyed. It is covered by 40% of Area 1; 25% of Area 2; and 40% of Area 3. Population is the attribute assumed to be spatially extensive, and the sum is preserved. Hence, we can simply derive the total population of the study area based on the weight of each area: 1000* 40% + 800* 25% + 900* 40% = 960.</p>
+<p>For the study area, there are 40% of it is Area 1; 33.3% of it is Area 2; 26.7% of it is Area 3. Density is spatially intensive instead, and the mean is preserved. Hence, we can simply derive the mean density of the study area based on the area weight of study area: 200/3* 40% + 40* 33.3% + 90* 26.7% = 64.</p>
+<p>Package sf provides a function <code>st_interpolation_aw()</code> to conduct the interpolation. There are three parameters required in the function <code>st_interpolate_aw(x, to, extensive)</code>. The first parameter (x) is the object of simple features, for which we want to aggregate attributes. The second parameter (to) is the object of simple features with the target geometries. Parameter <code>extensive=</code> is the operation of data. If it is True, the attribute variables are assumed to be spatially extensive (like population) and the sum is preserved, otherwise, spatially intensive (like population density) and the mean is preserved.</p>
+<p>Here, we use the data incongruent and aggregating_zones provided by package spData. The former one is a specific region separated into 9 districts in UK, while the latter is in the same region, but separated into 2 major area (as the figure shown below). We need to interpolate the value in data incongruent to the geometry data aggregating_zones, and derive the sum of value in two areas. The code and result are shown below.</p>
+<p><img src="graph/aggregating_zones_incongruent.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="spatial-operations.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_interpolate_aw</span>(incongruent[<span class="st">&quot;value&quot;</span>], aggregating_zones, <span class="at">extensive=</span>T)</span></code></pre></div>
+<pre><code>## Warning in st_interpolate_aw.sf(incongruent[&quot;value&quot;], aggregating_zones, :
+## st_interpolate_aw assumes attributes are constant or uniform over areas of x</code></pre>
+<pre><code>## Simple feature collection with 2 features and 1 field
+## Attribute-geometry relationship: 0 constant, 1 aggregate, 0 identity
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 417686.2 ymin: 443703.6 xmax: 422959.3 ymax: 447036.8
+## Projected CRS: OSGB 1936 / British National Grid
+##      value                       geometry
+## 1 19.61613 MULTIPOLYGON (((418731.9 44...
+## 2 25.66872 MULTIPOLYGON (((419196.4 44...</code></pre>
+</div>
+<div id="unions" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Unions</h2>
+<p>Aggregation can dissolve the boundaries of touching polygons in the same group. And what is the behind scene of the function <code>aggregate()</code> and <code>group_by() %&gt;% summarise()</code>? They combine the geometries and eliminate the boundaries in the group by using function <code>st_union()</code>. In the example shown below, we filter the West part of Us states, and then union it by collecting all the geometries together.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="spatial-operations.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter the west of US states</span></span>
+<span id="cb17-2"><a href="spatial-operations.html#cb17-2" aria-hidden="true" tabindex="-1"></a>us_west<span class="ot">=</span><span class="fu">filter</span>(us_states, REGION<span class="sc">==</span><span class="st">&quot;West&quot;</span>)</span>
+<span id="cb17-3"><a href="spatial-operations.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(us_west)</span></code></pre></div>
+<pre><code>## Simple feature collection with 6 features and 6 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -124.4096 ymin: 31.33224 xmax: -102.0422 ymax: 49.00091
+## Geodetic CRS:  NAD83
+##   GEOID       NAME REGION            AREA total_pop_10 total_pop_15
+## 1    04    Arizona   West 295281.3 [km^2]      6246816      6641928
+## 2    08   Colorado   West 269573.1 [km^2]      4887061      5278906
+## 3    16      Idaho   West 216512.7 [km^2]      1526797      1616547
+## 4    30    Montana   West 380829.2 [km^2]       973739      1014699
+## 5    32     Nevada   West 286363.7 [km^2]      2633331      2798636
+## 6    06 California   West 409747.1 [km^2]     36637290     38421464
+##                         geometry
+## 1 MULTIPOLYGON (((-114.7196 3...
+## 2 MULTIPOLYGON (((-109.0501 4...
+## 3 MULTIPOLYGON (((-116.916 45...
+## 4 MULTIPOLYGON (((-116.0492 4...
+## 5 MULTIPOLYGON (((-119.9992 4...
+## 6 MULTIPOLYGON (((-118.6034 3...</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="spatial-operations.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># union us_west</span></span>
+<span id="cb19-2"><a href="spatial-operations.html#cb19-2" aria-hidden="true" tabindex="-1"></a>us_west<span class="ot">=</span><span class="fu">st_union</span>(us_west)</span></code></pre></div>
+<pre><code>## although coordinates are longitude/latitude, st_union assumes that they are planar</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="spatial-operations.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(us_west)</span></code></pre></div>
+<pre><code>## Geometry set for 1 feature 
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -124.7042 ymin: 31.33224 xmax: -102.0422 ymax: 49.00236
+## Geodetic CRS:  NAD83</code></pre>
+<pre><code>## MULTIPOLYGON (((-124.411 42.25055, -124.4351 42...</code></pre>
+<p><img src="series_files/figure-html/union_figure-1.png" width="1360" style="display: block; margin: auto;" /></p>
+</div>
+<div id="centroid" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> Centroid</h2>
+<p>Centroid operations identify the center of the geographic objects. By using centroid, we can approximately estimate the distance between polygons. Or imagine you want to transform the complex polygon to the point geometry, centroid of the polygon may be a good choice. The most common type of centroid is called geographic centroid, which represents the center of mass in a spatial object. Function <code>st_centroid()</code> can generate the centroid. Use data us_states for example to derive the centroids of each states.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="spatial-operations.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># derive the centroid</span></span>
+<span id="cb24-2"><a href="spatial-operations.html#cb24-2" aria-hidden="true" tabindex="-1"></a>us_states_centroid<span class="ot">=</span><span class="fu">st_centroid</span>(us_states)</span></code></pre></div>
+<pre><code>## Warning in st_centroid.sf(us_states): st_centroid assumes attributes are
+## constant over geometries of x</code></pre>
+<pre><code>## Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =
+## of_largest_polygon): st_centroid does not give correct centroids for longitude/
+## latitude data</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="spatial-operations.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the map</span></span>
+<span id="cb27-2"><a href="spatial-operations.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(us_states)<span class="sc">+</span></span>
+<span id="cb27-3"><a href="spatial-operations.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()<span class="sc">+</span></span>
+<span id="cb27-4"><a href="spatial-operations.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>us_states_centroid, <span class="at">color=</span><span class="st">&quot;red&quot;</span>)<span class="sc">+</span></span>
+<span id="cb27-5"><a href="spatial-operations.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb27-6"><a href="spatial-operations.html#cb27-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb27-7"><a href="spatial-operations.html#cb27-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb27-8"><a href="spatial-operations.html#cb27-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background=</span><span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="series_files/figure-html/cemtroid_us_states-1.png" width="1200" style="display: block; margin: auto;" /></p>
+<p>But there is a drawback of <code>st_centroid()</code>. If the polygon contains many separated areas, the centroid might not lie on the polygon. For instance, the centroid of the group islands may not be situated in the land of the island, but in the ocean. Function <code>st_point_on_surface</code> can solve this problem. It ensures that all of the points will fall in their parent object. But please note that the point <code>st_point_on_surface</code> generates does not guarantee to be located in the most largest area. Here comes an example about the centroid and point of surface on Penghu Island, which is located in 50 kilometers west of Taiwan Island. <font color="red"><em><em>Data needed has been downloaded previously. You placed the file in the same directory as the R script file.</em></em> Click <a href="https://drive.google.com/uc?export=download&amp;id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi"><strong>here</strong></a> to re-download the file if it is lost.</font></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="spatial-operations.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read the shapefile of Taiwan and filter Penghu Island</span></span>
+<span id="cb28-2"><a href="spatial-operations.html#cb28-2" aria-hidden="true" tabindex="-1"></a>taiwan_county<span class="ot">=</span><span class="fu">read_sf</span>(<span class="st">&quot;./data/taiwan_county/taiwan_county.shp&quot;</span>)</span>
+<span id="cb28-3"><a href="spatial-operations.html#cb28-3" aria-hidden="true" tabindex="-1"></a>penghu<span class="ot">=</span><span class="fu">filter</span>(taiwan_county, COUNTYCODE<span class="sc">==</span><span class="dv">10016</span>)</span>
+<span id="cb28-4"><a href="spatial-operations.html#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="spatial-operations.html#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># derive the centroid</span></span>
+<span id="cb28-6"><a href="spatial-operations.html#cb28-6" aria-hidden="true" tabindex="-1"></a>penghu_centroid<span class="ot">=</span><span class="fu">st_centroid</span>(penghu)</span></code></pre></div>
+<pre><code>## Warning in st_centroid.sf(penghu): st_centroid assumes attributes are constant
+## over geometries of x</code></pre>
+<pre><code>## Warning in st_centroid.sfc(st_geometry(x), of_largest_polygon =
+## of_largest_polygon): st_centroid does not give correct centroids for longitude/
+## latitude data</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="spatial-operations.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># derive the point on surface</span></span>
+<span id="cb31-2"><a href="spatial-operations.html#cb31-2" aria-hidden="true" tabindex="-1"></a>penghu_point<span class="ot">=</span><span class="fu">st_point_on_surface</span>(penghu)</span></code></pre></div>
+<pre><code>## Warning in st_point_on_surface.sf(penghu): st_point_on_surface assumes
+## attributes are constant over geometries of x</code></pre>
+<pre><code>## Warning in st_point_on_surface.sfc(st_geometry(x)): st_point_on_surface may not
+## give correct results for longitude/latitude data</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="spatial-operations.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the map</span></span>
+<span id="cb34-2"><a href="spatial-operations.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penghu)<span class="sc">+</span></span>
+<span id="cb34-3"><a href="spatial-operations.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()<span class="sc">+</span></span>
+<span id="cb34-4"><a href="spatial-operations.html#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>penghu_point, <span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb34-5"><a href="spatial-operations.html#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>penghu_centroid, <span class="at">color=</span><span class="st">&quot;blue&quot;</span>, <span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb34-6"><a href="spatial-operations.html#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb34-7"><a href="spatial-operations.html#cb34-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb34-8"><a href="spatial-operations.html#cb34-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb34-9"><a href="spatial-operations.html#cb34-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background=</span><span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="series_files/figure-html/point_on_surface-1.png" width="360" style="display: block; margin: auto;" /></p>
+<p>In Penghu example, we can find that the point on surface (red dot) and the centroid (blue dot) are not the same. Centroid is located in the inland sea of Penghu, while the point on surface is located in one of the island of Penghu. Please note that the island which point on surface located in is not the largest one. For more information of its algorithm, please refer to the <a href="https://gis.stackexchange.com/questions/76498/how-is-st-pointonsurface-calculated">discussion</a> attached.</p>
+</div>
+<div id="buffer" class="section level2" number="5.7">
+<h2><span class="header-section-number">5.7</span> Buffer</h2>
+<p>Imagine that we want to calculate the number of schools within 500 meters radius of MRT stations, we need to first draw the buffer of each MRT stations before points calculation. Buffer is a zone (polygon) around a map feature within given distance, and it is useful for proximity analysis. Buffer can be created by function <code>st_buffer()</code>, whatever the type of geometry is. There are two parameters should be filled in <code>st_buffer()</code>. Place the spatial data first, and then set the distance of radius. But please note that the unit of distance is based on the coordinate reference system. In general, the unit is meter (m) in the <a href="#proj_coord">projected coordinate system</a>, while the unit is NULL in the the geographic coordinate systems (e.g., EPSG:4326). Hence, we need to use function <a href="#st_transform"><code>st_transform()</code></a> to convert CRS to specific projected coordinate system in the region of study area, if the spatial data with CRS EPSG:4326 is obtained.</p>
+<p>Examples below illustrates the buffer of cycle hire points across London. Data cycle hire is provided by package spData. Suppose we define the region within 300 meters of hire points is service area.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="spatial-operations.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test of the CRS and buffer of cycle_hire</span></span>
+<span id="cb35-2"><a href="spatial-operations.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(cycle_hire)<span class="sc">$</span>epsg             <span class="co"># original CRS: EPSG:4326 (geographic)</span></span></code></pre></div>
+<pre><code>## [1] 4326</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="spatial-operations.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(cycle_hire)<span class="sc">$</span>units            <span class="co"># units: NULL</span></span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="spatial-operations.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_buffer</span>(cycle_hire, <span class="dv">300</span>)</span></code></pre></div>
+<pre><code>## Warning in st_buffer.sfc(st_geometry(x), dist, nQuadSegs, endCapStyle =
+## endCapStyle, : st_buffer does not correctly buffer longitude/latitude data</code></pre>
+<pre><code>## dist is assumed to be in decimal degrees (arc_degrees).</code></pre>
+<pre><code>## Simple feature collection with 742 features and 5 fields
+## Geometry type: POLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -300.2368 ymin: -248.5452 xmax: 299.9977 ymax: 351.5421
+## Geodetic CRS:  WGS 84
+## First 10 features:
+##    id               name             area nbikes nempty
+## 1   1       River Street      Clerkenwell      4     14
+## 2   2 Phillimore Gardens       Kensington      2     34
+## 3   3 Christopher Street Liverpool Street      0     32
+## 4   4  St. Chad&#39;s Street     King&#39;s Cross      4     19
+## 5   5     Sedding Street    Sloane Square     15     12
+## 6   6 Broadcasting House       Marylebone      0     18
+## 7   7   Charlbert Street  St. John&#39;s Wood     15      0
+## 8   8         Lodge Road  St. John&#39;s Wood      5     13
+## 9   9     New Globe Walk         Bankside      3     16
+## 10 10        Park Street         Bankside      1     17
+##                          geometry
+## 1  POLYGON ((299.89 51.52916, ...
+## 2  POLYGON ((299.8024 51.49961...
+## 3  POLYGON ((299.9154 51.52128...
+## 4  POLYGON ((299.879 51.53006,...
+## 5  POLYGON ((299.8431 51.49313...
+## 6  POLYGON ((299.8558 51.51812...
+## 7  POLYGON ((299.8319 51.5343,...
+## 8  POLYGON ((299.8299 51.52834...
+## 9  POLYGON ((299.9036 51.50739...
+## 10 POLYGON ((299.9072 51.50597...</code></pre>
+<p>The warning shows that <code>st_buffer()</code> does not correctly buffer longitude-latitude spatial data, whose distance is assumed to be in decimal degrees (arc_degrees). Though the operation of geometry is still done, it is not true. (You can plot the map to check what the geometry looks like.) Hence, we should not use the spatial data with EPSG:4326 to create buffer, but transform CRS in advance. However, what CRS should be applied? We can look up the CRS of England in <a href="https://epsg.io/?q=England">EPSG database</a>.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="spatial-operations.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transform CRS to EPSG:27700 (projected)</span></span>
+<span id="cb43-2"><a href="spatial-operations.html#cb43-2" aria-hidden="true" tabindex="-1"></a>cycle_hire_new<span class="ot">=</span><span class="fu">st_transform</span>(cycle_hire, <span class="at">crs=</span><span class="dv">27700</span>)</span>
+<span id="cb43-3"><a href="spatial-operations.html#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="spatial-operations.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create the buffer (radius: 300 m)</span></span>
+<span id="cb43-5"><a href="spatial-operations.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">st_buffer</span>(cycle_hire_new, <span class="dv">300</span>)</span></code></pre></div>
+<pre><code>## Simple feature collection with 742 features and 5 fields
+## Geometry type: POLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 522202 ymin: 174108 xmax: 539033.2 ymax: 184721
+## Projected CRS: OSGB 1936 / British National Grid
+## First 10 features:
+##    id               name             area nbikes nempty
+## 1   1       River Street      Clerkenwell      4     14
+## 2   2 Phillimore Gardens       Kensington      2     34
+## 3   3 Christopher Street Liverpool Street      0     32
+## 4   4  St. Chad&#39;s Street     King&#39;s Cross      4     19
+## 5   5     Sedding Street    Sloane Square     15     12
+## 6   6 Broadcasting House       Marylebone      0     18
+## 7   7   Charlbert Street  St. John&#39;s Wood     15      0
+## 8   8         Lodge Road  St. John&#39;s Wood      5     13
+## 9   9     New Globe Walk         Bankside      3     16
+## 10 10        Park Street         Bankside      1     17
+##                          geometry
+## 1  POLYGON ((531503.5 182832.1...
+## 2  POLYGON ((525508.1 179391.9...
+## 3  POLYGON ((533285.8 182001.6...
+## 4  POLYGON ((530737.8 182912, ...
+## 5  POLYGON ((528351 178742, 52...
+## 6  POLYGON ((529158.4 181542.9...
+## 7  POLYGON ((527459 183300.8, ...
+## 8  POLYGON ((527332.7 182634.6...
+## 9  POLYGON ((532505 180434.6, ...
+## 10 POLYGON ((532764.9 180284.3...</code></pre>
+<p><img src="series_files/figure-html/buffer_figure-1.png" width="660" style="display: block; margin: auto;" /></p>
+<p>Figure above shows the location of cycle hire points (black dots), and the buffer of each point is painted red.</p>
+</div>
+<div id="boundary" class="section level2" number="5.8">
+<h2><span class="header-section-number">5.8</span> Boundary</h2>
+<p>Function <code>st_boundary()</code> creates a polygon that encompasses the full extent of the geometry. Boundary and union are often applied together to emphasize the border of the study area. The example below shows the us_state and makes the border of country thicker.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="spatial-operations.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># union us_states and then derive the boundary</span></span>
+<span id="cb45-2"><a href="spatial-operations.html#cb45-2" aria-hidden="true" tabindex="-1"></a>us_boundary<span class="ot">=</span><span class="fu">st_boundary</span>(<span class="fu">st_union</span>(us_states))</span></code></pre></div>
+<pre><code>## although coordinates are longitude/latitude, st_union assumes that they are planar</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="spatial-operations.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the map</span></span>
+<span id="cb47-2"><a href="spatial-operations.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(us_states)<span class="sc">+</span></span>
+<span id="cb47-3"><a href="spatial-operations.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()<span class="sc">+</span></span>
+<span id="cb47-4"><a href="spatial-operations.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>us_boundary, <span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb47-5"><a href="spatial-operations.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb47-6"><a href="spatial-operations.html#cb47-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb47-7"><a href="spatial-operations.html#cb47-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb47-8"><a href="spatial-operations.html#cb47-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background=</span><span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="series_files/figure-html/boundary-1.png" width="540" style="display: block; margin: auto;" /></p>
+</div>
+<div id="clipping" class="section level2" number="5.9">
+<h2><span class="header-section-number">5.9</span> Clipping</h2>
+<p>Clipping is a critical spatial operation in GIS. It extracts the geometry (point, line, polygon) that lies within the area outlined by the clip polygon. For instance, we have polygon of Taipei City and points of schools in Taiwan, and suppose we want to extract the schools located in Taipei City. We need to use the polygon to clip the point data, removing all the points outside the polygon. Though there is no “clip” function provided by package sf in fact, function <code>st_intersection()</code> help us do so. But please note that there is a difference between clipping and intersection in an accurate GIS definition. Clipping and intersection both extracts the geometry in a specific polygon; nonetheless, clipping does not retain the attributes of the clip polygon, while intersection creates output features which possess the attributes of all input features. The concept is illustrated below.</p>
+<p><img src="graph/clip_intersection.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>The slight difference may be a fundamental concept of GIS, but it is not really vital in terms of spatial analysis in R (after all, there is no clip function provided in R). In <code>st_intersection(x, y)</code>, it is free to place the spatial data in two parameters. But please note data x would be on the left-hand side of new data frame, while y is on the right-hand side. Here we use the example of nz (map of New Zealand) and nz_height (101 highest point in New Zealand) again. Suppose we want to extract the points located in North Island, the code and result are shown below.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="spatial-operations.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter North Island in data nz</span></span>
+<span id="cb48-2"><a href="spatial-operations.html#cb48-2" aria-hidden="true" tabindex="-1"></a>nz_north<span class="ot">=</span><span class="fu">filter</span>(nz, Island<span class="sc">==</span><span class="st">&quot;North&quot;</span>)</span>
+<span id="cb48-3"><a href="spatial-operations.html#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="spatial-operations.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># st_intersection(point, polygon)</span></span>
+<span id="cb48-5"><a href="spatial-operations.html#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">st_intersection</span>(nz_height, nz_north)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
+## geometries</code></pre>
+<pre><code>## Simple feature collection with 5 features and 8 fields
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: 1820643 ymin: 5647971 xmax: 1822492 ymax: 5650492
+## Projected CRS: NZGD2000 / New Zealand Transverse Mercator 2000
+##     t50_fid elevation              Name Island Land_area Population
+## 99  2408397      2751           Waikato  North  23900.04     460100
+## 100 2408406      2720           Waikato  North  23900.04     460100
+## 101 2408411      2732           Waikato  North  23900.04     460100
+## 97  2408394      2797 Manawatu-Wanganui  North  22220.61     234500
+## 98  2408395      2757 Manawatu-Wanganui  North  22220.61     234500
+##     Median_income Sex_ratio                geometry
+## 99          27900 0.9520500 POINT (1820660 5649488)
+## 100         27900 0.9520500 POINT (1822263 5650429)
+## 101         27900 0.9520500 POINT (1822492 5650492)
+## 97          25000 0.9387734 POINT (1821014 5647971)
+## 98          25000 0.9387734 POINT (1820643 5648331)</code></pre>
+<p>Remember the spatial join operation? Actually, we can use function <a href="spatial-operations.html#st_join"><code>st_join()</code></a> to do the same thing. The code is shown below.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="spatial-operations.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># union two data first</span></span>
+<span id="cb51-2"><a href="spatial-operations.html#cb51-2" aria-hidden="true" tabindex="-1"></a>nz_height_join<span class="ot">=</span><span class="fu">st_join</span>(nz_height, nz)</span>
+<span id="cb51-3"><a href="spatial-operations.html#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="spatial-operations.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># filter the highest point located in North Island</span></span>
+<span id="cb51-5"><a href="spatial-operations.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(nz_height_join, Island<span class="sc">==</span><span class="st">&quot;North&quot;</span>)</span></code></pre></div>
+<pre><code>## Simple feature collection with 5 features and 8 fields
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: 1820643 ymin: 5647971 xmax: 1822492 ymax: 5650492
+## Projected CRS: NZGD2000 / New Zealand Transverse Mercator 2000
+##   t50_fid elevation              Name Island Land_area Population Median_income
+## 1 2408394      2797 Manawatu-Wanganui  North  22220.61     234500         25000
+## 2 2408395      2757 Manawatu-Wanganui  North  22220.61     234500         25000
+## 3 2408397      2751           Waikato  North  23900.04     460100         27900
+## 4 2408406      2720           Waikato  North  23900.04     460100         27900
+## 5 2408411      2732           Waikato  North  23900.04     460100         27900
+##   Sex_ratio                geometry
+## 1 0.9387734 POINT (1821014 5647971)
+## 2 0.9387734 POINT (1820643 5648331)
+## 3 0.9520500 POINT (1820660 5649488)
+## 4 0.9520500 POINT (1822263 5650429)
+## 5 0.9520500 POINT (1822492 5650492)</code></pre>
+<p>In this example, we find that function <code>st_join()</code> and <code>st_intersection()</code> do the similar operation. This is because that <code>st_join()</code> sets the operation to “intersection” by default, that is, the parameter is <code>st_join(..., join="st_intersects")</code>. Other operations are listed in the table of <a href="spatial-operations.html#geos_binary_pred"><code>geos_binary_pred</code></a>.</p>
+<p>In addition to <code>st_intersection</code>, there are some functions to do subsetting and clipping spatial data. To illustrate the concept and operations of these functions, we use a simple example: two overlapping circles (X and Y), with a center point one unit away from each other and a radius of one. The code and results are shown below.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="spatial-operations.html#cb53-1" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">st_buffer</span>(<span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)), <span class="at">dist=</span><span class="dv">1</span>)</span>
+<span id="cb53-2"><a href="spatial-operations.html#cb53-2" aria-hidden="true" tabindex="-1"></a>Y<span class="ot">=</span><span class="fu">st_buffer</span>(<span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>)), <span class="at">dist=</span><span class="dv">1</span>)</span>
+<span id="cb53-3"><a href="spatial-operations.html#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="spatial-operations.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_intersection</span>(X, Y)</span>
+<span id="cb53-5"><a href="spatial-operations.html#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">st_difference</span>(X, Y)</span>
+<span id="cb53-6"><a href="spatial-operations.html#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="fu">st_difference</span>(Y, X)</span>
+<span id="cb53-7"><a href="spatial-operations.html#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">st_union</span>(X, Y)</span>
+<span id="cb53-8"><a href="spatial-operations.html#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="fu">st_sym_difference</span>(X, Y)</span></code></pre></div>
+<p><img src="series_files/figure-html/clip_operation_figure-1.png" width="900" style="display: block; margin: auto;" /></p>
+</div>
+<div id="simplification" class="section level2" number="5.10">
+<h2><span class="header-section-number">5.10</span> Simplification</h2>
+<p>When plotting the map, it is better to remove the detailed data and trivial information which may make the map complicated. This process is called cartographic generalization. It seeks to abstract spatial information at a high level of detail to information that can be rendered on a map at a lower level of detail. One of the main type of generalization is simplification. It simplifies the geometry, and result in reducing the amount of memory. To do simplification, many algorithms have been developed, such as <a href="https://www.wikiwand.com/en/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm">Ramer–Douglas–Peucker algorithm</a> and <a href="https://www.wikiwand.com/en/Visvalingam%E2%80%93Whyatt_algorithm">Visvalingam–Whyatt algorithm</a>. Let’s take a closer look on Ramer–Douglas–Peucker algorithm illustrated in the figure below.</p>
+<p><img src="graph/simplification.gif"></p>
+<p>The algorithm initially finds the point that is farthest from the line segment with the first and last points as end points. If the distance between the point and line segment is shorter than the minimum threshold ε, then any other points can be discarded. If the distance is greater than ε, the point must be kept. The algorithm recursively calls itself with the first point and the farthest point and then with the farthest point and the last point, which includes the farthest point being marked as kept.</p>
+<p>Function <code>st_simplify()</code> provided in sf package can do so. The simplification operation can be applied on all of the geometries (point, line, polygon). In function <code>st_simplify(x, dTolerance)</code>, spatial data is placed in the first parameter (x). Parameter <code>dTolerance</code> represents the minimum threshold (ε). Please note that the spatial data should be in projected coordinate system, or it might cause error. We can use function <code>st_crs()$unit</code> to confirm whether the unit is “meter.” If it is NULL, it represents the data is in geographic coordinate system, please look up the appropriate CRS in <a href="https://epsg.io/">EPSG database</a>. Here, let’s simplify the map of US states as code shown below.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="spatial-operations.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check the unit (if NULL, convert CRS)</span></span>
+<span id="cb54-2"><a href="spatial-operations.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(us_states)<span class="sc">$</span>units</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="spatial-operations.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transform CRS to 2163</span></span>
+<span id="cb56-2"><a href="spatial-operations.html#cb56-2" aria-hidden="true" tabindex="-1"></a>us_states_2163<span class="ot">=</span><span class="fu">st_transform</span>(us_states, <span class="at">crs=</span><span class="dv">2163</span>)</span>
+<span id="cb56-3"><a href="spatial-operations.html#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="spatial-operations.html#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co"># simplification (ε = 100000 meters = 100 kilometers)</span></span>
+<span id="cb56-5"><a href="spatial-operations.html#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="fu">st_simplify</span>(us_states_2163, <span class="at">dTolerance=</span><span class="dv">100000</span>)</span></code></pre></div>
+<pre><code>## Simple feature collection with 49 features and 6 fields (with 5 geometries empty)
+## Geometry type: GEOMETRY
+## Dimension:     XY
+## Bounding box:  xmin: -1970356 ymin: -2112380 xmax: 2521545 ymax: 731357.6
+## Projected CRS: NAD27 / US National Atlas Equal Area
+## First 10 features:
+##    GEOID        NAME   REGION             AREA total_pop_10 total_pop_15
+## 1     01     Alabama    South 133709.27 [km^2]      4712651      4830620
+## 2     04     Arizona     West 295281.25 [km^2]      6246816      6641928
+## 3     08    Colorado     West 269573.06 [km^2]      4887061      5278906
+## 4     09 Connecticut Norteast  12976.59 [km^2]      3545837      3593222
+## 5     12     Florida    South 151052.01 [km^2]     18511620     19645772
+## 6     13     Georgia    South 152725.21 [km^2]      9468815     10006693
+## 7     16       Idaho     West 216512.66 [km^2]      1526797      1616547
+## 8     18     Indiana  Midwest  93648.40 [km^2]      6417398      6568645
+## 9     20      Kansas  Midwest 213037.08 [km^2]      2809329      2892987
+## 10    22   Louisiana    South 122345.76 [km^2]      4429940      4625253
+##                          geometry
+## 1  POLYGON ((1076896 -1034555,...
+## 2  POLYGON ((-1379163 -1242190...
+## 3  POLYGON ((-759892.8 -402580...
+## 4  POLYGON ((2148004 24195.53,...
+## 5  POLYGON ((1433831 -1425453,...
+## 6  POLYGON ((1311335 -999185, ...
+## 7  POLYGON ((-1298505 247303.5...
+## 8  POLYGON ((1033794 -287181.6...
+## 9  POLYGON ((-175289.2 -552753...
+## 10 POLYGON ((558984.4 -1308375...</code></pre>
+<p><img src="series_files/figure-html/simplification_result-1.png" width="1360" style="display: block; margin: auto;" /></p>
+</div>
+<div id="affine-transformations" class="section level2" number="5.11">
+<h2><span class="header-section-number">5.11</span> Affine Transformations</h2>
+<p>Affine transformation is a geometric transformation that preserves lines and parallelism, but might change length or angle. It includes shifting, scaling and rotation. Affine transformation is usually used to improve map visualization, or to revise the distorted projected map. Contents below illustrates the codes and results of three basic transformations by using spatial data us_states.</p>
+<p>Before conducting affine transformation, please ensure that the data should be based on projected coordinate system, namely the unit is “meter.” In previous section, we knew that us_states is in geographic coordinate system, and hence, we should transform CRS to the projected one (EPSG:2163).</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="spatial-operations.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transform CRS to 2163</span></span>
+<span id="cb58-2"><a href="spatial-operations.html#cb58-2" aria-hidden="true" tabindex="-1"></a>us_states_2163<span class="ot">=</span><span class="fu">st_transform</span>(us_states, <span class="at">crs=</span><span class="dv">2163</span>)</span></code></pre></div>
+<p>In addition, the transformation is implemented on the <a href="#sfg">sfg</a> and <a href="#sfc">sfc</a> object, instead of <a href="#sf">sf</a> (the whole spatial data). Thus, please conduct the transformation on the geometry column in spatial data, such as the form <code>DATA$geometry</code>. <code>DATA</code> means the spatial data (sf), and use <code>$</code> to retrieve the <code>geometry</code> (sfc) in the data.</p>
+<p>Shifting moves every point by the same distance in map units. It can be simply achieved by adding vector object after the spatial data. For instance, in the example below, we shift all x-coordinate by 500,000 meters to the east, while shift all y-coordinate 300,000 meters to the south.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="spatial-operations.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shift the map</span></span>
+<span id="cb59-2"><a href="spatial-operations.html#cb59-2" aria-hidden="true" tabindex="-1"></a>us_states_shift<span class="ot">=</span>us_states_2163<span class="sc">$</span>geometry<span class="sc">+</span><span class="fu">c</span>(<span class="dv">500000</span>,<span class="sc">-</span><span class="dv">300000</span>)</span></code></pre></div>
+<p><img src="series_files/figure-html/us_states_shift_map-1.png" width="450" style="display: block; margin: auto;" /></p>
+<p>Scaling enlarges or shrinks objects by a factor. There are two types of scaling, global and local. Global scaling increases or decreases all coordinate values in relation to the origin coordinates (0,0), while keeping all geometries topological relations intact. It can be done by multiplying a factor on sfg or sfc object. Local scaling is based on each fixed specific point (e.g, centroid), and multiply the scaling factor by the distance of the geometries to the specific point. The concept of global and local scaling are illustrated as figure below.</p>
+<p><img src="graph/scale.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>The following code and result show the <strong>global scaling</strong> (shrink) of us_states.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="spatial-operations.html#cb60-1" aria-hidden="true" tabindex="-1"></a>us_states_scale<span class="ot">=</span>us_states_2163<span class="sc">$</span>geometry<span class="sc">/</span><span class="dv">2</span></span></code></pre></div>
+<p><img src="series_files/figure-html/us_states_scale_map_1-1.png" width="450" style="display: block; margin: auto;" /></p>
+<p>The following code and result show the <strong>local scaling</strong> (shrink) of us_states.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="spatial-operations.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find the centroid first</span></span>
+<span id="cb61-2"><a href="spatial-operations.html#cb61-2" aria-hidden="true" tabindex="-1"></a>us_states_centroid<span class="ot">=</span><span class="fu">st_centroid</span>(us_states_2163)</span>
+<span id="cb61-3"><a href="spatial-operations.html#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="spatial-operations.html#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="co"># new point = (vector of geometry to centroid) * factor + centroid</span></span>
+<span id="cb61-5"><a href="spatial-operations.html#cb61-5" aria-hidden="true" tabindex="-1"></a>us_states_scale<span class="ot">=</span>(us_states_2163<span class="sc">$</span>geometry<span class="sc">-</span>us_states_centroid<span class="sc">$</span>geometry)<span class="sc">/</span><span class="fl">1.3</span><span class="sc">+</span>us_states_centroid<span class="sc">$</span>geometry</span></code></pre></div>
+<p><img src="series_files/figure-html/us_states_scale_map_2-1.png" width="450" style="display: block; margin: auto;" /></p>
+<p>Rotation in two-dimensional coordinate can be done by the rotation matrix shown below. It rotates geometry in a counterclockwise direction.</p>
+<p><img src="graph/rotation_matrix.png" width="20%" style="display: block; margin: auto;" /></p>
+<p>The rotation function is listed as follows.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="spatial-operations.html#cb62-1" aria-hidden="true" tabindex="-1"></a>rotation<span class="ot">=</span><span class="cf">function</span>(x){</span>
+<span id="cb62-2"><a href="spatial-operations.html#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># covert degree to radian</span></span>
+<span id="cb62-3"><a href="spatial-operations.html#cb62-3" aria-hidden="true" tabindex="-1"></a>  r<span class="ot">=</span>x<span class="sc">*</span>pi<span class="sc">/</span><span class="dv">180</span></span>
+<span id="cb62-4"><a href="spatial-operations.html#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rotation matrix</span></span>
+<span id="cb62-5"><a href="spatial-operations.html#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fu">cos</span>(r), <span class="fu">sin</span>(r), <span class="sc">-</span><span class="fu">sin</span>(r), <span class="fu">cos</span>(r)), <span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb62-6"><a href="spatial-operations.html#cb62-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Rotation could be done around a specific point. The vector generated by the geometries and specific point should multiply by the rotation matrix, and then add the coordinate of specific point to derive the coordinate of geometries after rotation. Detailed information of rotation matrix, please review <a href="http://faculty.bard.edu/~belk/math213/LinearTransformations.pdf">linear algebra</a>. The rotation of us_states is as follows.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="spatial-operations.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find the centroid first</span></span>
+<span id="cb63-2"><a href="spatial-operations.html#cb63-2" aria-hidden="true" tabindex="-1"></a>us_states_centroid<span class="ot">=</span><span class="fu">st_centroid</span>(us_states_2163)</span>
+<span id="cb63-3"><a href="spatial-operations.html#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="spatial-operations.html#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co"># new point = (vector of geometry to centroid) * rotation matrix + centroid</span></span>
+<span id="cb63-5"><a href="spatial-operations.html#cb63-5" aria-hidden="true" tabindex="-1"></a>us_states_rotation<span class="ot">=</span>(us_states_2163<span class="sc">$</span>geometry<span class="sc">-</span>us_states_centroid<span class="sc">$</span>geometry)<span class="sc">*</span><span class="fu">rotation</span>(<span class="dv">30</span>)<span class="sc">+</span>us_states_centroid<span class="sc">$</span>geometry</span></code></pre></div>
+<p><img src="series_files/figure-html/us_states_rotation_map-1.png" width="450" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geometric-measurement" class="section level2" number="5.12">
+<h2><span class="header-section-number">5.12</span> Geometric Measurement</h2>
+<p>When doing spatial analysis, we usually calculate the length, distance and area of the geometries. But please note that the accuracy of the geometric measurement depends on the projection of the map (CRS). Here, we do not further discuss about how different CRS affect the measurement, but just know how to do calculation by using sf package.</p>
+<p>Length means</p>
+</div>
+<div id="nearest-analysis" class="section level2" number="5.13">
+<h2><span class="header-section-number">5.13</span> Nearest Analysis</h2>
+</div>
+<div id="convex-hull" class="section level2" number="5.14">
+<h2><span class="header-section-number">5.14</span> Convex Hull</h2>
+</div>
+<div id="voronoi-polygon" class="section level2" number="5.15">
+<h2><span class="header-section-number">5.15</span> Voronoi Polygon</h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="geographic-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ChiaJung-Yeh/Spatial-Analysis/blob/master/04-Spatial-Operations.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["series.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

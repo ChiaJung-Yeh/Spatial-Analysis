@@ -6,6 +6,7 @@ rmd_files: [
   "index.Rmd",
   "01-Basic-Knowledge-on-GIS.Rmd",
   "02-Data-Visualization-with-Maps.Rmd",
-  "03-Geographic-Data.Rmd"]
+  "03-Geographic-Data.Rmd",
+  "04-Spatial-Operations.Rmd"]
 delete_merged_file: true 
 output_dir: "docs"
