@@ -7,3 +7,11 @@ turn-bookdown-tutorial-into-awesome-book
 publish-awesome-book
 moving-forward
 write
+introduction
+basic-knowledge-on-gis
+geographic-information-systems
+well-known-text-wkt
+shapefile
+coordinate-reference-system-crs
+why-use-r
+required-packages
