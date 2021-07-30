@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 2 Bookdown Startup | Making free books with RStudio’s RMarkdown &amp; Bookdown</title>
+  <meta name="description" content="A mini bookdown tutorial book on how to make bookdown books.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 2 Bookdown Startup | Making free books with RStudio’s RMarkdown &amp; Bookdown />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  <meta name="github-repo" content="openscapes/series" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Bookdown Startup | Making free books with RStudio’s RMarkdown &amp; Bookdown />
+  
+  <meta name="twitter:description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  
+
+<meta name="author" content="Julie Lowndes">
+
+
+<meta name="date" content="2019-03-04">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Mini Bookdown Tutorial</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Welcome</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#learn-all-about-bookdown"><i class="fa fa-check"></i><b>1.1</b> Learn all about Bookdown</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="startup.html"><a href="startup.html"><i class="fa fa-check"></i><b>2</b> Bookdown Startup</a><ul>
+<li class="chapter" data-level="2.1" data-path="startup.html"><a href="startup.html#get-bookdown-tutorial-going-on-your-local-computer"><i class="fa fa-check"></i><b>2.1</b> Get “bookdown-tutorial” going on your local computer</a></li>
+<li class="chapter" data-level="2.2" data-path="startup.html"><a href="startup.html#create-your-awesome-book-github-repo"><i class="fa fa-check"></i><b>2.2</b> Create your “awesome-book” GitHub repo</a></li>
+<li class="chapter" data-level="2.3" data-path="startup.html"><a href="startup.html#turn-bookdown-tutorial-into-awesome-book"><i class="fa fa-check"></i><b>2.3</b> Turn “bookdown-tutorial” into “awesome-book”</a></li>
+<li class="chapter" data-level="2.4" data-path="startup.html"><a href="startup.html#publish-awesome-book"><i class="fa fa-check"></i><b>2.4</b> Publish “awesome-book”</a></li>
+<li class="chapter" data-level="2.5" data-path="startup.html"><a href="startup.html#moving-forward"><i class="fa fa-check"></i><b>2.5</b> Moving forward</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Making free books with RStudio’s RMarkdown &amp; Bookdown</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="startup" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Bookdown Startup</h1>
+<p>The <code>bookdown</code> package and <a href="https://bookdown.org/yihui/bookdown/get-started.html">book</a> is definitely the best way to get started. However, in practice I always find myself copying an existing, working book and modifying it instead of starting from scratch. So this tutorial is going to have you do that as well, using this book as the one you copy from.</p>
+<p>[more setup here]</p>
+<p>You will have to name your book’s repository. To differentiate your book’s repo name from this “bookdown-tutorial” repo, here we’ll call your book “awesome-book” <em>but you should consistently name it what you want to name it</em>.</p>
+<div id="get-bookdown-tutorial-going-on-your-local-computer" class="section level2">
+<h2><span class="header-section-number">2.1</span> Get “bookdown-tutorial” going on your local computer</h2>
+<ol style="list-style-type: decimal">
+<li>Go to <a href="https://github.com/jules32/bookdown-tutorial" class="uri">https://github.com/jules32/bookdown-tutorial</a></li>
+<li>Click the green “clone or download” button and DOWNLOAD ZIP.</li>
+<li>Locally on your computer, unzip the folder, save it in a reasonable place</li>
+<li>Rename 2 things from “bookdown-tutorial” to “awesome-book”. You can do this in the finder/windows explorer:</li>
+</ol>
+<ul>
+<li>the folder itself (that you just unzipped)</li>
+<li>the .Rproj file</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Double-click the .Rproj file to launch RStudio</li>
+<li>Install packages and restart</li>
+</ol>
+<ul>
+<li><code>install.packages(&quot;bookdown&quot;)</code><br />
+</li>
+<li><code>install.packages(&quot;usethis&quot;)</code><br />
+</li>
+<li>Use the menu item Session &gt; Restart R<br />
+</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Click on the Build tab in the top right pane</li>
+<li>Click on Build Book!</li>
+</ol>
+<p>Nice job! Now let’s make it yours, and connect it to GitHub.</p>
+</div>
+<div id="create-your-awesome-book-github-repo" class="section level2">
+<h2><span class="header-section-number">2.2</span> Create your “awesome-book” GitHub repo</h2>
+<ol style="list-style-type: decimal">
+<li>Go to your GitHub account: github.com/username</li>
+<li>Click on Repositories, and the green button “New” to create a new repo</li>
+<li>Name this new repo “awesome-book”</li>
+<li>DO NOT initialize this repo with a README</li>
+<li>Click the green “create repository” button — this will take you to your new repo</li>
+<li>Click the green “clone or download” button and COPY URL</li>
+</ol>
+</div>
+<div id="turn-bookdown-tutorial-into-awesome-book" class="section level2">
+<h2><span class="header-section-number">2.3</span> Turn “bookdown-tutorial” into “awesome-book”</h2>
+<p><em>The following is from Jenny Bryan’s <a href="https://happygitwithr.com/existing-github-last.html">Happy Git With R</a></em></p>
+<ol style="list-style-type: decimal">
+<li>Go back to RStudio, to your “awesome-book” project</li>
+<li>In the Console, type <code>usethis::use_git()</code> and say Yes to the two prompts. This will restart R and give you a new Git tab in the upper right pane.</li>
+<li>Now, click on the Terminal tab next to the Console tab.</li>
+<li>Type <code>git remote add origin &lt;paste your copied awesome-book github url here&gt;</code></li>
+<li>Type <code>git push --set-upstream origin master</code></li>
+</ol>
+</div>
+<div id="publish-awesome-book" class="section level2">
+<h2><span class="header-section-number">2.4</span> Publish “awesome-book”</h2>
+<p>Last steps!</p>
+<ol style="list-style-type: decimal">
+<li>Go back to github.com/username/“awesome-book” and refresh — our files should be there! But we want it to be a book published as <a href="https://username.github.io/awesome-book" class="uri">https://username.github.io/awesome-book</a>.</li>
+<li>Click Settings</li>
+<li>Scroll down to GitHub Settings</li>
+<li>Change the Source pulldown from “None” to “master branch /docs folder”</li>
+<li>It should say “Your site is ready to be published at <a href="https://username.github.io/awesome-book/" class="uri">https://username.github.io/awesome-book/</a>” — click the link to see!</li>
+</ol>
+<p>Now, you’re set — you just need to write your book.</p>
+</div>
+<div id="moving-forward" class="section level2">
+<h2><span class="header-section-number">2.5</span> Moving forward</h2>
+<p>As you write your .Rmd files, build the book and commit all files, including the docs/ folder, and your published book will be updated!</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/startup.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["series.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

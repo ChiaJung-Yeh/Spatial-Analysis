@@ -1,0 +1,19 @@
+bookdown::gitbook:
+  css:
+    - lib/css/bootstrap.min.css
+    - lib/css/style.css
+    - lib/css/lesson.css
+  includes:
+  config:
+    toc:
+      before: |
+        <li><a href="./">Mini Bookdown Tutorial</a></li>
+      after: |
+        <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+    edit: https://github.com/jules32/bookdown-tutorial/edit/master/%s
+    download: ["pdf"]
+#bookdown::pdf_book:
+#  includes:
+#    in_header: _preamble.tex
+#  latex_engine: xelatex
+#  keep_tex: no

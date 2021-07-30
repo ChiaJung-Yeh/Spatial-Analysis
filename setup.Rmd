@@ -1,0 +1,66 @@
+# Setting up Bookdown {#setup}
+
+The `bookdown` package and [book](https://bookdown.org/yihui/bookdown/get-started.html) is definitely the best way to get started. However, in practice I always find myself copying an existing, working book and modifying it instead of starting from scratch. So this tutorial is going to have you do that as well, using this book as the one you copy from.
+
+[more setup here]
+
+You will have to name your book's repository. To differentiate your book's repo name from this "bookdown-tutorial" repo, here we'll call your book "awesome-book" *but you should consistently name it what you want to name it*.
+
+## Get "bookdown-tutorial" going on your local computer
+
+1. Go to <https://github.com/jules32/bookdown-tutorial>
+1. Click the green "clone or download" button and DOWNLOAD ZIP. 
+1. Locally on your computer, unzip the folder, save it in a reasonable place
+1. Rename 2 things from "bookdown-tutorial" to "awesome-book". You can do this in the finder/windows explorer:
+  - the folder itself (that you just unzipped)
+  - the .Rproj file
+1. Double-click the .Rproj file to launch RStudio 
+1. Install packages and restart
+  - `install.packages("bookdown")`  
+  - `install.packages("usethis")`  
+  - Use the menu item Session > Restart R   
+1. Click on the Build tab in the top right pane
+1. Click on Build Book! 
+
+Nice job! Now let's make it yours, and connect it to GitHub.
+
+## Create your "awesome-book" GitHub repo
+
+1. Go to your GitHub account: github.com/username
+1. Click on Repositories, and the green button "New" to create a new repo
+1. Name this new repo "awesome-book"
+1. DO NOT initialize this repo with a README
+1. Click the green "create repository" button — this will take you to your new repo
+1. Click the tiny "clone or download" button near the top and COPY URL
+
+## Turn "bookdown-tutorial" into "awesome-book"
+
+*The following is from Jenny Bryan's [Happy Git With R](https://happygitwithr.com/existing-github-last.html)*
+
+1. Go back to RStudio, to your "awesome-book" project
+1. In the Console, type `usethis::use_git()` and say Yes to the two prompts. This will restart R and give you a new Git tab in the upper right pane.
+1. Now, click on the Terminal tab next to the Console tab. 
+1. Type `git remote add origin <paste your copied awesome-book github url here>`
+1. Type `git push --set-upstream origin master`
+
+## Publish "awesome-book"
+
+Last steps! 
+
+1. Go back to github.com/username/"awesome-book" and refresh — our files should be there! But we want it to be a book published as https://username.github.io/awesome-book.
+1. Click Settings
+1. Scroll down to GitHub Settings
+1. Change the Source pulldown from "None" to "master branch /docs folder"
+1. It should say "Your site is ready to be published at https://username.github.io/awesome-book/" — click the link to see!
+
+Now, you're set — you just need to write your book. 
+
+## Moving forward
+
+As you write your .Rmd files, build the book and commit all files, including the docs/ folder, and your published book will be updated!
+
+
+
+
+
+

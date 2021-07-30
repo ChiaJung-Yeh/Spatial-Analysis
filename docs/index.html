@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Making free books with RStudio’s RMarkdown &amp; Bookdown</title>
+  <meta name="description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Making free books with RStudio’s RMarkdown &amp; Bookdown" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  <meta name="github-repo" content="openscapes/series" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Making free books with RStudio’s RMarkdown &amp; Bookdown" />
+  
+  <meta name="twitter:description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  
+
+<meta name="author" content="Julie Lowndes" />
+
+
+<meta name="date" content="2021-07-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="setup.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Mini Bookdown Tutorial</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Welcome</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#learn-all-about-bookdown"><i class="fa fa-check"></i><b>1.1</b> Learn all about Bookdown</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> Setting up Bookdown</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="setup.html"><a href="setup.html#get-bookdown-tutorial-going-on-your-local-computer"><i class="fa fa-check"></i><b>2.1</b> Get “bookdown-tutorial” going on your local computer</a></li>
+<li class="chapter" data-level="2.2" data-path="setup.html"><a href="setup.html#create-your-awesome-book-github-repo"><i class="fa fa-check"></i><b>2.2</b> Create your “awesome-book” GitHub repo</a></li>
+<li class="chapter" data-level="2.3" data-path="setup.html"><a href="setup.html#turn-bookdown-tutorial-into-awesome-book"><i class="fa fa-check"></i><b>2.3</b> Turn “bookdown-tutorial” into “awesome-book”</a></li>
+<li class="chapter" data-level="2.4" data-path="setup.html"><a href="setup.html#publish-awesome-book"><i class="fa fa-check"></i><b>2.4</b> Publish “awesome-book”</a></li>
+<li class="chapter" data-level="2.5" data-path="setup.html"><a href="setup.html#moving-forward"><i class="fa fa-check"></i><b>2.5</b> Moving forward</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="write.html"><a href="write.html"><i class="fa fa-check"></i><b>3</b> Writing in Bookdown</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Making free books with RStudio’s RMarkdown &amp; Bookdown</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Making free books with RStudio’s RMarkdown &amp; Bookdown</h1>
+<p class="author"><em>Julie Lowndes</em></p>
+<p class="date" style="margin-top: 1.5em;"><em>2021-07-30</em></p>
+</div>
+<div id="welcome" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Welcome</h1>
+<p>hi</p>
+<p>It’s possible to create beautiful books for free using <a href="http://rmarkdown.rstudio.com/">RStudio’s R Markdown</a> and Yihui Xie’s <a href="https://bookdown.org/yihui/bookdown/">bookdown</a> and hosting them on <a href="http://github.com">Github</a>. This is pretty new and incredibly cool. It is a really powerful way to communicate science using the same reproducible workflow you use for your analyses and collaborations.</p>
+<p>This tutorial borrows heavily from a lot of great tutorials and resources you should check out too – there are links throughout. It also parallels a previous tutorial <a href="https://jules32.github.io/rmarkdown-website-tutorial/">Making free websites with RStudio’s R Markdown</a>.</p>
+<p>The best way to learn is to follow along with your own laptop, but all are welcome. We’ll spend half the time with the tutorial and half the time for you to work on your own website and get help. If you bring your laptop please do this beforehand:</p>
+<ol style="list-style-type: decimal">
+<li>install <a href="https://www.rstudio.com/products/rstudio/download/">RStudio</a></li>
+<li>create a <a href="(http://github.com)">GitHub</a> account (<a href="http://happygitwithr.com/github-acct.html">advice</a>)</li>
+<li>set up your computer to talk to GitHub
+<ul>
+<li>have RStudio linked directly (highly recommended) (<a href="http://happygitwithr.com/hello-git.html">instructions sections 8-14</a>)</li>
+<li>or install the <a href="https://desktop.github.com/">Desktop App</a></li>
+<li>or be familiar with git commands for the command line (<a href="https://try.github.io/levels/1/challenges/1">tutorial</a>)</li>
+</ul></li>
+</ol>
+<hr />
+<p><strong>Examples:</strong></p>
+<p>We have been using bookdown for the Ocean Health Index: <a href="http://ohi-science.org/data-science-training"><strong>ohi-science.org/data-science-training</strong></a> and Openscapes: <a href="https://openscapes.org/series"><strong>openscapes.org/series</strong></a>.<br />
+And R Markdown is much more than books and websites – here’s a <a href="http://rmarkdown.rstudio.com/lesson-1.html"><strong>one-minute video about R Markdown</strong></a> to get you excited.</p>
+<hr />
+<div id="learn-all-about-bookdown" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Learn all about Bookdown</h2>
+<p>The best way to learn more about bookdown is from Yihui Xie himself. You can read his book <a href="https://bookdown.org/yihui/bookdown/">bookdown: Authoring Books and Technical Documents with R Markdown</a> or watch his webinar <a href="https://www.rstudio.com/resources/webinars/introducing-bookdown/">introducing bookdown</a>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="setup.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["series.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
