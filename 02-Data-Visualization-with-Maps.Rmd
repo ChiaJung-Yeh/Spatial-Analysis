@@ -1,0 +1,455 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(sf)
+library(ggplot2)
+library(ggsflabel)
+library(ggspatial)
+library(knitr)
+library(kableExtra)
+library(spData)
+library(tmap)
+library(leaflet)
+library(classInt)
+library(cowplot)
+```
+
+# **Data Visualization with Maps**
+
+When it comes to Big Data, a massive amounts of information may cross our mind. How to process on the big data and to produce a neat summary is a vital issue nowadays, and so is the “Geospatial Big Data”. Data visualization with maps is one of the methods, which summarizes the huge data with geometry features.  
+
+The basic features of GIS is to make the maps!! But a map with only the geometric information may sound tedious. To display a map much more interestingly and interactively, we should combine the geometric features with its attributes. With the data joined, we can make the heat map, hypsometric map and so forth to make the attributes visualized.  
+
+In this section, we would go through the basic command on making maps, and then have a better knowing on the skills to label on the layers. Finally, briefly learn how to make the graduated, categorized, rule-based symbology map.  
+
+## Making Maps
+For the beginners, making map would give us a quick view and better understanding on how R can be used as GIS. It can be done simply by the function `ggplot()` in ggplot2 package.
+
+The gg in ggplot2 means Grammar of Graphics, a graphic concept which describes plots by using a “grammar”. `ggplot()` is used to construct the initial plot object, and is followed by + to add component to the plot. To make the map, we should also follow this grammar.
+
+The following two code represent how to draw United States Map by the ggplot grammar. `ggplot()` means the initialization of drawing, while `geom_sf()` informs the function `ggplot()` to make the map. The data can be either put in the code `ggplot()` or in `geom_sf()`.
+
+Note that “us_states” is an example data originally attached in spData package. Please install the packages “spData” and access the library before using the data.
+
+```{r spData, echo=T, eval=F}
+install.packages("spData")
+library(spData)
+```
+
+```{r us_states_1, echo=T, eval=F}
+ggplot(data=us_states)+
+  geom_sf()
+```
+
+```{r us_states_2, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot()+
+  geom_sf(data=us_states)
+```
+
+Two codes above can plot the same map as shown. And from this simple work, we may find out that making a map may be much easier and flexible than the desktop GIS (e.g., QGIS, ArcGIS), since it can produce map by standard and readable language.  
+
+## Attributes of Shapefile
+Notably, the class of “us_states” is “sf” (simple features) as well as “data.frame”. The simple features do not only store the geometric information, but the attributes of each features.  
+
+```{r class_us_states, echo=T, eval=T}
+class(us_states)
+```
+
+Now, we know how to make a map in R. But if we want to make visualized map, it is better for us to take a closer look on the shapefile first. Take “us_states” for instance.  
+
+```{r present_us_states, echo=T, eval=T}
+us_states
+```
+
+There are 49 features and 6 fields (attributes) in “us_states” data, that is, 49 rows (the 50 states except for Hawaii) and 6 columns in a table. However, we may find that there are actually 7 columns existing in the table above. It is because that the last column of this table stores the geometry of this shapefile. The “geometry” column is recorded in the form of “Well-Known Text (WKT)”.  
+
+It is allowed to apply basic command of R on the “sf” data. For instance, if we want to observe all the names in “us_states”, plus “$” behind the name of data, and then type on the column name.  
+
+```{r name_us_states, echo=T, eval=T}
+## Output the name of us_states by "$"
+us_states$NAME
+```
+
+Or, we can use the concept of matrix to derive the desired columns and rows.  
+
+```{r matrix_us_states_1, echo=T, eval=F}
+## Output the name and region of us_states by "[,]"
+us_states[,c("NAME","REGION")]  # Put the name of column directly
+```
+
+```{r matrix_us_states_2, echo=T, eval=T}
+## Output the name and region of us_states by "[,]"
+us_states[,c(2,3)]  # NAME is stored in the second column
+```
+
+```{r matrix_us_states_3, echo=T, eval=T}
+## Output the attributes of first row
+us_states[1,]
+```
+
+In addition, with the characteristic of “data.frame”, we can easily manipulate data by the package “dplyr”. It would be further discussed in the following section.  
+
+## Labels on Map
+Sometimes we need to label on the map to inform the name or attribute of specific places. To do so, the command `geom_sf_text()` should be appended after the `geom_sf()`, to inform which column is going to be labeled. The code illustrated below is the map of US states with thier names labelled on.
+
+```{r label_us_states, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot(us_states)+
+  geom_sf()+
+  geom_sf_text(aes(label=NAME))
+```
+
+In function `geom_sf_text()`, `aes()` represents aesthetic mappings, which defines the coordinates of each label. The attributes we want to label is followed by `label=`.  
+
+However, something awkward occurs. The text is overlapping with each other when the labels are dense. To solve this problem, install the package “ggsflabel” from GitHub. (Note that “ggsflabel” has not been released on CRAN, which is a global network that store versions of documentation for R. We should download it from GitHub!!)  
+<font size="1"><b>* If you want to learn more on the reason why install from GitHub and how “devtools” works, please click [here](https://www.r-project.org/nosvn/pandoc/devtools.html).</b></font>  
+
+```{r devtools, echo=T, eval=F}
+install.packages("devtools")
+devtools::install_github("yutannihilation/ggsflabel")
+library(ggsflabel)
+```
+
+With this package, the overlapping text would be eliminated, and make the map clear and readable.  
+
+```{r label_us_states_revised, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot(us_states)+
+  geom_sf()+
+  geom_sf_text_repel(aes(label=NAME), nudge_y=0.5, size=3, color="red")
+```
+
+In function `geom_sf_text()` and `geom_sf_text_repel()`, `nudge_x` and `nudge_y` shift the label horizontally and vertically respectively in order to make the maps more visualizable.  
+
+Also, if we want to change the color or size of the text, just revise the variable in `geom_sf_text()` or `geom_sf_text_repel()`: `color=`, `size=`. Common colors can be directly given as the name of color, for instance, `color="red"`. Other colors can be used by typing its [Color Code](https://www.ifreesite.com/color/), such as `color="#2894FF"`.  
+
+## Graduated Symbol Map
+Graduated symbol map is a map that change in color or size according to the value of the attribute they represent. The data type of the particular value should be **numeric** and **continuous**. Graduated symbol map can be applied widely, for instance, denser populations might be represented by larger dots or darker polygon.  
+
+Let’s take “us_states” data for example again. There are two columns representing population (total_pop_10, total_pop_15) in the data. What if we want to make a graduated symbol map with population of each states?  
+
+First, let us learn how to alter the color and size of the map. To do so, we just need to set up the parameters in `geom_sf()`. The parameter and feature of `geom_sf()` are summarized in the table below.  
+
+```{r parameter , echo=F, eval=T}
+parameter=data.frame(Parameter=c("**size**","**color**","**fill**"), Features=c("identify the size of point, line, polyon","identify the color of **point** and **line**","identify the color of **polygon**"))
+kbl(parameter, booktabs=T)%>%
+  kable_styling(bootstrap_options=c("striped", "hover"), font_size=14)
+```
+
+The following code fills “us_states” polygon blue, and make the red and thicker border.     
+
+```{r fill_us_states, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot(us_states)+
+  geom_sf(fill="blue", size=3, color="red")
+```
+
+Graduated symbol map does not assign a specific color to each geometry features. Thus, the partameter in `geom_sf()` should not be a fixed value or color. Instead, the parameters(`size`, `color`, `fill`) should be based on the value of attribute, that is `Parameter=Attribute`. The following code and map are the example of how to make a graduated symbol map based on the population of each US states.  
+
+```{r graduated_us_states, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot(us_states)+
+  geom_sf(aes(fill=total_pop_10))
+```
+
+Simply add the code `aes(fill=total_pop_10)` inside `geom_sf()`, it produces the graduated symbol map based on the value of population. Here, `aes()` defines the coordinate of the filled polygon. `fill` defines which attribute should be based on.  
+
+But the map is somehow weird. In common, area with high population should be filled with dark color as expected. The result above are the total opposite. Thus, we need other functions to re-define the color.  
+
+`scale_fill_continuous()` is appended after `geom_sf()`. It is used to define the color of continuous data for filling the polygon. `scale_color_continuous()` do the same thing, but coloring the point or line. In these functions, two major parameters should be set. One is `low=`, representing the color given to the lowest value in the data; the other is `high=`, representing the color given for highest value.  
+
+In “us_states” example, since the data is continuous and the objective is polygon, we should apply the function `scale_fill_continuous()`. The code and figure are shown as follows.  
+
+```{r graduated_us_states_revised, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot(us_states)+
+  geom_sf(aes(fill=total_pop_15))+
+  scale_fill_continuous(low="#D2E9FF", high="#003D79")
+```
+
+## Categorized Symbol Map
+Categorized map is similar to graduated map, but it is used on the **discrete** data. It is widely used to the geometric data which has been classified in advance. For instance, the region of states, the type of schools (elementary, junior high, senior high, university,…), the classification of highways (expressway, freeway,…), and so forth.  
+
+Take “us_states” data for example. A column named “REGION” represents the region of each states. We can fill the same region with consistent color. Similar to graduated map, the parameters(`size`, `color`, `fill`) should be based on the classification of attribute, that is `Parameter=Attribute`. The code and result are as the followings.  
+
+```{r categorized_us_states, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot(us_states)+
+  geom_sf(aes(fill=REGION))
+```
+
+It seems to be as simple as the graduated map. But what if we want to adjust the color manually?  
+
+`scale_fill_manual()` or `scale_color_manual()` is appended after `geom_sf()`. They are used to adjust the color of polygon and “point or line” respectively. In these functions, parameter `values=` should be set up. It is used to define the color of each classifications. The pseudocode is as follows. `values=c("Classification_1"="Color_1", "Classification_2"="Color_2",...)`  
+
+```{r categorized_us_states_manual, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot(us_states)+
+  geom_sf(aes(fill=REGION))+
+  scale_fill_manual(values=c("Norteast"="#FFC1E0", "Midwest"="#97CBFF", "South"="#A6FFA6", "West"="#FFE66F"))
+```
+
+## Rule-based Symbol Map
+Sometimes the category is determined by values from multiple columns. Under this condition, we may find it hard to use categorized symbol map. We should mutate a new column to determine the new classification of each tuple.  
+
+Take “us_states” data for example. We want to classify all the data into four categories, that is “high population-large area”, “high population-small area”, “low population-large area” and “low population-small area”. And the data is seperated simply by the average, namely, the one whose population is lower than the average is defined as “low population”.  
+
+In this case, we need `mutate()` and `case_when()` functions in dplyr package to help us sort out the data.  
+
+```{r us_states_data, echo=T, eval=T}
+# Create a new data frame named us_states_type
+us_states_type=mutate(us_states,TYPE=case_when(
+  total_pop_15>mean(us_states$total_pop_15) & AREA>mean(us_states$AREA) ~ "high population-large area",
+  total_pop_15>mean(us_states$total_pop_15) & AREA<mean(us_states$AREA) ~ "high population-small area",
+  total_pop_15<mean(us_states$total_pop_15) & AREA>mean(us_states$AREA) ~ "low population-large area",
+  total_pop_15<mean(us_states$total_pop_15) & AREA<mean(us_states$AREA) ~ "low population-small area"
+))
+
+# Output the newly data
+us_states_type
+```
+
+<font size="1"><b>*To understand more about basic operation of dplyr, please click [here](https://dplyr.tidyverse.org/).</b></font>  
+
+With the newly data derived, we can then apply the categorized symbol map. The code and result are as follows.  
+
+```{r us_states_Rule-based, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot(us_states_type)+
+  geom_sf(aes(fill=TYPE))
+```
+
+## Basic Operations/Elements of Map
+### **Map Overlay**
+It is simple by using ggplot2 to make an overlaying map. Shapefiles can be overlay by repeating `geom_sf(data=)`. Let's take New Zealand and its top 101 heighest points for example. Layers used in this example are provided in the package spData. nz is the polygon shapefile, and nz_height is the point. The code and result are as follows.  
+
+```{r nz_overlay, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot()+
+  geom_sf(data=nz)+
+  geom_sf(data=nz_height, color="red")
+```
+
+### **North Arrow and Scale**
+North arrow is a graphical representation indicating the direction of north in the map. The scale of a map is the ratio of a distance on the map to the corresponding distance on the ground. These two items are required when making the maps. In ggplot2, we can simply use the function `annotation_north_arrow` and `annotation_scale` in package ggspatial to add them. Again, we use map of New Zealand (nz) to display the result.  
+
+```{r ggspatial, echo=T, eval=F}
+# Please install the package ggspatial first!
+install.packages("ggspatial")
+library(ggspatial)
+```
+
+```{r nz_na_sc, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot()+
+  geom_sf(data=nz)+
+  annotation_scale(location="br")+
+  annotation_north_arrow(location="tl")
+```
+
+Parameter `location=` in two functions represents that the place where signs are expected to be put. "br" means "**b**ottom **r**ight, while "tl" means "**t**op **l**eft". If we do not prefer the location of default value, we can slghtly alter the location by using parameter `pad_x` and `pad_y`. Usage of other parameters please look up [ggspatial documentation](https://cran.r-project.org/web/packages/ggspatial/ggspatial.pdf).  
+
+### **Linetype/Shape**
+We have introduced the parameter `color`, `fill` and `size` in the past section. But what if we want to change the type of line (e.g., dashed, dotted) or change the shape of point (e.g., diamond, triangle)? We need to add parameters in `geom_sf()`. Take map of New Zealand for instance again.  
+
+```{r nz_line_shape, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot()+
+  geom_sf(data=nz, color="blue", linetype="dashed")+       # make the border of nz dashed
+  geom_sf(data=nz_height, color="red", size=2, shape=4)    # set the shape of nz_height to "X"
+```
+
+Linetype and points shapes commonly used in R are illustrated in the figure below.  
+
+```{r linetype_shape, echo=F, out.width="60%", fig.align="center"}
+include_graphics("./graph/linetype_shape.png")
+```
+
+### **Theme**
+Maps above show the background (longitude and latitude) and the axes. But sometimes we do not prefer to show the details about the geographic information, then we need to set those elements to be blanked. Or we might change the position of legend, size of legend, and so forth, in order to make the maps more elegant. In these situation, we need function `theme` to customize the style of map. Let's optimize our map of New Zealand. Suppose we don't want the background as well as the coordinate. Also, we need to change the position of legend on the bottom-right of the map.  
+
+```{r nz_theme, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+ggplot()+
+  geom_sf(data=nz, aes(fill=Island))+
+  theme(axis.text=element_blank(),             # remove the value on axis
+        axis.ticks=element_blank(),            # remove the ticks on axis
+        axis.title=element_blank(),            # remove the title on axis (X,Y)
+        legend.text=element_text(size=12),     # set up the size of text in legend to 12
+        legend.title=element_text(size=15),    # set up the size of legend title to 15
+        legend.position=c(0.87, 0.15),         # set up the position of legend to the bottom-right ((0,0) at the bottom-left)
+        panel.background=element_blank())      # remove the background
+```
+
+Example above shows one of the common theme in making map. In fact, function `theme` provides lots of parameters for the users to set. To make an ideal map, it is suggested to read [theme documentation](https://www.rdocumentation.org/packages/ggplot2/versions/1.0.1/topics/theme) and take advantage of it.  
+
+## Other Mapping Tools
+ggplot is a powerful package for making maps (in fact it is also helpful on plotting bar chart, line chart, histogram, and so forth) though, the major drawback is that raster objects are not natively supported by it. Hence, many users are inclined to use a specialized package for making maps, such as "tmap" and "leaflet". In this notebook, we would briefly introduce how they work with a simple example.  
+
+### **tmap**
+Like ggplot2, tmap is based on the idea of a "grammar of graphics". This involves a separation between the input data and the aesthetics (how data are visualised): each input dataset can be mapped by the visual variables. The basic building block is `tm_shape()`, which defines input data, raster and vector objects, followed by one or more layer elements such as `tm_fill()` and `tm_dots()`. Here, we can compare the command used in two different packages.  
+
+```{r tmap_ggplot2, echo=F, eval=T}
+tmap_ggplot2=data.frame(Package=c("Basic Block","Polygon","Fill","Border","Point","Line","Raster","Aesthetic"),
+                        tmap=c("`tm_shape()+`","`tm_polygons(col=X)`","`tm_fill(col=X)`","`tm_borders(col=X, lwd=Y, lty=Z)`","`tm_dots(col=X, size=Y shape=Z)`","`tm_lines(col=X, lwd=Y, lty=Z)`","`tm_raster()`","`tm_dots(col=\"ATTRIBUTE\")`"),
+                        ggplot2=c("`ggplot()+`","`geom_sf(fill=X)`","`geom_sf(color=NA, fill=X)`","`geom_sf(color=X, size=Y, linetype=Z)`","`geom_sf(color=X, size=Y, shape=Z)`","`geom_sf(color=X, size=Y, linetype=Z)`","Does not support raster data","`geom_sf(aes(color=ATTRIBUTE))`"))
+kbl(tmap_ggplot2, booktabs=T)%>%
+  kable_styling(bootstrap_options=c("striped", "hover"), font_size=14)%>%
+  column_spec(1, bold=T)
+```
+
+Plotting the map by using tmap, please install tmap package first. Then, let's display the map of New Zealand.  
+
+```{r tmap_install, echo=T, eval=F}
+# Please install the package tmap first!
+install.packages("tmap")
+library(tmap)
+```
+
+```{r nz_tamp, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
+tm_shape(nz)+
+  tm_polygons(col="Island")+
+  tm_shape(nz)+
+  tm_borders(col="grey", lty="dashed")+
+  tm_shape(nz_height)+
+  tm_dots(shape=4, col="red", size=1)
+```
+
+Also, tmap supports to plot the interactive map, which is provided by leaflet (discussed later). The plotting procedure is very easy, just change the mode from "plot" to "view" by function `tmap_mode("view")`. If we do not define the mode used, the default value would be `tmap_mode("plot")`.  
+```{r nz_tamp_view, echo=T, eval=T, fig.width=3, fig.align="center"}
+tmap_mode("view")
+tm_shape(nz)+
+  tm_polygons(col="Island")+
+  tm_shape(nz)+
+  tm_borders(col="grey", lty="dashed")
+```
+
+### **leaflet**
+Leaflet is the most mature and widely used interactive mapping package in R. It provides a relatively low-level interface to the Leaflet JavaScript library and many of its arguments can be understood by reading the documentation of the original JavaScript library.  
+
+Leaflet maps are created with `leaflet()`, the result of which is a leaflet map object which can be piped to other leaflet functions. This allows multiple map layers and control settings to be added interactively.  
+
+```{r leaflet_install, echo=T, eval=F}
+# Please install the package leaflet first!
+install.packages("leaflet")
+library(leaflet)
+```
+
+The basic command of leaflet includes `addTiles`, `addPolygons`, `addCircles`. `addTiles` means the map used. If no arguments is given, OpenStreetMap is set by default. Or we can use `addProviderTiles` to connect other maps provided by different websites. `addPolygons` is used to paint the border color of polygon, and also fill in the color. `addCircles` is used for the point data. It draws a buffer with a given radius. Note that the unit of `radius` is "meters".  
+
+Now, let’s display the interactive map of New Zealand by using leaflet.  
+
+```{r nz_leaflet, echo=T, eval=T, fig.width=3, fig.align="center"}
+leaflet(data=st_transform(nz, crs=4326))%>% 
+  addTiles()%>%
+  addPolygons(color="green", fillColor="gray")%>%
+  addCircles(data=st_transform(nz_height, crs=4326), color="red", radius=1000)
+```
+
+<font size="1"><b>* Please ignore the function [`st_transform()`](#st_transform) above, which is applied to transform the coordinate reference system, we would discuss it in the following chapter.</b></font>  
+
+Several method to plot the visualized map have been introduced. Here, we spend a lot on understanding how to use package ggplot2 to plot the map, for it is the most common and universal tool to plot all kinds of graph in R. Other mapping tools are also helpful, particularly when it comes to raster shapefile. If the readers are interested in those packages, and want to learn more advanced skills please read chapter 8 of book [*_“Geocomputation with R”_*](https://geocompr.robinlovelace.net/adv-map.html). But please note that, ggplot2 is introduced more detailed in this notebook, while book *_“Geocomputation with R”_* may provide sketchy information on the topic.  
+
+## <span style="border-bottom: 3px double black">*_PRACTICE_*</span> 
+In this chapter, we introduce the simple example on the us_states and nz data which “spdata” package provides. Then, it’s time for us to make our own maps of Taipei.  
+
+But, how to connect to shapefile of Taipei map? There is no package like "us_states" for Taipei, and thus we need to download the files on government open data in advance. The list below shows commonly used websites, which are in rich of the shapefiles regarding transportation, economy, and administration in Taiwan.  
+
+* [GIS-T](https://gist.motc.gov.tw/gist_web/MapDataService/Retrieval)
+* [National Land Surveying and Mapping Center OPen Data](https://whgis.nlsc.gov.tw/Opendata/Files.aspx)
+* [EGIS](https://egis.moea.gov.tw/opendata)
+* [Government Open data](https://data.gov.tw/)
+
+<font color="red">For convenience, please download the data [**here**](https://drive.google.com/uc?export=download&id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi) directly. This zip file contains all data needed in the notebook. Please unzip the file first, and make sure that you place the file in the same directory as your R script file.</font>  
+
+Here, we use Taipei village map (polygon), cycle path map (line), MRT routes (line) and stations (point) map, and YouBike map (point), to practice plotting maps.  
+<br/>
+
+First, let's make a map regarding cycling system and village population. Please follow the instructions below:  
+
+1. Plot the village map, and fill in the color by population (PP) of each village. (*_Hint: `scale_fill_continuous()`_*)  
+2. Add the cycling path. (*_Hint: Use `alpha` to adjust the transparency of the color, not necessary._*)  
+3. Add the point of YouBike stations, and size of point is determined by the bikes capacity (BIKESCAPAC). (*_Hint: `scale_size_continuous()`_*)   
+4. Finally, use function `theme` to optimize your map.  
+
+```{r practice_1, echo=T, eval=F}
+# Please put the files you download in the same directory of your RStudio environment!!
+# read the shapefiles
+taipei_village_map=read_sf("./data/taipei_map/taipei_village_map.shp")
+taipei_cycle_path=read_sf("./data/taipei_cycle_path/taipei_cycle_path.shp")
+taipei_youbike=read_sf("./data/taipei_youbike/taipei_youbike.shp")
+```
+
+The result is illustrated below.  
+
+```{r practice_result_1, echo=F, eval=T, warning=F, out.width="90%", fig.align="center"}
+taipei_village_map=read_sf("./data/taipei_map/taipei_village_map.shp")
+taipei_cycle_path=read_sf("./data/taipei_cycle_path/taipei_cycle_path.shp")
+taipei_youbike=read_sf("./data/taipei_youbike/taipei_youbike.shp")
+
+windowsFonts(A=windowsFont("標楷體"))
+
+ggplot(taipei_village_map)+
+  geom_sf(color=NA, aes(fill=PP), alpha=0.8)+
+  scale_fill_continuous(low="#FFECEC", high="#EA0000", name="人口數")+
+  geom_sf(data=taipei_cycle_path, size=0.1, color="#C4E1E1", alpha=0.8)+
+  geom_sf(data=taipei_youbike, aes(size=BIKESCAPAC), color="#6C6C6C")+
+  scale_size_continuous(range=c(0.2,2.5))+
+  guides(size=guide_legend("YouBike 車樁數", label.position="bottom", ncol=3))+
+  annotation_scale(location="br", height=unit(0.15, "cm"))+
+  annotation_north_arrow(location="tl", width=unit(0.6, "cm"), height=unit(0.9, "cm"))+
+  theme(axis.text=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title=element_blank(),
+        legend.text=element_text(size=8, family="A"),
+        legend.title=element_text(size=12, family="A"),
+        legend.key=element_blank(),
+        legend.key.size=unit(0.5, 'cm'),
+        panel.background=element_blank())
+```
+
+With the maps above, we may come out some interesting questions: Is the design capacity of YouBike stations associated with the population of its location? Or, does the cycling path meet the supply of bike sharing system? Now, we can briefly observe the "phenomenon" from the visualized map, but of course, a concrete and pratical conclusion should be drawn after conducting spatial analysis.  
+ <br/>
+Now let's make a more complicated map, a Taipei district map with MRT routes and stations. In addition, the transfer stations should be labeled with text and use a different point shape compared to non-transfer station. Thus, the first task we need to do is to classify the transfer and non-transfer stations. It is recommended to use package dplyr to tidy the data.  
+
+After cleaning the data. Please follow the instructions below to plot the map:  
+
+1. Plot the village map, and fill in the color by district (TOWNCODE). (*_Hint: `scale_fill_manual()` or `scale_fill_brewer()`_*)  
+2. Add the MRT route, and paint them with its specific color (i.e., 板南線 should be painted blue). (*_Hint: `scale_color_manual()`_*)  
+3. Add the non-transfer MRT stations.  
+4. Add the transfer MRT stations. Pleaes note that you should set up a different shape compared to the former.  
+5. Finally, use function `theme` to optimize your map.  
+
+```{r practice_2, echo=T, eval=F}
+# Please put the files you download in the same directory of your RStudio environment!!
+# read the shapefiles
+taipei_village_map=read_sf("./data/taipei_map/taipei_village_map.shp")
+taipei_mrt_route=read_sf("./data/taipei_mrt/taipei_mrt_route.shp")
+taipei_mrt_station=read_sf("./data/taipei_mrt/taipei_mrt_station.shp")
+
+# tidy data
+transfer_station=filter(taipei_mrt_station, ...)
+non_transfer_station=filter(taipei_mrt_station, ...)
+```
+
+The result is illustrated below.  
+
+```{r practice_result_2, echo=F, eval=T, message=F, warning=F, out.width="90%", fig.align="center"}
+taipei_village_map=read_sf("./data/taipei_map/taipei_village_map.shp")
+taipei_mrt_route=read_sf("./data/taipei_mrt/taipei_mrt_route.shp")
+taipei_mrt_station=read_sf("./data/taipei_mrt/taipei_mrt_station.shp")
+
+windowsFonts(A=windowsFont("標楷體"))
+
+trans_sta=filter(taipei_mrt_station, duplicated(taipei_mrt_station$Zh_tw) | Zh_tw %in% c("七張","北投"))
+taipei_mrt_station=filter(taipei_mrt_station, !(Zh_tw %in% trans_sta$Zh_tw) , !(Zh_tw %in% c("七張","北投")))
+
+ggplot(taipei_village_map)+
+  geom_sf(color=NA, aes(fill=TOWNNAME), alpha=0.5)+
+  scale_fill_brewer(palette="Set3", name="行政區")+
+  geom_sf(data=taipei_mrt_route, aes(color=RAILNAME), size=1, show.legend="line")+
+  scale_color_manual(values=c("板南線"="#0070BD", "松山新店線"="#008659", "淡水信義線"="#E3002C", "中和新蘆線"="#F8B61C", "文湖線"="#C48B30"),
+                     name="捷運路線")+
+  geom_sf(data=taipei_mrt_station, shape=19, size=1)+
+  geom_sf(data=trans_sta, shape=10, size=2)+
+  geom_sf_text_repel(data=trans_sta, aes(label=Zh_tw), size=3, nudge_x=5, family="A", box.padding=0.3)+
+  guides(fill=guide_legend(override.aes=list(color=NA)))+
+  theme(axis.text=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title=element_blank(),
+        legend.text=element_text(size=8, family="A"),
+        legend.title=element_text(size=12, family="A"),
+        legend.key=element_blank(),
+        legend.key.size=unit(0.5, 'cm'),
+        panel.background=element_blank())
+```
+
+In this example, you may find that making maps might be a bit difficult when lots of conditions are going to be considered. Thus, besides the source code provided in this notebook, we need to learn more on dplyr or other packages that could efficiently clean the data. Moreover, making maps elegant is another issue. Only with the study on this notebook is enough, but not advanced, we should practice more and search for more functions from websites (others' work), to optimize the skills of map visualization.  

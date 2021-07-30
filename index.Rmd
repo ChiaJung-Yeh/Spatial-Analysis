@@ -1,6 +1,6 @@
 --- 
-title: "Making free books with RStudio’s RMarkdown & Bookdown"
-author: "Julie Lowndes"
+title: "Spatial Analysis with R"
+author: "Chia JUng, Yeh"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 # output: bookdown::gitbook
@@ -9,7 +9,7 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: openscapes/series
-description: "A mini bookdown tutorial book on how to make bookdown books."
+description: "A bookdown book on how to conduct spatial analysis on R."
 ---
 
 # Introduction

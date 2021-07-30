@@ -7,10 +7,10 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Mini Bookdown Tutorial</a></li>
+        <li><a href="./">Spatial Analysis with R</a></li>
       after: |
         <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/jules32/bookdown-tutorial/edit/master/%s
+    edit: https://github.com/ChiaJung-Yeh/Spatial-Analysis/blob/master/%s
     download: ["pdf"]
 #bookdown::pdf_book:
 #  includes:

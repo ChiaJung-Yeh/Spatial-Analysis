@@ -5,6 +5,6 @@ language:
 rmd_files: [
   "index.Rmd",
   "01-Basic-Knowledge-on-GIS.Rmd",
-  "write.Rmd"]
+  "02-Data-Visualization-with-Maps.Rmd"]
 delete_merged_file: true 
 output_dir: "docs"
