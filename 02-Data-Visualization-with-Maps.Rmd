@@ -23,9 +23,9 @@ The basic features of GIS is to make the maps!! But a map with only the geometri
 In this section, we would go through the basic command on making maps, and then have a better knowing on the skills to label on the layers. Finally, briefly learn how to make the graduated, categorized, rule-based symbology map.  
 
 ## Making Maps
-For the beginners, making map would give us a quick view and better understanding on how R can be used as GIS. It can be done simply by the function `ggplot()` in ggplot2 package.
+For the beginners, making map would give us a quick view and better understanding on how R can be used as GIS. It can be done simply by the function `ggplot()` in `ggplot2` package.
 
-The gg in ggplot2 means Grammar of Graphics, a graphic concept which describes plots by using a “grammar”. `ggplot()` is used to construct the initial plot object, and is followed by + to add component to the plot. To make the map, we should also follow this grammar.
+The gg in `ggplot2` means Grammar of Graphics, a graphic concept which describes plots by using a “grammar”. `ggplot()` is used to construct the initial plot object, and is followed by + to add component to the plot. To make the map, we should also follow this grammar.
 
 The following two code represent how to draw United States Map by the ggplot grammar. `ggplot()` means the initialization of drawing, while `geom_sf()` informs the function `ggplot()` to make the map. The data can be either put in the code `ggplot()` or in `geom_sf()`.
 
@@ -87,7 +87,7 @@ us_states[,c(2,3)]  # NAME is stored in the second column
 us_states[1,]
 ```
 
-In addition, with the characteristic of “data.frame”, we can easily manipulate data by the package “dplyr”. It would be further discussed in the following section.  
+In addition, with the characteristic of “data.frame”, we can easily manipulate data by the package `dplyr`. It would be further discussed in the following section.  
 
 ## Labels on Map
 Sometimes we need to label on the map to inform the name or attribute of specific places. To do so, the command `geom_sf_text()` should be appended after the `geom_sf()`, to inform which column is going to be labeled. The code illustrated below is the map of US states with thier names labelled on.
@@ -100,8 +100,8 @@ ggplot(us_states)+
 
 In function `geom_sf_text()`, `aes()` represents aesthetic mappings, which defines the coordinates of each label. The attributes we want to label is followed by `label=`.  
 
-However, something awkward occurs. The text is overlapping with each other when the labels are dense. To solve this problem, install the package “ggsflabel” from GitHub. (Note that “ggsflabel” has not been released on CRAN, which is a global network that store versions of documentation for R. We should download it from GitHub!!)  
-<font size="1"><b>* If you want to learn more on the reason why install from GitHub and how “devtools” works, please click [here](https://www.r-project.org/nosvn/pandoc/devtools.html).</b></font>  
+However, something awkward occurs. The text is overlapping with each other when the labels are dense. To solve this problem, install the package `ggsflabel` from GitHub. (Note that `ggsflabel` has not been released on CRAN, which is a global network that store versions of documentation for R. We should download it from GitHub!!)  
+<font size="1"><b>* If you want to learn more on the reason why install from GitHub and how `devtools` works, please click [here](https://www.r-project.org/nosvn/pandoc/devtools.html).</b></font>  
 
 ```{r devtools, echo=T, eval=F}
 install.packages("devtools")
@@ -187,7 +187,7 @@ Sometimes the category is determined by values from multiple columns. Under this
 
 Take “us_states” data for example. We want to classify all the data into four categories, that is “high population-large area”, “high population-small area”, “low population-large area” and “low population-small area”. And the data is seperated simply by the average, namely, the one whose population is lower than the average is defined as “low population”.  
 
-In this case, we need `mutate()` and `case_when()` functions in dplyr package to help us sort out the data.  
+In this case, we need `mutate()` and `case_when()` functions in `dplyr` package to help us sort out the data.  
 
 ```{r us_states_data, echo=T, eval=T}
 # Create a new data frame named us_states_type
@@ -202,7 +202,7 @@ us_states_type=mutate(us_states,TYPE=case_when(
 us_states_type
 ```
 
-<font size="1"><b>*To understand more about basic operation of dplyr, please click [here](https://dplyr.tidyverse.org/).</b></font>  
+<font size="1"><b>*To understand more about basic operation of `dplyr`, please click [here](https://dplyr.tidyverse.org/).</b></font>  
 
 With the newly data derived, we can then apply the categorized symbol map. The code and result are as follows.  
 
@@ -213,7 +213,7 @@ ggplot(us_states_type)+
 
 ## Basic Operations/Elements of Map
 ### **Map Overlay**
-It is simple by using ggplot2 to make an overlaying map. Shapefiles can be overlay by repeating `geom_sf(data=)`. Let's take New Zealand and its top 101 heighest points for example. Layers used in this example are provided in the package spData. nz is the polygon shapefile, and nz_height is the point. The code and result are as follows.  
+It is simple by using `ggplot2` to make an overlaying map. Shapefiles can be overlay by repeating `geom_sf(data=)`. Let's take New Zealand and its top 101 heighest points for example. Layers used in this example are provided in the package spData. nz is the polygon shapefile, and nz_height is the point. The code and result are as follows.  
 
 ```{r nz_overlay, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
 ggplot()+
@@ -222,7 +222,7 @@ ggplot()+
 ```
 
 ### **North Arrow and Scale**
-North arrow is a graphical representation indicating the direction of north in the map. The scale of a map is the ratio of a distance on the map to the corresponding distance on the ground. These two items are required when making the maps. In ggplot2, we can simply use the function `annotation_north_arrow` and `annotation_scale` in package ggspatial to add them. Again, we use map of New Zealand (nz) to display the result.  
+North arrow is a graphical representation indicating the direction of north in the map. The scale of a map is the ratio of a distance on the map to the corresponding distance on the ground. These two items are required when making the maps. In `ggplot2`, we can simply use the function `annotation_north_arrow` and `annotation_scale` in package ggspatial to add them. Again, we use map of New Zealand (nz) to display the result.  
 
 ```{r ggspatial, echo=T, eval=F}
 # Please install the package ggspatial first!
@@ -275,7 +275,7 @@ Example above shows one of the common theme in making map. In fact, function `th
 ggplot is a powerful package for making maps (in fact it is also helpful on plotting bar chart, line chart, histogram, and so forth) though, the major drawback is that raster objects are not natively supported by it. Hence, many users are inclined to use a specialized package for making maps, such as "tmap" and "leaflet". In this notebook, we would briefly introduce how they work with a simple example.  
 
 ### **tmap**
-Like ggplot2, tmap is based on the idea of a "grammar of graphics". This involves a separation between the input data and the aesthetics (how data are visualised): each input dataset can be mapped by the visual variables. The basic building block is `tm_shape()`, which defines input data, raster and vector objects, followed by one or more layer elements such as `tm_fill()` and `tm_dots()`. Here, we can compare the command used in two different packages.  
+Like `ggplot2`, tmap is based on the idea of a "grammar of graphics". This involves a separation between the input data and the aesthetics (how data are visualised): each input dataset can be mapped by the visual variables. The basic building block is `tm_shape()`, which defines input data, raster and vector objects, followed by one or more layer elements such as `tm_fill()` and `tm_dots()`. Here, we can compare the command used in two different packages.  
 
 ```{r tmap_ggplot2, echo=F, eval=T}
 tmap_ggplot2=data.frame(Package=c("Basic Block","Polygon","Fill","Border","Point","Line","Raster","Aesthetic"),
@@ -336,7 +336,7 @@ leaflet(data=st_transform(nz, crs=4326))%>%
 
 <font size="1"><b>* Please ignore the function [`st_transform()`](#st_transform) above, which is applied to transform the coordinate reference system, we would discuss it in the following chapter.</b></font>  
 
-Several method to plot the visualized map have been introduced. Here, we spend a lot on understanding how to use package ggplot2 to plot the map, for it is the most common and universal tool to plot all kinds of graph in R. Other mapping tools are also helpful, particularly when it comes to raster shapefile. If the readers are interested in those packages, and want to learn more advanced skills please read chapter 8 of book [*_“Geocomputation with R”_*](https://geocompr.robinlovelace.net/adv-map.html). But please note that, ggplot2 is introduced more detailed in this notebook, while book *_“Geocomputation with R”_* may provide sketchy information on the topic.  
+Several method to plot the visualized map have been introduced. Here, we spend a lot on understanding how to use package `ggplot2` to plot the map, for it is the most common and universal tool to plot all kinds of graph in R. Other mapping tools are also helpful, particularly when it comes to raster shapefile. If the readers are interested in those packages, and want to learn more advanced skills please read chapter 8 of book [*_“Geocomputation with R”_*](https://geocompr.robinlovelace.net/adv-map.html). But please note that, `ggplot2` is introduced more detailed in this notebook, while book *_“Geocomputation with R”_* may provide sketchy information on the topic.  
 
 ## <span style="border-bottom: 3px double black">*_PRACTICE_*</span> 
 In this chapter, we introduce the simple example on the us_states and nz data which “spdata” package provides. Then, it’s time for us to make our own maps of Taipei.  
@@ -398,7 +398,7 @@ ggplot(taipei_village_map)+
 
 With the maps above, we may come out some interesting questions: Is the design capacity of YouBike stations associated with the population of its location? Or, does the cycling path meet the supply of bike sharing system? Now, we can briefly observe the "phenomenon" from the visualized map, but of course, a concrete and pratical conclusion should be drawn after conducting spatial analysis.  
  <br/>
-Now let's make a more complicated map, a Taipei district map with MRT routes and stations. In addition, the transfer stations should be labeled with text and use a different point shape compared to non-transfer station. Thus, the first task we need to do is to classify the transfer and non-transfer stations. It is recommended to use package dplyr to tidy the data.  
+Now let's make a more complicated map, a Taipei district map with MRT routes and stations. In addition, the transfer stations should be labeled with text and use a different point shape compared to non-transfer station. Thus, the first task we need to do is to classify the transfer and non-transfer stations. It is recommended to use package `dplyr` to tidy the data.  
 
 After cleaning the data. Please follow the instructions below to plot the map:  
 
@@ -452,4 +452,4 @@ ggplot(taipei_village_map)+
         panel.background=element_blank())
 ```
 
-In this example, you may find that making maps might be a bit difficult when lots of conditions are going to be considered. Thus, besides the source code provided in this notebook, we need to learn more on dplyr or other packages that could efficiently clean the data. Moreover, making maps elegant is another issue. Only with the study on this notebook is enough, but not advanced, we should practice more and search for more functions from websites (others' work), to optimize the skills of map visualization.  
+In this example, you may find that making maps might be a bit difficult when lots of conditions are going to be considered. Thus, besides the source code provided in this notebook, we need to learn more on `dplyr` or other packages that could efficiently clean the data. Moreover, making maps elegant is another issue. Only with the study on this notebook is enough, but not advanced, we should practice more and search for more functions from websites (others' work), to optimize the skills of map visualization.  

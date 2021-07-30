@@ -89,7 +89,7 @@ To conduct the geocomputation in R, it is required to download `sf` package.
 
 To analyze the data more efficiently, it is suggested to take advantage of `dplyr` package.  
 
-To display the map, *`ggplot2`” package is strongly recommended. (There are other packages to make the map as well; nonetheless, `ggplot2` is more powerful and easier to learn.)  
+To display the map, `ggplot2`” package is strongly recommended. (There are other packages to make the map as well; nonetheless, `ggplot2` is more powerful and easier to learn.)  
 
 ```{r required_packages, echo=T, eval=F}
 install.packages("sf")
