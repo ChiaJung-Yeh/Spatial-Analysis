@@ -12,34 +12,16 @@ github-repo: openscapes/series
 description: "A mini bookdown tutorial book on how to make bookdown books."
 ---
 
-# Welcome {#welcome}
+# Introduction
 
-hi
+This book would introduce the basic skills of spatial analysis with R. Spatial analysis is vital in terms of transportation study. For instance, when conducting the transport planning analysis, we need to collect the data of the study area, and dig into the issue about geographic characteristic, socioeconomic factors, to further do research on the traffic zone, trip distribution and so forth. Here we need the skills of spatial analysis before executing the transport planning process. In fact, there are more powerful and more user-experience based tools such as ArcGIS, CUBE and many other transport planning software to do spatial analysis. However, these software are not easily accessible due to high-cost. Hence, we can use R to do some simple spatial analysis instead. In the notebook, we would acquire the skills listed below.  
 
-It's possible to create beautiful books for free using [RStudio's R Markdown](http://rmarkdown.rstudio.com/) and Yihui Xie's [bookdown](https://bookdown.org/yihui/bookdown/) and hosting them on [Github](http://github.com). This is pretty new and incredibly cool. It is a really powerful way to communicate science using the same reproducible workflow you use for your analyses and collaborations.
+1. Making customized maps.  
+2. Join the spatial and attribute data.  
+3. Conduct spatial operations.  
+4. Data analysis on spatial data.  
+5. Export our own spatial data.  
 
-This tutorial borrows heavily from a lot of great tutorials and resources you should check out too -- there are links throughout. It also parallels a previous tutorial [Making free websites with RStudio’s R Markdown](https://jules32.github.io/rmarkdown-website-tutorial/).
-
-The best way to learn is to follow along with your own laptop, but all are welcome. We'll spend half the time with the tutorial and half the time for you to work on your own website and get help. If you bring your laptop please do this beforehand: 
-
-1. install [RStudio](https://www.rstudio.com/products/rstudio/download/)
-1. create a [GitHub]((http://github.com)) account ([advice](http://happygitwithr.com/github-acct.html))
-1. set up your computer to talk to GitHub
-    - have RStudio linked directly (highly recommended) ([instructions sections 8-14](http://happygitwithr.com/hello-git.html))
-    - or install the [Desktop App](https://desktop.github.com/)
-    - or be familiar with git commands for the command line ([tutorial](https://try.github.io/levels/1/challenges/1))
-
-----
-
-
-**Examples:**
-
-We have been using bookdown for the Ocean Health Index:  [**ohi-science.org/data-science-training**](http://ohi-science.org/data-science-training) and Openscapes: [**openscapes.org/series**](https://openscapes.org/series).  
-And R Markdown is much more than books and websites -- here's a [**one-minute video about R Markdown**](http://rmarkdown.rstudio.com/lesson-1.html) to get you excited. 
-
-----
-
-## Learn all about Bookdown
-
-The best way to learn more about bookdown is from Yihui Xie himself. You can read his book [bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/) or watch his webinar [introducing bookdown](https://www.rstudio.com/resources/webinars/introducing-bookdown/).
+In addition, the notebook would focus on the transportation spatial issue. If you are major in [Transportation Engineering or Transportation Management](https://www.tlm.nctu.edu.tw/en/), you may relate to the content. The notebook provides lots of example regarding transportation data in Taiwan. Any suggestions and questions please contact <a href="mailto:1328robert@gmail.com"><u>here</u></a>.
+<br/>
 
