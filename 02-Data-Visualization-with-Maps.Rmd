@@ -272,10 +272,10 @@ ggplot()+
 Example above shows one of the common theme in making map. In fact, function `theme` provides lots of parameters for the users to set. To make an ideal map, it is suggested to read [theme documentation](https://www.rdocumentation.org/packages/ggplot2/versions/1.0.1/topics/theme) and take advantage of it.  
 
 ## Other Mapping Tools
-ggplot is a powerful package for making maps (in fact it is also helpful on plotting bar chart, line chart, histogram, and so forth) though, the major drawback is that raster objects are not natively supported by it. Hence, many users are inclined to use a specialized package for making maps, such as "tmap" and "leaflet". In this notebook, we would briefly introduce how they work with a simple example.  
+`ggplot2` is a powerful package for making maps (in fact it is also helpful on plotting bar chart, line chart, histogram, and so forth) though, the major drawback is that raster objects are not natively supported by it. Hence, many users are inclined to use a specialized package for making maps, such as `tmap` and `leaflet`. In this notebook, we would briefly introduce how they work with a simple example.  
 
 ### **tmap**
-Like `ggplot2`, tmap is based on the idea of a "grammar of graphics". This involves a separation between the input data and the aesthetics (how data are visualised): each input dataset can be mapped by the visual variables. The basic building block is `tm_shape()`, which defines input data, raster and vector objects, followed by one or more layer elements such as `tm_fill()` and `tm_dots()`. Here, we can compare the command used in two different packages.  
+Like `ggplot2`, `tmap` is based on the idea of a "grammar of graphics". This involves a separation between the input data and the aesthetics (how data are visualised): each input dataset can be mapped by the visual variables. The basic building block is `tm_shape()`, which defines input data, raster and vector objects, followed by one or more layer elements such as `tm_fill()` and `tm_dots()`. Here, we can compare the command used in two different packages.  
 
 ```{r tmap_ggplot2, echo=F, eval=T}
 tmap_ggplot2=data.frame(Package=c("Basic Block","Polygon","Fill","Border","Point","Line","Raster","Aesthetic"),
@@ -286,7 +286,7 @@ kbl(tmap_ggplot2, booktabs=T)%>%
   column_spec(1, bold=T)
 ```
 
-Plotting the map by using tmap, please install tmap package first. Then, let's display the map of New Zealand.  
+Plotting the map by using `tmap`, please install package `tmap` first. Then, let's display the map of New Zealand.  
 
 ```{r tmap_install, echo=T, eval=F}
 # Please install the package tmap first!
@@ -303,7 +303,7 @@ tm_shape(nz)+
   tm_dots(shape=4, col="red", size=1)
 ```
 
-Also, tmap supports to plot the interactive map, which is provided by leaflet (discussed later). The plotting procedure is very easy, just change the mode from "plot" to "view" by function `tmap_mode("view")`. If we do not define the mode used, the default value would be `tmap_mode("plot")`.  
+Also, `tmap` supports to plot the interactive map, which is provided by leaflet (discussed later). The plotting procedure is very easy, just change the mode from "plot" to "view" by function `tmap_mode("view")`. If we do not define the mode used, the default value would be `tmap_mode("plot")`.  
 ```{r nz_tamp_view, echo=T, eval=T, fig.width=3, fig.align="center"}
 tmap_mode("view")
 tm_shape(nz)+
@@ -313,7 +313,7 @@ tm_shape(nz)+
 ```
 
 ### **leaflet**
-Leaflet is the most mature and widely used interactive mapping package in R. It provides a relatively low-level interface to the Leaflet JavaScript library and many of its arguments can be understood by reading the documentation of the original JavaScript library.  
+`leaflet` is the most mature and widely used interactive mapping package in R. It provides a relatively low-level interface to the Leaflet JavaScript library and many of its arguments can be understood by reading the documentation of the original JavaScript library.  
 
 Leaflet maps are created with `leaflet()`, the result of which is a leaflet map object which can be piped to other leaflet functions. This allows multiple map layers and control settings to be added interactively.  
 
@@ -323,9 +323,9 @@ install.packages("leaflet")
 library(leaflet)
 ```
 
-The basic command of leaflet includes `addTiles`, `addPolygons`, `addCircles`. `addTiles` means the map used. If no arguments is given, OpenStreetMap is set by default. Or we can use `addProviderTiles` to connect other maps provided by different websites. `addPolygons` is used to paint the border color of polygon, and also fill in the color. `addCircles` is used for the point data. It draws a buffer with a given radius. Note that the unit of `radius` is "meters".  
+The basic command of `leaflet` includes `addTiles`, `addPolygons`, `addCircles`. `addTiles` means the map used. If no arguments is given, OpenStreetMap is set by default. Or we can use `addProviderTiles` to connect other maps provided by different websites. `addPolygons` is used to paint the border color of polygon, and also fill in the color. `addCircles` is used for the point data. It draws a buffer with a given radius. Note that the unit of `radius` is "meters".  
 
-Now, let’s display the interactive map of New Zealand by using leaflet.  
+Now, let’s display the interactive map of New Zealand by using `leaflet`.  
 
 ```{r nz_leaflet, echo=T, eval=T, fig.width=3, fig.align="center"}
 leaflet(data=st_transform(nz, crs=4326))%>% 
