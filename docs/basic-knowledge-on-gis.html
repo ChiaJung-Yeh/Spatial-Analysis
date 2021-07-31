@@ -366,7 +366,6 @@ shape index format; a positional index of the feature geometry to allow seeking 
 <h2><span class="header-section-number">2.4</span> Coordinate Reference System (CRS)</h2>
 <p>Geometric data is not geospatial unless it is accompanied by coordinate reference system (CRS) information, which allows GIS to display and operate the data accurately. It includes two major components, datum and projection. Datum is a model of the shape of the earth. It has angular units (degrees) and defines the starting point (0,0), and hence the coordinate can represent a specific spot on the earth. Projection is a mathematical transformation of the angular measurements on a round earth to a flat surface. The units associated with a given projection are usually linear (feet, meters, etc.).</p>
 <p>There are two common types of coordinate systems:</p>
-<p><span id="proj_coord"></span></p>
 <table class="table table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -421,7 +420,7 @@ EPSG:3826<br />
 <h2><span class="header-section-number">2.6</span> Required Packages</h2>
 <p>To conduct the geocomputation in R, it is required to download <code>sf</code> package.</p>
 <p>To analyze the data more efficiently, it is suggested to take advantage of <code>dplyr</code> package.</p>
-<p>To display the map, <code>ggplot2</code>” package is strongly recommended. (There are other packages to make the map as well; nonetheless, <code>ggplot2</code> is more powerful and easier to learn.)</p>
+<p>To display the map, <code>ggplot2</code> package is strongly recommended. (There are other packages to make the map as well; nonetheless, <code>ggplot2</code> is more powerful and easier to learn.)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="basic-knowledge-on-gis.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sf&quot;</span>)</span>
 <span id="cb1-2"><a href="basic-knowledge-on-gis.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
 <span id="cb1-3"><a href="basic-knowledge-on-gis.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
