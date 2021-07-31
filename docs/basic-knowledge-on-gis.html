@@ -24,7 +24,7 @@
 <meta name="author" content="Chia Jung, Yeh" />
 
 
-<meta name="date" content="2021-07-30" />
+<meta name="date" content="2021-07-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -243,7 +243,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>In this notebook, we would focus on the issue about spaitial analysis and making visualized maps.</p>
 <p>The detailed concept of GIS can be derived on the textbook <a href="https://www.academia.edu/28691712/Introduction_to_GIS_Kang_Tsung_Chang_pdf?email_work_card=title"><em><em>“Introduction to Geographic Information Systems (Kang Tsung Chang)”</em></em></a>.</p>
-<p><span id="WKT"></span></p>
 </div>
 <div id="well-known-text-wkt" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Well-Known Text (WKT)</h2>
@@ -312,7 +311,6 @@ POLYGON (1 4, 2 2, 4 1, 5 5, 1 4)
 </table>
 <p>The WKT types illustrated above are single geometry. However, sometimes we want to mark all the geometry together to signify the same attribute, single geometry may seem to be difficult to express. For instance, there are five campuses in NCTU. If we want to combine all the points into one single geometry, in order to represent “NCTU,” it is hard to express by POINT text. Thus, we need multi geometries to mark it.</p>
 <p>Multi geometries are available to represent more than one geometry of the same dimension in a single object, including MultiPoint, MultiLineString, MultiPolygon. Geometry Collection is the geometries of different dimensions.</p>
-<p><span id="shapefile"></span></p>
 </div>
 <div id="shapefile" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Shapefile</h2>

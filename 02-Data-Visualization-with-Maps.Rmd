@@ -222,7 +222,7 @@ ggplot()+
 ```
 
 ### **North Arrow and Scale**
-North arrow is a graphical representation indicating the direction of north in the map. The scale of a map is the ratio of a distance on the map to the corresponding distance on the ground. These two items are required when making the maps. In `ggplot2`, we can simply use the function `annotation_north_arrow` and `annotation_scale` in package ggspatial to add them. Again, we use map of New Zealand (nz) to display the result.  
+North arrow is a graphical representation indicating the direction of north in the map. The scale of a map is the ratio of a distance on the map to the corresponding distance on the ground. These two items are required when making the maps. In `ggplot2`, we can simply use the function `annotation_north_arrow` and `annotation_scale` in package `ggspatial` to add them. Again, we use map of New Zealand (nz) to display the result.  
 
 ```{r ggspatial, echo=T, eval=F}
 # Please install the package ggspatial first!

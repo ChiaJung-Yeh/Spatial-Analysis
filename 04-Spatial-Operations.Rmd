@@ -18,12 +18,11 @@ library(cowplot)
 
 We have learned how geographic datasets are structured in R, and how to join the spatial and attribute features. In this chapter, we would further discuss about the skills of spatial operations. Imagine that we want to know the number of schools in each villages, we should intersect the school point layer and village polygon layer, to identify the polygon for each point located on. "Intersection" is a type of spatial operations. Or imagine we want to know whether there are schools within 500 meters of MRT stations. We need to draw buffer of the stations in advance. "Buffer" is also a type of spatial operations. From the examples above, we find that spatial operations are vital in the spatial analysis.  
 
-We would introduce some common spatial operation functions in package sf. But please note that we would also use some functions in package dplyr. If you are not acquainted with the package, please read the notebook attached [here](https://rpubs.com/WeiLunChiang/dplyr), which provides you with a quick learn on the major function in dplyr. More detailed information of dplyr is supplied in [Chapter 5 of R for Data Science](https://r4ds.had.co.nz/transform.html).  
+We would introduce some common spatial operation functions in package sf. But please note that we would also use some functions in package `dplyr`. If you are not acquainted with the package, please read the notebook attached [here](https://rpubs.com/WeiLunChiang/dplyr), which provides you with a quick learn on the major function in `dplyr` More detailed information of dplyr is supplied in [Chapter 5 of R for Data Science](https://r4ds.had.co.nz/transform.html).  
 
-<span id="st_join"></span>
 
 ## Spatial Join
-As we have learned in the [previous chapter](#join), joining spatial and attribute data requires a primary key, namely a common column variable. But what if we want to join two spatial data? It applies the similar concept, but relies on the shared areas of geographic space (spatial overlay). We can apply function `st_join(x, y, left)`. The target object which would be in the left part of the new data frame is placed in the first parameter (x), while the joined object is placed in the second parameter (y). Parameter `left=` represents whether do the left join or not, which is `left=T` by default, and return all records of the x object with y fields. If `left=F`, then do the inner join instead.  
+As we have learned in the [previous chapter](#join-attribute-and-spatial-data), joining spatial and attribute data requires a primary key, namely a common column variable. But what if we want to join two spatial data? It applies the similar concept, but relies on the shared areas of geographic space (spatial overlay). We can apply function `st_join(x, y, left)`. The target object which would be in the left part of the new data frame is placed in the first parameter (x), while the joined object is placed in the second parameter (y). Parameter `left=` represents whether do the left join or not, which is `left=T` by default, and return all records of the x object with y fields. If `left=F`, then do the inner join instead.  
 
 Take nz and nz_height in spData for instance. The former data is the map of New Zealand, while the latter is the top 101 highest points in the country. In the example below, we want to know which provinces those points are located in.  
 
@@ -48,7 +47,7 @@ kbl(join_function, booktabs=T)%>%
 ```
 
 ## Attribute Aggregation
-Aggregation operations summarize datasets (including attributes and spatial features) by a "grouping variable". We can use function `group_by() %>% summarise()` in dplyr to conduct aggregation. Let's take data "world" for example. We want to group by the data by continent, and summarize the total population of each continent. The code and result are shown below.  
+Aggregation operations summarize datasets (including attributes and spatial features) by a "grouping variable". We can use function `group_by() %>% summarise()` in `dplyr` to conduct aggregation. Let's take data "world" for example. We want to group by the data by continent, and summarize the total population of each continent. The code and result are shown below.  
 
 ```{r aggregation_1, echo=T, eval=T, message=F, fig.width=10, fig.height=4, dpi=120}
 # map before aggregation
@@ -74,7 +73,7 @@ ggplot(continent_pop)+
 
 After aggregation, we can find that the population (attribute) has been summed up based on the continent. The geometry is also aggregated by it, which eliminate the border of each country. The geometry of new map represents the border of each continent.  
 
-Here let's do more practice on the function of dplyr. Suppose we want to retrieve the data of total population, average life expectancy and the number of countries by subregion. Then, arrange the data by average life expectancy in descending order. The code is shown below.  
+Here let's do more practice on the function of `dplyr` Suppose we want to retrieve the data of total population, average life expectancy and the number of countries by subregion. Then, arrange the data by average life expectancy in descending order. The code is shown below.  
 
 ```{r aggregation_2, echo=T, eval=T, message=F}
 subregion_info=group_by(world, subregion)%>%
@@ -91,14 +90,14 @@ subregion_info
 
 Function `sum()` obtains the total value; `mean()` obtains the average value; `n()` obtains the total number in the group. Parameter `na.rm=T` means that the calculation would skip the NA (not available). If we do not add this parameter, the result would be NA as well. Parameter `desc()` means arrange the data in descending order, or it would be in ascending order by default. As we can see in the result printed above, the first three highest life expectancy are Australia and New Zealand, Western Europe, and Northern America respectively.  
 
-In addition to the application of dplyr, we can use function `aggregate()` provided by package sf to obtain the same result. The first parameter in the function is the data we want to summarize. Note the data should be remain the sf features. Thus, do not use the form like `world$pop`, whose type is "numeric". Instead, we should write in the form as `world["pop"]`, whose type is "sf" and "dataframe". Parameter `by=` should be filled in with the columns we want to group by. Note that the type of data should be a list. Parameter `FUN` is the spatial operation such as sum or average. Last, if the data contains NA, we should add the parameter `na.rm=T`, in order to skip NA. Again, take data "world" for example, and group by the data by continent, summarize the total population of each continent. The code and result are as follows.  
+In addition to the application of `dplyr`, we can use function `aggregate()` provided by package `sf` to obtain the same result. The first parameter in the function is the data we want to summarize. Note the data should be remain the sf features. Thus, do not use the form like `world$pop`, whose type is "numeric". Instead, we should write in the form as `world["pop"]`, whose type is "sf" and "dataframe". Parameter `by=` should be filled in with the columns we want to group by. Note that the type of data should be a list. Parameter `FUN` is the spatial operation such as sum or average. Last, if the data contains NA, we should add the parameter `na.rm=T`, in order to skip NA. Again, take data "world" for example, and group by the data by continent, summarize the total population of each continent. The code and result are as follows.  
 
 ```{r aggregation_3, echo=T, eval=T}
 continent_pop_ag=aggregate(world["pop"], by=list(world$continent), FUN=sum, na.rm=T)
 continent_pop_ag
 ```
 
-You may find that package dplyr provides more flexible functions for us in terms of attribute features calculation in spatial analysis. Hence, it is very helpful to use package "sf" and "dplyr" together.  
+You may find that package `dplyr` provides more flexible functions for us in terms of attribute features calculation in spatial analysis. Hence, it is very helpful to use package `sf` and `dplyr` together.  
 
 ## Spatial Aggregation
 Similar to attribute data aggregation introduced in the previous section, spatial aggregation can be done by function `aggregate()`. In attribute aggregation, the first parameter should be in class sf, while the second parameter `by=` is a list with non-spatial data. There is a little difference on the data imported in parameter `by=`, which the data should also contain geometry in spatial aggregation. Briefly to say, in function `aggregate(x, by=y)`, spatial aggregation is the geometry of the source (y) that defines how values in the target object (x) are grouped.  
@@ -111,7 +110,7 @@ aggregate(x=nz_height, by=nz, FUN=mean)
 
 As the result shows, all of attribute features of data nz_height (first parameter) are average value of each province. And the geometry is based on the spatial data in second parameter `by=`. You may find that the data we obtain are not perfect, since it does not contain the features in second parameter `by=`. Also, it does not make sense to calculate the average of all attribute features. For instance, variable "t50_fid" is the identity number of the highest points, it does not make sense to derive its mean.  
 
-In addition to function `aggregate()`, the same result can also be generated by function `group_by() %>% summarise()` in dplyr. The code and result are shown below.  
+In addition to function `aggregate()`, the same result can also be generated by function `group_by() %>% summarise()` in `dplyr` The code and result are shown below.  
 
 ```{r aggregation_spatial_dplyr, echo=T, eval=T, fig.width=10, fig.height=5, dpi=170, fig.align="center"}
 ave_height=st_join(nz, nz_height)%>%
@@ -128,9 +127,9 @@ ggplot(ave_height)+
         panel.background=element_blank())
 ```
 
-We need to join two spatial data (nz is the target data, which should be placed in the first parameter). Then, group by the variable "Name" and summarize the mean value of elevation in each group. Though the code is longer than function `aggregate()`, dplyr shows a readable and clear code to do the spatial aggregation.  
+We need to join two spatial data (nz is the target data, which should be placed in the first parameter). Then, group by the variable "Name" and summarize the mean value of elevation in each group. Though the code is longer than function `aggregate()`, `dplyr` shows a readable and clear code to do the spatial aggregation.  
 
-In this example, we can again find that use "dplyr" and "sf" package together might be a better method to do spatial aggregation.  
+In this example, we can again find that use `dplyr` and `sf` package together might be a better method to do spatial aggregation.  
 
 ## Interpolation
 Interpolation is the process that calculate estimates from a source set of polygons to an overlapping but incongruent set of target polygons. Imagine that we want to derive the population in a specific area, which is defined by us. Since the boundary of study area we define does not align with the one of population data (most of the population data is based on the villages or Statistical Areas), we should use interpolation to produce estimates in this situation. The concept is simply illustrated in the figure below.  
@@ -143,7 +142,7 @@ In the figure above, the study area contains three districts whose population ha
 
 For the study area, there are 40% of it is Area 1; 33.3% of it is Area 2; 26.7% of it is Area 3. Density is spatially intensive instead, and the mean is preserved. Hence, we can simply derive the mean density of the study area based on the area weight of study area: 200/3* 40% + 40* 33.3% + 90* 26.7% = 64.    
 
-Package sf provides a function `st_interpolation_aw()` to conduct the interpolation. There are three parameters required in the function `st_interpolate_aw(x, to, extensive)`. The first parameter (x) is the object of simple features, for which we want to aggregate attributes. The second parameter (to) is the object of simple features with the target geometries. Parameter `extensive=` is the operation of data. If it is True, the attribute variables are assumed to be spatially extensive (like population) and the sum is preserved, otherwise, spatially intensive (like population density) and the mean is preserved.  
+Package `sf` provides a function `st_interpolation_aw()` to conduct the interpolation. There are three parameters required in the function `st_interpolate_aw(x, to, extensive)`. The first parameter (x) is the object of simple features, for which we want to aggregate attributes. The second parameter (to) is the object of simple features with the target geometries. Parameter `extensive=` is the operation of data. If it is True, the attribute variables are assumed to be spatially extensive (like population) and the sum is preserved, otherwise, spatially intensive (like population density) and the mean is preserved.  
 
 Here, we use the data incongruent and aggregating_zones provided by package spData. The former one is a specific region separated into 9 districts in UK, while the latter is in the same region, but separated into 2 major area (as the figure shown below). We need to interpolate the value in data incongruent to the geometry data aggregating_zones, and derive the sum of value in two areas. The code and result are shown below.  
 
@@ -240,7 +239,7 @@ ggplot(penghu)+
 In Penghu example, we can find that the point on surface (red dot) and the centroid (blue dot) are not the same. Centroid is located in the inland sea of Penghu, while the point on surface is located in one of the island of Penghu. Please note that the island which point on surface located in is not the largest one. For more information of its algorithm, please refer to the [discussion](https://gis.stackexchange.com/questions/76498/how-is-st-pointonsurface-calculated) attached.  
 
 ## Buffer
-Imagine that we want to calculate the number of schools within 500 meters radius of MRT stations, we need to first draw the buffer of each MRT stations before points calculation. Buffer is a zone (polygon) around a map feature within given distance, and it is useful for proximity analysis. Buffer can be created by function `st_buffer()`, whatever the type of geometry is. There are two parameters should be filled in `st_buffer()`. Place the spatial data first, and then set the distance of radius. But please note that the unit of distance is based on the coordinate reference system. In general, the unit is meter (m) in the [projected coordinate system](#proj_coord), while the unit is NULL in the the geographic coordinate systems (e.g., EPSG:4326). Hence, we need to use function [`st_transform()`](#st_transform) to convert CRS to specific projected coordinate system in the region of study area, if the spatial data with CRS EPSG:4326 is obtained.  
+Imagine that we want to calculate the number of schools within 500 meters radius of MRT stations, we need to first draw the buffer of each MRT stations before points calculation. Buffer is a zone (polygon) around a map feature within given distance, and it is useful for proximity analysis. Buffer can be created by function `st_buffer()`, whatever the type of geometry is. There are two parameters should be filled in `st_buffer()`. Place the spatial data first, and then set the distance of radius. But please note that the unit of distance is based on the coordinate reference system. In general, the unit is meter (m) in the [projected coordinate system](#proj_coord), while the unit is NULL in the the geographic coordinate systems (e.g., EPSG:4326). Hence, we need to use function [`st_transform()`](#reproject-geographic-data) to convert CRS to specific projected coordinate system in the region of study area, if the spatial data with CRS EPSG:4326 is obtained.  
 
 Examples below illustrates the buffer of cycle hire points across London. Data cycle hire is provided by package spData. Suppose we define the region within 300 meters of hire points is service area.  
 
@@ -294,7 +293,7 @@ ggplot(us_states)+
 ```
 
 ## Clipping
-Clipping is a critical spatial operation in GIS. It extracts the geometry (point, line, polygon) that lies within the area outlined by the clip polygon. For instance, we have polygon of Taipei City and points of schools in Taiwan, and suppose we want to extract the schools located in Taipei City. We need to use the polygon to clip the point data, removing all the points outside the polygon. Though there is no "clip" function provided by package sf in fact, function `st_intersection()` help us do so. But please note that there is a difference between clipping and intersection in an accurate GIS definition. Clipping and intersection both extracts the geometry in a specific polygon; nonetheless, clipping does not retain the attributes of the clip polygon, while intersection creates output features which possess the attributes of all input features. The concept is illustrated below.  
+Clipping is a critical spatial operation in GIS. It extracts the geometry (point, line, polygon) that lies within the area outlined by the clip polygon. For instance, we have polygon of Taipei City and points of schools in Taiwan, and suppose we want to extract the schools located in Taipei City. We need to use the polygon to clip the point data, removing all the points outside the polygon. Though there is no "clip" function provided by package `sf` in fact, function `st_intersection()` help us do so. But please note that there is a difference between clipping and intersection in an accurate GIS definition. Clipping and intersection both extracts the geometry in a specific polygon; nonetheless, clipping does not retain the attributes of the clip polygon, while intersection creates output features which possess the attributes of all input features. The concept is illustrated below.  
 
 ```{r clip_intersection_figure, echo=F, out.width="90%", fig.align="center"}
 include_graphics("./graph/clip_intersection.png")
@@ -310,7 +309,7 @@ nz_north=filter(nz, Island=="North")
 st_intersection(nz_height, nz_north)
 ```
 
-Remember the spatial join operation? Actually, we can use function [`st_join()`](#st_join) to do the same thing. The code is shown below.  
+Remember the spatial join operation? Actually, we can use function [`st_join()`](#spatial-join) to do the same thing. The code is shown below.  
 
 ```{r intersection_union, echo=T, eval=T}
 # union two data first
@@ -417,7 +416,7 @@ When plotting the map, it is better to remove the detailed data and trivial info
 
 The algorithm initially finds the point that is farthest from the line segment with the first and last points as end points. If the distance between the point and line segment is shorter than the minimum threshold ε, then any other points can be discarded. If the distance is greater than ε, the point must be kept. The algorithm recursively calls itself with the first point and the farthest point and then with the farthest point and the last point, which includes the farthest point being marked as kept.  
 
-Function `st_simplify()` provided in sf package can do so. The simplification operation can be applied on all of the geometries (point, line, polygon). In function `st_simplify(x, dTolerance)`, spatial data is placed in the first parameter (x). Parameter `dTolerance` represents the minimum threshold (ε). Please note that the spatial data should be in projected coordinate system, or it might cause error. We can use function `st_crs()$unit` to confirm whether the unit is "meter". If it is NULL, it represents the data is in geographic coordinate system, please look up the appropriate CRS in [EPSG database](https://epsg.io/). Here, let's simplify the map of US states as code shown below.  
+Function `st_simplify()` provided in package `sf` can do so. The simplification operation can be applied on all of the geometries (point, line, polygon). In function `st_simplify(x, dTolerance)`, spatial data is placed in the first parameter (x). Parameter `dTolerance` represents the minimum threshold (ε). Please note that the spatial data should be in projected coordinate system, or it might cause error. We can use function `st_crs()$unit` to confirm whether the unit is "meter". If it is NULL, it represents the data is in geographic coordinate system, please look up the appropriate CRS in [EPSG database](https://epsg.io/). Here, let's simplify the map of US states as code shown below.  
 
 ```{r simplification, echo=T, eval=T}
 # check the unit (if NULL, convert CRS)
@@ -468,7 +467,7 @@ Before conducting affine transformation, please ensure that the data should be b
 us_states_2163=st_transform(us_states, crs=2163)
 ```
 
-In addition, the transformation is implemented on the [sfg](#sfg) and [sfc](#sfc) object, instead of [sf](#sf) (the whole spatial data). Thus, please conduct the transformation on the geometry column in spatial data, such as the form `DATA$geometry`. `DATA` means the spatial data (sf), and use `$` to retrieve the `geometry` (sfc) in the data.  
+In addition, the transformation is implemented on the [sfg](#simple-feature-geometries-sfg) and [sfc](#simple-feature-columns-sfc) object, instead of [sf](#simple-feature-sf) (the whole spatial data). Thus, please conduct the transformation on the geometry column in spatial data, such as the form `DATA$geometry`. `DATA` means the spatial data (sf), and use `$` to retrieve the `geometry` (sfc) in the data.  
 
 Shifting moves every point by the same distance in map units. It can be simply achieved by adding vector object after the spatial data. For instance, in the example below, we shift all x-coordinate by 500,000 meters to the east, while shift all y-coordinate 300,000 meters to the south.  
 

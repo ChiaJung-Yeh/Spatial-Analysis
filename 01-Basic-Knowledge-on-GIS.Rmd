@@ -28,7 +28,6 @@ In this notebook, we would focus on the issue about spaitial analysis and making
 
 The detailed concept of GIS can be derived on the textbook [*_“Introduction to Geographic Information Systems (Kang Tsung Chang)”_*](https://www.academia.edu/28691712/Introduction_to_GIS_Kang_Tsung_Chang_pdf?email_work_card=title).
 
-<span id="WKT"></span>  
 
 ## Well-Known Text (WKT)
 Well-known text (WKT) is a text markup language for representing vector geometry objects. The common type of geometric objects are marked as shown in the table below.  
@@ -44,7 +43,6 @@ The WKT types illustrated above are single geometry. However, sometimes we want 
 
 Multi geometries are available to represent more than one geometry of the same dimension in a single object, including MultiPoint, MultiLineString, MultiPolygon. Geometry Collection is the geometries of different dimensions.  
 
-<span id="shapefile"></span>  
 
 ## Shapefile
 The shapefile format is a universal geospatial vector data format. It is developed and regulated by [Esri](https://www.wikiwand.com/en/Esri), which is an international supplier of GIS software. The shapefile format can illustrate the vector features: points, lines, and polygons. In fact, shapefile is not a single file, but a collection containing four mandatory files. Each file is briefly introduced as the following.  
@@ -61,7 +59,6 @@ Geometric data is not geospatial unless it is accompanied by coordinate referenc
 
 There are two common types of coordinate systems:  
 
-<span id="proj_coord"></span>  
 
 ```{r crs_type, echo=F, eval=T}
 crs_type=data.frame(Type=c("**Geographic Coordinate Systems**","**Projected Coordinate System**"), Features=c("A global or spherical coordinate system such as latitude–longitude.","Based on a map projection such as [transverse Mercator](https://www.wikiwand.com/en/Transverse_Mercator_projection), [Albers equal area](https://www.wikiwand.com/en/Albers_projection), or [Robinson](https://www.wikiwand.com/en/Robinson_projection), which project the spherical surface onto a two-dimensional coordinate plane."), Example=c("EPSG:4326\\\n(World Geodetic System 1984)","EPSG:3826\\\n(TWD97 / TM2 zone 121, Taiwan Datum 1997)"))
