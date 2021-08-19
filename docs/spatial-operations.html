@@ -24,7 +24,7 @@
 <meta name="author" content="Chia Jung, Yeh" />
 
 
-<meta name="date" content="2021-07-31" />
+<meta name="date" content="2021-08-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -579,7 +579,7 @@ identifies if geometries of x and y share a common point but their interiors do 
 </div>
 <div id="buffer" class="section level2" number="5.7">
 <h2><span class="header-section-number">5.7</span> Buffer</h2>
-<p>Imagine that we want to calculate the number of schools within 500 meters radius of MRT stations, we need to first draw the buffer of each MRT stations before points calculation. Buffer is a zone (polygon) around a map feature within given distance, and it is useful for proximity analysis. Buffer can be created by function <code>st_buffer()</code>, whatever the type of geometry is. There are two parameters should be filled in <code>st_buffer()</code>. Place the spatial data first, and then set the distance of radius. But please note that the unit of distance is based on the coordinate reference system. In general, the unit is meter (m) in the <a href="#proj_coord">projected coordinate system</a>, while the unit is NULL in the the geographic coordinate systems (e.g., EPSG:4326). Hence, we need to use function <a href="geographic-data.html#reproject-geographic-data"><code>st_transform()</code></a> to convert CRS to specific projected coordinate system in the region of study area, if the spatial data with CRS EPSG:4326 is obtained.</p>
+<p>Imagine that we want to calculate the number of schools within 500 meters radius of MRT stations, we need to first draw the buffer of each MRT stations before points calculation. Buffer is a zone (polygon) around a map feature within given distance, and it is useful for proximity analysis. Buffer can be created by function <code>st_buffer()</code>, whatever the type of geometry is. There are two parameters should be filled in <code>st_buffer()</code>. Place the spatial data first, and then set the distance of radius. But please note that the unit of distance is based on the coordinate reference system. In general, the unit is meter (m) in the <a href="basic-knowledge-on-gis.html#coordinate-reference-system-crs">projected coordinate system</a>, while the unit is NULL in the the geographic coordinate systems (e.g., EPSG:4326). Hence, we need to use function <a href="geographic-data.html#reproject-geographic-data"><code>st_transform()</code></a> to convert CRS to specific projected coordinate system in the region of study area, if the spatial data with CRS EPSG:4326 is obtained.</p>
 <p>Examples below illustrates the buffer of cycle hire points across London. Data cycle hire is provided by package spData. Suppose we define the region within 300 meters of hire points is service area.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="spatial-operations.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test of the CRS and buffer of cycle_hire</span></span>
 <span id="cb35-2"><a href="spatial-operations.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(cycle_hire)<span class="sc">$</span>epsg             <span class="co"># original CRS: EPSG:4326 (geographic)</span></span></code></pre></div>
@@ -821,8 +821,147 @@ identifies if geometries of x and y share a common point but their interiors do 
 </div>
 <div id="geometric-measurement" class="section level2" number="5.12">
 <h2><span class="header-section-number">5.12</span> Geometric Measurement</h2>
-<p>When doing spatial analysis, we usually calculate the length, distance and area of the geometries. But please note that the accuracy of the geometric measurement depends on the projection of the map (CRS). Here, we do not further discuss about how different CRS affect the measurement, but just know how to do calculation by using sf package.</p>
-<p>Length means</p>
+<p>Geometric measurement is mainly to measure the area, length and distance of the geometries. The operation can be done by the function <code>st_area</code>, <code>st_length</code> and <code>st_distance</code> in package <code>sf</code> respectively. Geometric measurement is very useful when it comes to calculating the population density (area), the radial distance between two points (distance) and lots of practical issues. But please note that the precision of the geometric measurement depends on the projection of the map (CRS). If we use the geographic coordinate systems (latitude–longitude, e.g., EPSG:4326) to measure the geometries, we may obtain a wrong result. This is because the geographic coordinate systems uses a three-dimensional spherical surface to define a location on the earth with longitudes and latitudes in degrees, and of course, the measurement on two-dimensional must result in the high deviation. The measurement of functions can be well-performed when the geometries in a correct projected coordinate system, which defines the X and Y of two-dimensional geometry. Here, we do not further discuss about how different CRS affect on the measurement, which requires better technical knowledge on the GIS, but just realize how to do calculation by using package <code>sf</code>.</p>
+<p><code>st_area</code> is used to calculate the area of the polygon. Take data <code>lnd</code> in package <code>spData</code> for instance. <code>lnd</code> is the data that records all of the boroughs in London with the attributes such as name, official code, area, and so forth.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="spatial-operations.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_area</span>(lnd)</span></code></pre></div>
+<pre><code>## Units: [m^2]
+##  [1]  37275804  86520876 150170946  55950018  55567236 112367550 115753312
+##  [8]  50484355  43249381  86779900  26818665  28870760  35158807  47345454
+## [15]  60592248  82225772  38818676  56432387  43862148  57376438  37638114
+## [22]  34276203  16403636  12128152  21494317  21796715  19783577  14861403
+## [29]  19054716  29607835  36210825  36115169   2904829</code></pre>
+<p>Simply just place the data in the function <code>st_area()</code>, we would get the result. It shows the area of each borough in the sequence of the original data <code>lnd</code>, for example, the first row is Kingston upon Thames, and its area is 37275804 [m^2]. But is the result correct? Fortunately, we can check the answer in the attribute fields of data <code>lnd</code>, which records the area in column named HECTARES. What’s surprising? The result are not identical. Column HECTARES in <code>lnd</code> tells us the area of Kingston upon Thames is 3726.117 [hectares], which is equal to 37261170 [m^2]; however, the result we get from <code>st_area</code> is 37275804 [m^2]. What’s our mistake?</p>
+<p>The inconsistent results are derived from the wrong CRS we use. First of all, we can check the CRS of data <code>lnd</code>. Using function <code>st_crs()</code> to identify the coordinate system, we can find that the CRS is EPSG:4326 (geographic coordinate systems). As mentioned above, the geographic coordinate systems is defined in spherical surface, which is not appropriate to directly conduct geometric measurement. Hence, we need to convert it to coordinated system by function <a href="geographic-data.html#reproject-geographic-data"><code>st_transform</code></a> in advance, ensuring the precision of result. Please look up the CRS of London (England) in <a href="#https://epsg.io/?q=England">EPSG database</a>.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="spatial-operations.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The project coordinate system of England is </span></span>
+<span id="cb66-2"><a href="spatial-operations.html#cb66-2" aria-hidden="true" tabindex="-1"></a>lnd_27700<span class="ot">=</span><span class="fu">st_transform</span>(lnd, <span class="at">crs=</span><span class="dv">27700</span>)</span>
+<span id="cb66-3"><a href="spatial-operations.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_area</span>(lnd_27700)</span></code></pre></div>
+<pre><code>## Units: [m^2]
+##  [1]  37261178  86494436 150134858  55926233  55544350 112349669 115700544
+##  [8]  50463301  43232640  86748314  26810042  28862036  35149085  47334073
+## [15]  60580234  82200191  38807965  56419224  43846975  57353283  37624744
+## [22]  34264163  16397618  12123848  21486977  21789296  19777937  14856653
+## [29]  19049028  29598387  36201727  36107810   2903926</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="spatial-operations.html#cb68-1" aria-hidden="true" tabindex="-1"></a>lnd_27700</span></code></pre></div>
+<pre><code>## Simple feature collection with 33 features and 7 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 503568.2 ymin: 155850.8 xmax: 561957.5 ymax: 200933.9
+## Projected CRS: OSGB 1936 / British National Grid
+## First 10 features:
+##                    NAME  GSS_CODE  HECTARES NONLD_AREA ONS_INNER SUB_2009
+## 1  Kingston upon Thames E09000021  3726.117      0.000         F     &lt;NA&gt;
+## 2               Croydon E09000008  8649.441      0.000         F     &lt;NA&gt;
+## 3               Bromley E09000006 15013.487      0.000         F     &lt;NA&gt;
+## 4              Hounslow E09000018  5658.541     60.755         F     &lt;NA&gt;
+## 5                Ealing E09000009  5554.428      0.000         F     &lt;NA&gt;
+## 6              Havering E09000016 11445.735    210.763         F     &lt;NA&gt;
+## 7            Hillingdon E09000017 11570.063      0.000         F     &lt;NA&gt;
+## 8                Harrow E09000015  5046.330      0.000         F     &lt;NA&gt;
+## 9                 Brent E09000005  4323.270      0.000         F     &lt;NA&gt;
+## 10               Barnet E09000003  8674.837      0.000         F     &lt;NA&gt;
+##    SUB_2006                       geometry
+## 1      &lt;NA&gt; MULTIPOLYGON (((516401.6 16...
+## 2      &lt;NA&gt; MULTIPOLYGON (((535009.2 15...
+## 3      &lt;NA&gt; MULTIPOLYGON (((540373.6 15...
+## 4      &lt;NA&gt; MULTIPOLYGON (((521975.8 17...
+## 5      &lt;NA&gt; MULTIPOLYGON (((510253.5 18...
+## 6      &lt;NA&gt; MULTIPOLYGON (((549893.9 18...
+## 7      &lt;NA&gt; MULTIPOLYGON (((510599.8 19...
+## 8      &lt;NA&gt; MULTIPOLYGON (((510599.8 19...
+## 9      &lt;NA&gt; MULTIPOLYGON (((525201 1825...
+## 10     &lt;NA&gt; MULTIPOLYGON (((524579.9 19...</code></pre>
+<p>Fortunately, we can derive a more precise area of each polygon. Please note that they are still not equal, possibly because of the problem of CRS issue again, but the difference between what we calculate and the attributes recorded (HECTARES) shrinks.</p>
+<p>Length means to measure the length of a line, which can be operated by function <code>st_length()</code>. Take the perimeter of a country border for instance.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="spatial-operations.html#cb70-1" aria-hidden="true" tabindex="-1"></a>lnd_27700_border<span class="ot">=</span><span class="fu">st_boundary</span>(lnd_27700)</span>
+<span id="cb70-2"><a href="spatial-operations.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_length</span>(lnd_27700_border)</span></code></pre></div>
+<pre><code>## Units: [m]
+##  [1] 37553.153 58703.984 76164.278 58997.621 47439.044 63559.524 63887.056
+##  [8] 33735.497 38334.168 50818.591 33856.826 34210.755 41169.745 47611.445
+## [15] 45018.345 41064.695 33339.419 48674.312 39844.420 65245.555 32349.061
+## [22] 38656.187 23940.326 20973.844 27304.280 26150.805 28683.830 20727.850
+## [29] 25382.790 29025.112 34939.936 40695.572  9249.686</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="spatial-operations.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_distance</span>(nz)</span></code></pre></div>
+<pre><code>## Units: [m]
+##             [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
+##  [1,]       0.00      0.00  75566.03 180795.60 343284.56 332120.19 260309.94
+##  [2,]       0.00      0.00      0.00  69118.65 231081.57 214143.40 156998.82
+##  [3,]   75566.03      0.00      0.00      0.00  57235.28      0.00      0.00
+##  [4,]  180795.60  69118.65      0.00      0.00      0.00      0.00 121039.46
+##  [5,]  343284.56 231081.57  57235.28      0.00      0.00      0.00 197818.19
+##  [6,]  332120.19 214143.40      0.00      0.00      0.00      0.00  99189.36
+##  [7,]  260309.94 156998.82      0.00 121039.46 197818.19  99189.36      0.00
+##  [8,]  260373.19 146622.25      0.00  29994.58 108540.08      0.00      0.00
+##  [9,]  486064.93 380550.55 154741.70 186162.61 229504.73  33399.33  98213.50
+## [10,]  511443.56 440414.79 307994.42 399434.74 479820.14 321371.01 200862.80
+## [11,]  612546.38 516396.53 322634.30 384430.21 457445.69 265332.05 235975.54
+## [12,]  917836.62 850862.92 713271.58 784826.57 860632.11 664618.09 605419.20
+## [13,] 1000362.89 941011.81 810304.02 890389.53 967998.39 793503.18 702382.38
+## [14,]  472634.53 396266.43 258946.21 349711.88 430276.27 276169.48 151151.97
+## [15,]  518393.04 427201.07 258487.06 330273.76 407819.85 242083.51 159546.61
+## [16,]  477233.59 382287.35 208440.88 280908.63 358771.29 197116.01 109860.92
+##            [,8]      [,9]     [,10]     [,11]    [,12]      [,13]    [,14]
+##  [1,] 260373.19 486064.93 511443.56 612546.38 917836.6 1000362.89 472634.5
+##  [2,] 146622.25 380550.55 440414.79 516396.53 850862.9  941011.81 396266.4
+##  [3,]      0.00 154741.70 307994.42 322634.30 713271.6  810304.02 258946.2
+##  [4,]  29994.58 186162.61 399434.74 384430.21 784826.6  890389.53 349711.9
+##  [5,] 108540.08 229504.73 479820.14 457445.69 860632.1  967998.39 430276.3
+##  [6,]      0.00  33399.33 321371.01 265332.05 664618.1  793503.18 276169.5
+##  [7,]      0.00  98213.50 200862.80 235975.54 605419.2  702382.38 151152.0
+##  [8,]      0.00      0.00 216969.76 167028.33 572648.6  685199.24 172656.4
+##  [9,]      0.00      0.00 164664.11  86289.55 491472.4  610962.32 111914.8
+## [10,] 216969.76 164664.11      0.00      0.00      0.0       0.00      0.0
+## [11,] 167028.33  86289.55      0.00      0.00      0.0   87359.73      0.0
+## [12,] 572648.65 491472.41      0.00      0.00      0.0       0.00 286469.7
+## [13,] 685199.24 610962.32      0.00  87359.73      0.0       0.00 391785.8
+## [14,] 172656.38 111914.84      0.00      0.00 286469.7  391785.83      0.0
+## [15,] 135707.91  88665.26  46422.04  68152.42 409632.2  514821.67      0.0
+## [16,]  87435.82  39404.91  23949.55      0.00 312545.8  426689.29      0.0
+##           [,15]     [,16]
+##  [1,] 518393.04 477233.59
+##  [2,] 427201.07 382287.35
+##  [3,] 258487.06 208440.88
+##  [4,] 330273.76 280908.63
+##  [5,] 407819.85 358771.29
+##  [6,] 242083.51 197116.01
+##  [7,] 159546.61 109860.92
+##  [8,] 135707.91  87435.82
+##  [9,]  88665.26  39404.91
+## [10,]  46422.04  23949.55
+## [11,]  68152.42      0.00
+## [12,] 409632.19 312545.79
+## [13,] 514821.67 426689.29
+## [14,]      0.00      0.00
+## [15,]      0.00      0.00
+## [16,]      0.00      0.00</code></pre>
+<p>The result shows the length of border of each boroughs in London. The unit is [m].</p>
+<p>Last, <code>st_distance()</code> helps us to calculate the distance between pairs of geometric features. In transportation field, we often expect to calculate the distance of any two points, to roughly identify the radial distance of an OD pair, and construct the OD matrix. The elements of <code>st_distance()</code> is a bit complicated than the previous. Function <code>st_distance(x, y, by_element)</code> returns a dense numeric matrix of dimension length(x) by length(y) when parameter <code>by_element=F</code> (default). That is, if x consists of 5 points, and y consists of 4 points, then there are 5*4=20 results of distance, which is a complete matrix. If parameter <code>by_element=T</code> is set, then the distance is calculated by row, and the shorter one being recycled. And if there is only one data in the function, then it means to construct the complete distance matrix of the data. Here, we take the first five rows of data <code>nz_height</code> (data records the top 101 highest points in New Zealand) provided by <code>spData</code> for example.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="spatial-operations.html#cb74-1" aria-hidden="true" tabindex="-1"></a>nz_height_5<span class="ot">=</span>nz_height[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]</span>
+<span id="cb74-2"><a href="spatial-operations.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_distance</span>(nz_height_5)</span></code></pre></div>
+<pre><code>## Units: [m]
+##           [,1]      [,2]      [,3]      [,4]     [,5]
+## [1,]      0.00  30627.85  31795.56  61597.89 205090.3
+## [2,]  30627.85      0.00   1266.53  37715.86 180876.7
+## [3,]  31795.56   1266.53      0.00  36606.75 179668.5
+## [4,]  61597.89  37715.86  36606.75      0.00 144033.9
+## [5,] 205090.28 180876.66 179668.50 144033.94      0.0</code></pre>
+<p>With only one data in the function, the result shows the complete distance matrix of the 5 points. And now, a bit more complicated, let’s calculate the distance between the first 5 points to the centroid of its regions (polygons). In this case, we need to find out the region of each points located by using function <a href="spatial-operations.html#clipping"><code>st_intersection()</code></a>, and create a new variable called “nz_height_region.” However, doing intersection can only get the attribute of data <code>nz</code>, the geometry type remains “POINT.” Hence, we need to join the geometry data by using <code>left_join()</code> and use <a href="geographic-data.html#simple-feature-sf"><code>st_sf()</code></a> to re-make the simple feature data. The next step is to retrieve the centroid of each region, and create a new variable named “nz_height_region_centroid.” Last, we can calculate the distance of the points and the centroids of its region located in. And remember to add the parameter <code>by_element=T</code>, to ensure the distance is calculated by row, instead of a complete matrix. To sum, the operation is tortuous, but review some of the basic operations mentioned in this chapter up to now.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="spatial-operations.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># intersection to find out regions of each points located</span></span>
+<span id="cb76-2"><a href="spatial-operations.html#cb76-2" aria-hidden="true" tabindex="-1"></a>nz_height_region<span class="ot">=</span><span class="fu">st_intersection</span>(nz_height_5, nz)</span>
+<span id="cb76-3"><a href="spatial-operations.html#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="spatial-operations.html#cb76-4" aria-hidden="true" tabindex="-1"></a><span class="co"># left join to retrieve the geometries of polygon</span></span>
+<span id="cb76-5"><a href="spatial-operations.html#cb76-5" aria-hidden="true" tabindex="-1"></a>nz_height_region<span class="ot">=</span><span class="fu">left_join</span>(<span class="fu">st_drop_geometry</span>(nz_height_region), nz)</span></code></pre></div>
+<pre><code>## Joining, by = c(&quot;Name&quot;, &quot;Island&quot;, &quot;Land_area&quot;, &quot;Population&quot;, &quot;Median_income&quot;, &quot;Sex_ratio&quot;)</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="spatial-operations.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the simple feature is converted to data frame, hence use st_sf() to retrieve the sf</span></span>
+<span id="cb78-2"><a href="spatial-operations.html#cb78-2" aria-hidden="true" tabindex="-1"></a>nz_height_region<span class="ot">=</span><span class="fu">st_sf</span>(nz_height_region)</span>
+<span id="cb78-3"><a href="spatial-operations.html#cb78-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-4"><a href="spatial-operations.html#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the centroid of each region</span></span>
+<span id="cb78-5"><a href="spatial-operations.html#cb78-5" aria-hidden="true" tabindex="-1"></a>nz_height_region_centroid<span class="ot">=</span><span class="fu">st_centroid</span>(nz_height_region)</span>
+<span id="cb78-6"><a href="spatial-operations.html#cb78-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-7"><a href="spatial-operations.html#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the distance of highest points and its region</span></span>
+<span id="cb78-8"><a href="spatial-operations.html#cb78-8" aria-hidden="true" tabindex="-1"></a><span class="fu">st_distance</span>(nz_height_5, nz_height_region_centroid, <span class="at">by_element=</span>T)</span></code></pre></div>
+<pre><code>## Units: [m]
+## [1] 307518.0 280053.5 113454.4 116381.3 291094.6</code></pre>
+<p>The geometric measurement is vital and basic in terms of doing spatial analysis. In this section, we can learn how to calculate the area, length and distance. The only issue we do not address is that the precision of calculation, if interested, please find other resources to get deeper understanding.</p>
 </div>
 <div id="nearest-analysis" class="section level2" number="5.13">
 <h2><span class="header-section-number">5.13</span> Nearest Analysis</h2>

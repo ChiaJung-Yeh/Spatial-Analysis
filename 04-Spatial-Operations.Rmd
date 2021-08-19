@@ -239,7 +239,7 @@ ggplot(penghu)+
 In Penghu example, we can find that the point on surface (red dot) and the centroid (blue dot) are not the same. Centroid is located in the inland sea of Penghu, while the point on surface is located in one of the island of Penghu. Please note that the island which point on surface located in is not the largest one. For more information of its algorithm, please refer to the [discussion](https://gis.stackexchange.com/questions/76498/how-is-st-pointonsurface-calculated) attached.  
 
 ## Buffer
-Imagine that we want to calculate the number of schools within 500 meters radius of MRT stations, we need to first draw the buffer of each MRT stations before points calculation. Buffer is a zone (polygon) around a map feature within given distance, and it is useful for proximity analysis. Buffer can be created by function `st_buffer()`, whatever the type of geometry is. There are two parameters should be filled in `st_buffer()`. Place the spatial data first, and then set the distance of radius. But please note that the unit of distance is based on the coordinate reference system. In general, the unit is meter (m) in the [projected coordinate system](#proj_coord), while the unit is NULL in the the geographic coordinate systems (e.g., EPSG:4326). Hence, we need to use function [`st_transform()`](#reproject-geographic-data) to convert CRS to specific projected coordinate system in the region of study area, if the spatial data with CRS EPSG:4326 is obtained.  
+Imagine that we want to calculate the number of schools within 500 meters radius of MRT stations, we need to first draw the buffer of each MRT stations before points calculation. Buffer is a zone (polygon) around a map feature within given distance, and it is useful for proximity analysis. Buffer can be created by function `st_buffer()`, whatever the type of geometry is. There are two parameters should be filled in `st_buffer()`. Place the spatial data first, and then set the distance of radius. But please note that the unit of distance is based on the coordinate reference system. In general, the unit is meter (m) in the [projected coordinate system](#coordinate-reference-system-crs), while the unit is NULL in the the geographic coordinate systems (e.g., EPSG:4326). Hence, we need to use function [`st_transform()`](#reproject-geographic-data) to convert CRS to specific projected coordinate system in the region of study area, if the spatial data with CRS EPSG:4326 is obtained.  
 
 Examples below illustrates the buffer of cycle hire points across London. Data cycle hire is provided by package spData. Suppose we define the region within 300 meters of hire points is service area.  
 
@@ -580,11 +580,65 @@ ggplot()+
 ```
 
 ## Geometric Measurement
-When doing spatial analysis, we usually calculate the length, distance and area of the geometries. But please note that the accuracy of the geometric measurement depends on the projection of the map (CRS). Here, we do not further discuss about how different CRS affect the measurement, but just know how to do calculation by using sf package.  
+Geometric measurement is mainly to measure the area, length and distance of the geometries. The operation can be done by the function `st_area`, `st_length` and `st_distance` in package `sf` respectively. Geometric measurement is very useful when it comes to calculating the population density (area), the radial distance between two points (distance) and lots of practical issues. But please note that the precision of the geometric measurement depends on the projection of the map (CRS). If we use the geographic coordinate systems (latitude–longitude, e.g., EPSG:4326) to measure the geometries, we may obtain a wrong result. This is because the geographic coordinate systems uses a three-dimensional spherical surface to define a location on the earth with longitudes and latitudes in degrees, and of course, the measurement on two-dimensional must result in the high deviation. The measurement of functions can be well-performed when the geometries in a correct projected coordinate system, which defines the X and Y of two-dimensional geometry. Here, we do not further discuss about how different CRS affect on the measurement, which requires better technical knowledge on the GIS, but just realize how to do calculation by using package `sf`.  
 
-Length means 
+`st_area` is used to calculate the area of the polygon. Take data `lnd` in package `spData` for instance. `lnd` is the data that records all of the boroughs in London with the attributes such as name, official code, area, and so forth.
 
+```{r measure_area, echo=T, eval=T, warning=F}
+st_area(lnd)
+```
 
+Simply just place the data in the function `st_area()`, we would get the result. It shows the area of each borough in the sequence of the original data `lnd`, for example, the first row is Kingston upon Thames, and its area is 37275804 [m^2]. But is the result correct? Fortunately, we can check the answer in the attribute fields of data `lnd`, which records the area in column named HECTARES. What's surprising? The result are not identical. Column HECTARES in `lnd` tells us the area of Kingston upon Thames is 3726.117 [hectares], which is equal to 37261170 [m^2]; however, the result we get from `st_area` is 37275804 [m^2]. What's our mistake?  
+
+The inconsistent results are derived from the wrong CRS we use. First of all, we can check the CRS of data `lnd`. Using function `st_crs()` to identify the coordinate system, we can find that the CRS is EPSG:4326 (geographic coordinate systems). As mentioned above, the geographic coordinate systems is defined in spherical surface, which is not appropriate to directly conduct geometric measurement. Hence, we need to convert it to coordinated system by function [`st_transform`](#reproject-geographic-data) in advance, ensuring the precision of result. Please look up the CRS of London (England) in [EPSG database](#https://epsg.io/?q=England).
+
+```{r measure_area_revise, echo=T, eval=T, warning=F}
+# The project coordinate system of England is 
+lnd_27700=st_transform(lnd, crs=27700)
+st_area(lnd_27700)
+lnd_27700
+```
+
+Fortunately, we can derive a more precise area of each polygon. Please note that they are still not equal, possibly because of the problem of CRS issue again, but the difference between what we calculate and the attributes recorded (HECTARES) shrinks.  
+
+Length means to measure the length of a line, which can be operated by function `st_length()`. Take the perimeter of a country border for instance.  
+
+```{r measure_length, echo=T, eval=T, warning=F}
+lnd_27700_border=st_boundary(lnd_27700)
+st_length(lnd_27700_border)
+
+st_distance(nz)
+```
+
+The result shows the length of border of each boroughs in London. The unit is [m].  
+
+Last, `st_distance()` helps us to calculate the distance between pairs of geometric features. In transportation field, we often expect to calculate the distance of any two points, to roughly identify the radial distance of an OD pair, and construct the OD matrix. The elements of `st_distance()` is a bit complicated than the previous. Function `st_distance(x, y, by_element)` returns a dense numeric matrix of dimension length(x) by length(y) when parameter `by_element=F` (default). That is, if x consists of 5 points, and y consists of 4 points, then there are 5*4=20 results of distance, which is a complete matrix. If parameter `by_element=T` is set, then the distance is calculated by row, and the shorter one being recycled. And if there is only one data in the function, then it means to construct the complete distance matrix of the data. Here, we take the first five rows of data `nz_height` (data records the top 101 highest points in New Zealand) provided by `spData` for example.  
+
+```{r measure_distance, echo=T, eval=T, warning=F}
+nz_height_5=nz_height[1:5,]
+st_distance(nz_height_5)
+```
+
+With only one data in the function, the result shows the complete distance matrix of the 5 points. And now, a bit more complicated, let's calculate the distance between the first 5 points to the centroid of its regions (polygons). In this case, we need to find out the region of each points located by using function [`st_intersection()`](#clipping), and create a new variable called "nz_height_region". However, doing intersection can only get the attribute of data `nz`, the geometry type remains "POINT". Hence, we need to join the geometry data by using `left_join()` and use [`st_sf()`](#simple-feature-sf) to re-make the simple feature data. The next step is to retrieve the centroid of each region, and create a new variable named "nz_height_region_centroid". Last, we can calculate the distance of the points and the centroids of its region located in. And remember to add the parameter `by_element=T`, to ensure the distance is calculated by row, instead of a complete matrix. To sum, the operation is tortuous, but review some of the basic operations mentioned in this chapter up to now.  
+
+```{r measure_distance_by, echo=T, eval=T, warning=F}
+# intersection to find out regions of each points located
+nz_height_region=st_intersection(nz_height_5, nz)
+
+# left join to retrieve the geometries of polygon
+nz_height_region=left_join(st_drop_geometry(nz_height_region), nz)
+
+# the simple feature is converted to data frame, hence use st_sf() to retrieve the sf
+nz_height_region=st_sf(nz_height_region)
+
+# calculate the centroid of each region
+nz_height_region_centroid=st_centroid(nz_height_region)
+
+# calculate the distance of highest points and its region
+st_distance(nz_height_5, nz_height_region_centroid, by_element=T)
+```
+
+The geometric measurement is vital and basic in terms of doing spatial analysis. In this section, we can learn how to calculate the area, length and distance. The only issue we do not address is that the precision of calculation, if interested, please find other resources to get deeper understanding.  
 
 ## Nearest Analysis
 

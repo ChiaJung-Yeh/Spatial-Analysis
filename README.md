@@ -2,5 +2,5 @@
 Spatial Analysis with R
 
 
-National Yang Ming Chiao Tung University
+National Yang Ming Chiao Tung University  
 Chia Jung, Yeh
