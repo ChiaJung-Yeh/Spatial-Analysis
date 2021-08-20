@@ -377,12 +377,13 @@ taipei_youbike=read_sf("./data/taipei_youbike/taipei_youbike.shp")
 
 windowsFonts(A=windowsFont("標楷體"))
 
+taipei_youbike$BksCpct=as.numeric(taipei_youbike$BksCpct)
 ggplot(taipei_village_map)+
   geom_sf(color=NA, aes(fill=PP), alpha=0.8)+
   scale_fill_continuous(low="#FFECEC", high="#EA0000", name="人口數")+
-  geom_sf(data=taipei_cycle_path, size=0.1, color="#C4E1E1", alpha=0.8)+
-  geom_sf(data=taipei_youbike, aes(size=BIKESCAPAC), color="#6C6C6C")+
-  scale_size_continuous(range=c(0.2,2.5))+
+  geom_sf(data=taipei_cycle_path, size=0.1, color="#2894FF", alpha=0.8)+
+  geom_sf(data=taipei_youbike, aes(size=BksCpct), color="#6C6C6C")+
+  scale_size_continuous(range=c(0.1,2))+
   guides(size=guide_legend("YouBike 車樁數", label.position="bottom", ncol=3))+
   annotation_scale(location="br", height=unit(0.15, "cm"))+
   annotation_north_arrow(location="tl", width=unit(0.6, "cm"), height=unit(0.9, "cm"))+

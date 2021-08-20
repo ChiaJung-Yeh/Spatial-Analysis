@@ -243,7 +243,7 @@ tm_shape(ScenicSpot)+
 ## Reproject Geographic Data
 After collecting the shapefile data, we may find that their CRS are not consistent, which may cause error in plotting maps as well as in conducting spatial analysis. Hence, it is required to covert them to a same CRS. The inconsistency of CRS often results from the different origin or purpose of the map. In Taiwan, there are two major type of CRS. One is EPSG:4326, which is recorded in latitude and longitude. The other one is EPSG:3826, which is specifically used for the island. However, since shapefiles are managed and released by different sectors (private sector and gonvernment), CRS has not been unified. Function `st_transform()` can solve this problem by resetting CRS.  
 
-We have convert "ScenicSpot" from CSV file to shapefile in EPSG:4326 in the previous section. In the example below, we would further transform CRS to EPSG:3826.  
+We have converted "ScenicSpot" from CSV file to shapefile in EPSG:4326 in the previous section. In the example below, we would further transform CRS to EPSG:3826.  
 
 ```{r st_transform, echo=T, eval=T}
 # check the original CRS
