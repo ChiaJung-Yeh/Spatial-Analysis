@@ -719,7 +719,7 @@ tm_shape(nearest_line)+
   tm_dots(col="#FF9224", size=0.01)
 ```
 
-We have learned the method to capture the nearest point of the feature. But sometimes, we do not only need the nearest one, but the second, third,... nearest points. Unfortunately, package `sf` does not support to do so. Again, the most intuitive way is calculate the distance and then sort them by the value, but it is somehow complicated. Function `st_nn()` in package `nngeo` solve this problem. It can obtain several (k) nearest points by setting parameter `k=` in the function. Let's first set `k=1` to observe the result of the nearest point, checking whether the result are identical to the one from function `st_nearest_feature()`. Using the case of Taipei MRT and YouBike stations for example again. Note that install the package `nngeo` first.  
+We have learned the method to capture the nearest point of the feature. But sometimes, we do not only need the nearest one, but the second, third,... nearest points. Unfortunately, package `sf` does not support to do so. Again, the most intuitive way is to calculate the distance and then sort them by the value, but it is somehow complicated. Function `st_nn()` in package `nngeo` solve this problem. It can obtain several (k) nearest points by setting parameter `k=` in the function. Let's first set `k=1` to observe the result of the nearest point, checking whether the result are identical to the one from function `st_nearest_feature()`. Using the case of Taipei MRT and YouBike stations for example again. Note that install the package `nngeo` first.  
 
 ```{r nngeo, echo=T, eval=F, warning=F}
 install.packages("nngeo")
@@ -764,9 +764,36 @@ The table shown above may have a little mistake, since we put all the transfer s
 
 Last, it's important to mention that function `st_nn()` can also derive the distance of k nearest point, simply by adding the parameter `returnDist=T`. The function would also output the distance result in the list.  
 
-
 ## Convex Hull
+The convex hull of a shape is the smallest convex set that contains in the geometry, illustrated as the figure below. There are many algorithms developed to seek for the convex hull in the decades, mainly to decrease the complexity of the algorithm and increase the efficiency. We do not further discuss about the detailed and technical approach to find the convex hull, but simply use the function provided by package `sf` to obtain the result.  
 
+```{r convex_hull_figure, echo=F, out.width="90%", fig.align="center"}
+include_graphics("./graph/convex_hull.png")
+```
+
+If we want to find the convex hull of several points, remember to union all the points together by function [`st_union()`](#unions), and then use `st_convex_hull()` to get the convex hull of all the points. Here we use Taipei YouBike station again to retrieve its convex hull.  
+
+```{r convex_hull, echo=T, eval=T, warning=F}
+# union all the points
+youbike_union=st_union(taipei_youbike)
+
+# do the convex hull
+youbike_convex=st_convex_hull(youbike_union)
+```
+
+```{r convex_hull_map, echo=F, eval=T, warning=F, fig.width=8, fig.height=4, dpi=200}
+town=read_sf("./data/taipei_map/taipei_village_map.shp")
+town=group_by(town, TOWNNAME)%>%
+  summarise()
+ggplot()+
+  geom_sf(data=town)+
+  geom_sf(data=youbike_convex, alpha=0.5, color=NA, fill="#75AADB")+
+  geom_sf(data=taipei_youbike, color="#FF9224", size=0.01)+
+  theme(panel.background=element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank(),
+        axis.ticks=element_blank())
+```
 
 
 ## Voronoi Polygon
