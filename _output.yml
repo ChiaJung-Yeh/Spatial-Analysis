@@ -10,6 +10,9 @@ bookdown::gitbook:
         <li><a href="./">Spatial Analysis with R</a></li>
       after: |
         <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+    fontsettings:
+      theme: white
+      family: serif
     edit: https://github.com/ChiaJung-Yeh/Spatial-Analysis/blob/master/%s
     download: ["pdf"]
 #bookdown::pdf_book:
