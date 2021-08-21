@@ -1,0 +1,31 @@
+```{r setup5, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(sf)
+library(ggplot2)
+library(ggsflabel)
+library(ggspatial)
+library(knitr)
+library(kableExtra)
+library(spData)
+library(tmap)
+library(leaflet)
+library(classInt)
+library(cowplot)
+library(DT)
+library(nngeo)
+library(RColorBrewer)
+sf_use_s2(FALSE)
+```
+
+# **Basic Quantitative Geography **
+From chapter 2 to 4, we have learned how to do make maps and do spatial operations, they are all fundamental and vital contents regarding spatial analysis. The operations we have learned could help us identify what the spatial "looks like"; however, up to now, we have no idea about "what spatial tells". Hence, this chapter would introduce the basic theory and application of quantitative geography. We would learn the point patterns and spatial auto correlation in this chapter, which are relatively simple in this field, and can also help the analysis on transportation issue. Note that there are much more to explore other than this two elements, if interested, please refer to the textbook [Spatial Data Analysis - An Introduction For Gis Users](https://vdoc.pub/documents/spatial-data-analysis-an-introduction-for-gis-users-7kgftthl78g0).  
+
+In this chapter, we need a preliminary knowledge on statistics, especially the concept of hypothetical test.  
+
+## Point Patterns Analysis
+
+
+## Spatial Autocorrelation Analysis
+
+

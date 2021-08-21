@@ -1,4 +1,4 @@
-```{r setup, include=FALSE}
+```{r setup4, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(sf)
@@ -886,6 +886,7 @@ One more interesting issue we would like to mention is that the center of kmeans
 
 In conclusion, Voronoi polygon is a practical tool for us to do the basic spatial analysis, particularly for the nearest analysis or the cluster analysis.  
 
+## <span style="border-bottom: 3px double black">*_PRACTICE_*</span> 
 
 
 

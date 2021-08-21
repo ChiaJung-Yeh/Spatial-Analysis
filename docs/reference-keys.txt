@@ -54,3 +54,7 @@ geometric-measurement
 nearest-analysis
 convex-hull
 voronoi-polygon
+practice-2
+basic-quantitative-geography
+point-patterns-analysis
+spatial-autocorrelation-analysis
