@@ -647,12 +647,16 @@ The geometric measurement is vital and basic in terms of doing spatial analysis.
 ## Nearest Analysis
 In practical issue, we often want to know the nearest point of the feature, for instance, the nearest MRT station of the school. One method is to construct the complete distance matrix, and filter the nearest one by using function [`st_distance()`](#geometric-measurement). But obviously, it sounds very time-consuming. Package `sf` provided a function called `st_nearest_feature()` to get the index of the nearest geometry. Let's take Youbike and MRT Station in Taipei for example, and supposed we want to know the nearest MRT station of each YouBike station. <font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://drive.google.com/uc?export=download&id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi) to re-download the file if it is lost.</font>  
 
-In function `st_nearest_feature(X, Y)`, the result shows that for each geometry in X, the index of the nearest geometry in set Y. And note that the feature (geometry) can be point, line and polygon. In our case, we want to know the nearest MRT station of YouBike station, and hence, we should place YouBike data in the first parameter (X), while the MRT data should be placed in the second parameter. The code and result are shown below.  
+In function `st_nearest_feature(X, Y)`, the result shows that for each geometry in X, the index of the nearest geometry in set Y. And note that the feature (geometry) can be point, line and polygon. In our case, we want to know the nearest MRT station of YouBike station, and hence, we should place YouBike data in the first parameter (X), while the MRT data should be placed in the second parameter. The code and result are shown below. Before conducting the analysis, be aware at the "transfer station" of MRT! For transfer stations, though the station names are identical, they represent different geometry due to they are belong to different MRT lines. As a result, we can revise them by removing the data with duplicated station name. The work can be done by function `distinct()` from package `dplyr`.  
 
 ```{r nearest_feature, echo=T, eval=T, warning=F}
 # import the shapefile
 taipei_mrt_station=read_sf("./data/taipei_mrt/taipei_mrt_station.shp")
 taipei_youbike=read_sf("./data/taipei_youbike/taipei_youbike.shp")
+
+# remove the duplicated station names of transfer stations
+taipei_mrt_station=select(taipei_mrt_station, Zh_tw)%>%
+  distinct()
 
 # find the nearest feature
 near_mrt=st_nearest_feature(taipei_youbike, taipei_mrt_station)
@@ -662,7 +666,7 @@ head(near_mrt)
 
 # combine the data
 near_mrt_result=data.frame(YouBike=taipei_youbike$StatnNm,
-                           MRT=paste(taipei_mrt_station[near_mrt,]$StationID, taipei_mrt_station[near_mrt,]$Zh_tw))
+                           MRT=taipei_mrt_station[near_mrt,]$Zh_tw)
 # near_mrt_result
 ```
 
@@ -670,16 +674,16 @@ near_mrt_result=data.frame(YouBike=taipei_youbike$StatnNm,
 datatable(near_mrt_result, options=list(pageLength=10))
 ```
 
-Again, we must note that the result of function `st_nearest_feature()` retrieves is the "index" of nearest feature, not the simple feature itself. For instance, the first row of YouBike data is station "YouBike1.0_捷運市政府站(3號出口)", and the index of its nearest feature is 116, that is, the 116<sup>th</sup> row of MRT data (市政府).  
+Again, we must note that the result of function `st_nearest_feature()` retrieves is the "index" of nearest feature, not the simple feature itself. For instance, the first row of YouBike data is station "YouBike1.0_捷運市政府站(3號出口)", and the index of its nearest feature is 104, that is, the 104<sup>th</sup> row of MRT data (市政府).  
 
-Now, we know how to derive the index of the nearest feature, but what if we want to obtain the line between the nearest points? It can be done by the function named `st_nearest_points()`. The function gets nearest points between pairs of geometries, and output the linestring between two points. It does not only process on the point feature, but also the line and polygon. Let's do a simple test on this function regarding the nearest point on the polygon. Here we randomly choose 2 MRT stations, R10 and BR10, to draw their buffers (polygon), and choose other 5 MRT stations (BL10, R13, G08, BR07, BR13) to be the test points. By using the function, we can obtain the nearest points on each buffer for all the test points. The code and result are shown below.  
+Now, we know how to derive the index of the nearest feature, but what if we want to obtain the line between the nearest points? It can be done by the function named `st_nearest_points()`. The function gets nearest points between pairs of geometries, and output the linestring between two points. It does not only process on the point feature, but also the line and polygon. Let's do a simple test on this function regarding the nearest point on the polygon. Here we randomly choose 2 MRT stations, 台北車站 and 忠孝復興, to draw their buffers (polygon), and choose other 5 MRT stations (龍山寺, 民權西路, 台電大樓, 六張犁, 松山機場) to be the test points. By using the function, we can obtain the nearest points on each buffer for all the test points. The code and result are shown below.  
 
 ```{r nearest_point, echo=T, eval=T, warning=F}
 # choose 2 MRT stations
-mrt1=filter(taipei_mrt_station, StationID %in% c("R10", "BR10"))
+mrt1=filter(taipei_mrt_station, Zh_tw %in% c("台北車站", "忠孝復興"))
 
 # choose other 5 MRT stations
-mrt2=filter(taipei_mrt_station, StationID %in% c("BL10","R13","G08","BR07","BR13"))
+mrt2=filter(taipei_mrt_station, Zh_tw %in% c("龍山寺","民權西路","台電大樓","六張犁","松山機場"))
 
 # draw buffers
 mrt1=st_buffer(mrt1, 500)
@@ -696,10 +700,10 @@ tm_shape(mrt1_2)+
   tm_lines()+
   tm_shape(mrt1)+
   tm_polygons(alpha=0.2, col="#75AADB")+
-  tm_text("StationID")+
+  tm_text("Zh_tw")+
   tm_shape(mrt2)+
   tm_dots()+
-  tm_text("StationID", ymod=2)
+  tm_text("Zh_tw", ymod=2)
 ```
 
 In addition, continuing on the work we have done on the nearest MRT station of each YouBike station, we can use function `st_nearest_points()` to obtain the connection line on the map. But please note that we should add parameter `pairwise=T` to ensure the function returns nearest points between subsequent pairs, instead of all pairs.  
@@ -719,9 +723,10 @@ tm_shape(nearest_line)+
   tm_dots(col="#FF9224", size=0.01)
 ```
 
-We have learned the method to capture the nearest point of the feature. But sometimes, we do not only need the nearest one, but the second, third,... nearest points. Unfortunately, package `sf` does not support to do so. Again, the most intuitive way is to calculate the distance and then sort them by the value, but it is somehow complicated. Function `st_nn()` in package `nngeo` solve this problem. It can obtain several (k) nearest points by setting parameter `k=` in the function. Let's first set `k=1` to observe the result of the nearest point, checking whether the result are identical to the one from function `st_nearest_feature()`. Using the case of Taipei MRT and YouBike stations for example again. Note that install the package `nngeo` first.  
+We have learned the method to capture the nearest point of the feature. But sometimes, we do not only need the nearest one, but the second, third,... nearest points. Unfortunately, package `sf` does not support to do so. Again, the most intuitive way is to calculate the distance and then sort them by the value, but it is somehow complicated. Function `st_nn()` in package `nngeo` solve this problem. It can obtain several (k) nearest points by setting parameter `k=` in the function. Let's first set `k=1` to observe the result of the nearest point, checking whether the result are identical to the one from function `st_nearest_feature()`. Using the case of Taipei MRT and YouBike stations for example again.  
 
 ```{r nngeo, echo=T, eval=F, warning=F}
+# install the package `nngeo` first
 install.packages("nngeo")
 library(nngeo)
 ```
@@ -734,7 +739,7 @@ near_mrt_k1=st_nn(taipei_youbike, taipei_mrt_station, k=1)
 head(near_mrt_k1)
 ```
 
-The result is recorded in the list. If you want to retrieve the numeric type of the data, please use the following code: `unlist(near_mrt_k1)`. The first element in the list is 116, which means that the 116<sup>th</sup> row of MRT data is the nearest MRT station for the first row of YouBike data. Furthermore, we can find that the results derived from two different packages are the same.  
+The result is recorded in the list. If you want to retrieve the numeric type of the data, please use the following code: `unlist(near_mrt_k1)`. The first element in the list is 104, which means that the 104<sup>th</sup> row of MRT data is the nearest MRT station for the first row of YouBike data. Furthermore, we can find that the results derived from two different packages are the same.  
 
 Then, the following code tests for the first three nearest MRT stations of each YouBike station.  
 
@@ -753,14 +758,12 @@ The first three nearest points are shown in the matrix above. It tells us that t
 
 ```{r st_nn_k3_table, echo=F, eval=T, warning=F}
 near_mrt_k3=data.frame(near_mrt_k3)
-near_mrt_k3=data.frame(MRT_nn1=paste(taipei_mrt_station[near_mrt_k3$X1,]$StationID, taipei_mrt_station[near_mrt_k3$X1,]$Zh_tw),
-                       MRT_nn2=paste(taipei_mrt_station[near_mrt_k3$X2,]$StationID, taipei_mrt_station[near_mrt_k3$X2,]$Zh_tw),
-                       MRT_nn3=paste(taipei_mrt_station[near_mrt_k3$X3,]$StationID, taipei_mrt_station[near_mrt_k3$X3,]$Zh_tw))
+near_mrt_k3=data.frame(MRT_nn1=taipei_mrt_station[near_mrt_k3$X1,]$Zh_tw,
+                       MRT_nn2=taipei_mrt_station[near_mrt_k3$X2,]$Zh_tw,
+                       MRT_nn3=taipei_mrt_station[near_mrt_k3$X3,]$Zh_tw)
 near_mrt_k3=cbind(YouBike=taipei_youbike$StatnNm, near_mrt_k3)
 datatable(near_mrt_k3, options=list(pageLength=10))
 ```
-
-The table shown above may have a little mistake, since we put all the transfer stations in the data, namely, the first three nearest MRT station might have two stations that refer to the same station but on the different MRT lines. We can revise them by removing the data with duplicated station name. The work can be done by function `distinct()` from package `dplyr`, if any interested, do the nearest neighbor analysis again to get a more reasonable answer.  
 
 Last, it's important to mention that function `st_nn()` can also derive the distance of k nearest point, simply by adding the parameter `returnDist=T`. The function would also output the distance result in the list.  
 
@@ -781,12 +784,12 @@ youbike_union=st_union(taipei_youbike)
 youbike_convex=st_convex_hull(youbike_union)
 ```
 
-```{r convex_hull_map, echo=F, eval=T, warning=F, fig.width=8, fig.height=4, dpi=200}
+```{r convex_hull_map, echo=F, eval=T, warning=F}
 town=read_sf("./data/taipei_map/taipei_village_map.shp")
 town=group_by(town, TOWNNAME)%>%
   summarise()
 ggplot()+
-  geom_sf(data=town)+
+  geom_sf(data=town, color="#F0F0F0", fill="#BEBEBE")+
   geom_sf(data=youbike_convex, alpha=0.5, color=NA, fill="#75AADB")+
   geom_sf(data=taipei_youbike, color="#FF9224", size=0.01)+
   theme(panel.background=element_blank(),
@@ -795,7 +798,36 @@ ggplot()+
         axis.ticks=element_blank())
 ```
 
+Convex hull can also roughly identify the service area of the public facilities (e.g., fire stations ,police offices), public transport stations and so forth. Here, we again take Taipei YouBike station for example, and simply define the nearest MRT station to be the major service point, from the first mile and last mile point of view. Thus, the convex hull of YouBike stations for each MRT station can be interpreted as the service area of MRT stations regarding first and last mile service. Now, let's do the convex analysis on all the YouBike stations of each nearest MRT station. The code and result are shown below.  
+
+```{r convex_hull_youbike, echo=T, eval=T, warning=F}
+# near_mrt_result is dervied from section 5.13 Nearest Analysis
+near_mrt_sf=left_join(near_mrt_result, taipei_youbike[, c("StatnNm","PostnLn","PostnLt")], by=c("YouBike"="StatnNm"))
+
+# convert the data frame to simple feature
+near_mrt_sf=st_sf(near_mrt_sf)
+
+# group by each MRT station and draw the convex hull
+near_mrt_convex=group_by(near_mrt_sf, MRT)%>%
+  summarise()%>% 
+  st_convex_hull()
+```
+
+```{r convex_hull_youbike_map, echo=F, eval=T, warning=F, fig.width=8, fig.height=4, dpi=200}
+tmap_mode("view")
+tm_shape(st_transform(near_mrt_convex, crs=4326))+
+  tm_fill(col="#75AADB", alpha=0.6)+
+  tm_shape(taipei_youbike)+
+  tm_dots(col="#FF9224", size=0.01)+
+  tm_shape(taipei_mrt_station)+
+  tm_dots(col="#01B468", size=0.03)
+```
+
+From the map above, we can realize the YouBike service area of each MRT station. But we can find that some of the YouBike station are not in any convex hull. What happened? In fact, those MRT station contain only two or less YouBike stations, and thus, can not derive the polygon as results.  
 
 ## Voronoi Polygon
+Voronoi diagram is a partition of a plane into regions close to each of a given set of objects.
+
+
 
 
