@@ -14,6 +14,7 @@ library(classInt)
 library(cowplot)
 library(DT)
 library(nngeo)
+library(RColorBrewer)
 sf::sf_use_s2(FALSE)
 ```
 
@@ -791,7 +792,7 @@ town=group_by(town, TOWNNAME)%>%
 ggplot()+
   geom_sf(data=town, color="#F0F0F0", fill="#BEBEBE")+
   geom_sf(data=youbike_convex, alpha=0.5, color=NA, fill="#75AADB")+
-  geom_sf(data=taipei_youbike, color="#FF9224", size=0.01)+
+  geom_sf(data=taipei_youbike, color="#FF9224", size=0.5)+
   theme(panel.background=element_blank(),
         axis.title=element_blank(),
         axis.text=element_blank(),
@@ -809,7 +810,7 @@ near_mrt_sf=st_sf(near_mrt_sf)
 
 # group by each MRT station and draw the convex hull
 near_mrt_convex=group_by(near_mrt_sf, MRT)%>%
-  summarise()%>% 
+  summarise()%>%
   st_convex_hull()
 ```
 
@@ -826,10 +827,62 @@ tm_shape(st_transform(near_mrt_convex, crs=4326))+
 From the map above, we can realize the YouBike service area of each MRT station. But we can find that some of the YouBike station are not in any convex hull. What happened? In fact, it is because only two or less YouBike stations are belong to their nearest MRT station, and thus, can not derive the polygon as results.  
 
 ## Voronoi Polygon
-Voronoi polygon is a partition of a plane into regions close to each of a given set of objects.
+Voronoi polygon is a partition of a plane into regions close to each of a given set of objects, that is, the distance between any points of the region to its object is the minimum. As a result, Voronoi polygon is also known as nearest neighbor polygons. Here briefly introduces the algorithm to find the Voronoi polygon. First of all, we need to find the [Delaunay triangulation](https://www.wikiwand.com/en/Delaunay_triangulation) in the points set, ensuring to maximize the minimum angle of all the angles of the triangles. Then, get all the perpendicular of the edges to find circumcircle of all triangulation. Finally, keep the perpendicular of the edges that can connect the circumcircles, and the remained line is then Voronoi polygon. The basic process of the algorithm constructing Voronoi polygon is illustrated as the figure below.  
+
+```{r voronoi_figure, echo=F, out.width="100%", fig.align="center"}
+include_graphics("./graph/voronoi_figure.png")
+```
+
+Function `st_voronoi()` can create Voronoi polygons for a set of points, simply by placing the set of points data in the function. But remember to union all the points in advance by using function [`st_union()`](#unions). Let's dig into the practice by taking Taipei MRT stations in the city center for instance. Here we define the city center as the district of 中山區, 中正區, 大安區, 信義區, 松山區, 大同區, 萬華區, and select the MRT station in these districts. Then, union all the stations we select, and use function `st_voronoi()` to produce the result.  
+
+```{r voronoi_mrt, echo=T, eval=T, warning=F}
+# define the study area (city center)
+town=read_sf("./data/taipei_map/taipei_village_map.shp")
+town=group_by(town, TOWNNAME)%>%
+  summarise()%>%
+  filter(TOWNNAME %in% c("中山區","中正區","大安區","信義區","松山區","大同區","萬華區"))
+
+# select MRT stations in the study area
+mrt_station_sel=st_intersection(taipei_mrt_station, town)
+
+# union all the stations
+mrt_station_sel=st_union(mrt_station_sel)
+
+# do the voronoi polygon
+mrt_station_vor=st_voronoi(mrt_station_sel)
+
+head(mrt_station_vor)
+
+# extract the geometry whose type is "GEOMETRYCOLLECTION"
+mrt_station_vor=st_collection_extract(mrt_station_vor)
+
+head(mrt_station_vor)
+```
 
 
+```{r voronoi_mrt_map, echo=F, eval=T, warning=F, fig.width=3, fig.height=3, dpi=120}
+windowsFonts(A=windowsFont("標楷體"))
+windowsFonts(B=windowsFont("Times New Roman"))
+getPalette=colorRampPalette(brewer.pal(7, "Set2"))
+ggplot()+
+  geom_sf(data=town, aes(fill=TOWNNAME), color=NA)+
+  scale_fill_manual(values=getPalette(7))+
+  geom_sf(data=st_intersection(mrt_station_vor, st_union(town)), fill=NA)+
+  geom_sf(data=st_intersection(taipei_mrt_station, town))+
+  theme(panel.background=element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank(),
+        axis.ticks=element_blank(),
+        legend.title=element_blank(),
+        legend.text=element_text(size=18, family="A"))
 
+```
 
+In the R code above, we use `st_collection_extract()` to decompose the polygon made by `st_voronoi()`, which retrieves all the polygon in the GEOMETRYCOLLECTION type. By extracting the geometry, we can then do other process on the data, for instance, calculating the area of each polygon.  
 
+A practical issue may then come out. What Voronoi polygon can tell us? In fact, due to the fact that the distance between any points of the region to its object (MRT station) is the minimum, it can also imply the service area of each MRT station. However, we should remind that there is a constraint on applying Voronoi polygon to the geographical analysis. That is, if the study area is not flat and the resources are not evenly distributed, Voronoi polygon may give us a strange result. For example, the Voronoi polygon of remote area would have a very large area, which is not actually the service area. And this is why we choose only the city center in Taipei City in the example above. To sum up, there are many geographical constraints should be thoroughly considered when doing this analysis.  
+
+One more interesting issue we would like to mention is that the center of kmeans is actually the object of each region in the Voronoi polygon. That is to say, points in the same cluster would also be in the same Voronoi polygon.  
+
+In conclusion, Voronoi polygon is a practical tool for us to do the basic spatial analysis, particularly for the nearest analysis or the cluster analysis.  
 
