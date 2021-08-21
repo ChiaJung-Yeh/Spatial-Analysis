@@ -813,7 +813,7 @@ near_mrt_convex=group_by(near_mrt_sf, MRT)%>%
   st_convex_hull()
 ```
 
-```{r convex_hull_youbike_map, echo=F, eval=T, warning=F, fig.width=8, fig.height=4, dpi=200}
+```{r convex_hull_youbike_map, echo=F, eval=T, warning=F, fig.width=4, fig.height=4, dpi=200}
 tmap_mode("view")
 tm_shape(st_transform(near_mrt_convex, crs=4326))+
   tm_fill(col="#75AADB", alpha=0.6)+
@@ -823,10 +823,12 @@ tm_shape(st_transform(near_mrt_convex, crs=4326))+
   tm_dots(col="#01B468", size=0.03)
 ```
 
-From the map above, we can realize the YouBike service area of each MRT station. But we can find that some of the YouBike station are not in any convex hull. What happened? In fact, those MRT station contain only two or less YouBike stations, and thus, can not derive the polygon as results.  
+From the map above, we can realize the YouBike service area of each MRT station. But we can find that some of the YouBike station are not in any convex hull. What happened? In fact, it is because only two or less YouBike stations are belong to their nearest MRT station, and thus, can not derive the polygon as results.  
 
 ## Voronoi Polygon
-Voronoi diagram is a partition of a plane into regions close to each of a given set of objects.
+Voronoi polygon is a partition of a plane into regions close to each of a given set of objects.
+
+
 
 
 
