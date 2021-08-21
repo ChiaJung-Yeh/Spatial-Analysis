@@ -1,3 +1,109 @@
+--- 
+title: "Spatial Analysis with R"
+author: "Chia Jung, Yeh"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+# output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: openscapes/series
+description: "A bookdown book on how to conduct spatial analysis on R."
+---
+--- 
+title: "Spatial Analysis with R"
+author: "Chia Jung, Yeh"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+# output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: openscapes/series
+description: "A bookdown book on how to conduct spatial analysis on R."
+---
+
+# Introduction
+
+This book would introduce the basic skills of spatial analysis with R. Spatial analysis is vital in terms of transportation study. For instance, when conducting the transport planning analysis, we need to collect the data of the study area, and dig into the issue about geographic characteristic, socioeconomic factors, to further do research on the traffic zone, trip distribution and so forth. Here we need the skills of spatial analysis before executing the transport planning process. In fact, there are more powerful and more user-experience based tools such as ArcGIS, CUBE and many other transport planning software to do spatial analysis. However, these software are not easily accessible due to high-cost. Hence, we can use R to do some simple spatial analysis instead. In the notebook, we would acquire the skills listed below.  
+
+1. Making customized maps.  
+2. Join the spatial and attribute data.  
+3. Conduct spatial operations.  
+4. Data analysis on spatial data.  
+5. Export our own spatial data.  
+
+In addition, the notebook would focus on the transportation spatial issue. If you are major in [Transportation Engineering or Transportation Management](https://www.tlm.nctu.edu.tw/en/), you may relate to the content. The notebook provides lots of example regarding transportation data in Taiwan. Any suggestions and questions please contact <a href="mailto:1328robert@gmail.com"><u>here</u></a>.
+<br/>
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# **Basic Knowledge on GIS**
+
+Placeholder
+
+
+## Geographic Information Systems
+## Well-Known Text (WKT)
+## Shapefile
+## Coordinate Reference System (CRS)
+## Why Use R?
+## Required Packages
+
+<!--chapter:end:01-Basic-Knowledge-on-GIS.Rmd-->
+
+
+# **Data Visualization with Maps**
+
+Placeholder
+
+
+## Making Maps
+## Attributes of Shapefile
+## Labels on Map
+## Graduated Symbol Map
+## Categorized Symbol Map
+## Rule-based Symbol Map
+## Basic Operations/Elements of Map
+### **Map Overlay**
+### **North Arrow and Scale**
+### **Linetype/Shape**
+### **Theme**
+## Other Mapping Tools
+### **tmap**
+### **leaflet**
+## <span style="border-bottom: 3px double black">*_PRACTICE_*</span> 
+
+<!--chapter:end:02-Data-Visualization-with-Maps.Rmd-->
+
+
+# **Geographic Data**
+
+Placeholder
+
+
+## Simple Feature Geometries (sfg)
+### **Point**
+### **Linestring**
+### **Polygon**
+### **Multipoint**
+### **Multilinestring**
+### **Multipolygon**
+## Simple Feature Columns (sfc)
+## Simple Feature (sf)
+## Convert Text File to Shapefile
+## Reproject Geographic Data
+## Geographic Data Export
+## Geographic Data Format
+## Join Attribute and Spatial Data
+## <span style="border-bottom: 3px double black">*_PRACTICE_*</span> 
+
+<!--chapter:end:03-Geographic-Data.Rmd-->
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
@@ -887,5 +993,5 @@ One more interesting issue we would like to mention is that the center of kmeans
 In conclusion, Voronoi polygon is a practical tool for us to do the basic spatial analysis, particularly for the nearest analysis or the cluster analysis.  
 
 
-
+<!--chapter:end:04-Spatial-Operations.Rmd-->
 
