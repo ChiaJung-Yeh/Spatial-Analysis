@@ -58,3 +58,5 @@ practice-2
 basic-quantitative-geography
 point-patterns-analysis
 spatial-autocorrelation-analysis
+tmap-1
+basic-measures

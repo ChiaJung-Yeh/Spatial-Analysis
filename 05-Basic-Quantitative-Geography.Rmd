@@ -15,15 +15,123 @@ library(cowplot)
 library(DT)
 library(nngeo)
 library(RColorBrewer)
+library(aspace)
 sf_use_s2(FALSE)
 ```
 
 # **Basic Quantitative Geography **
-From chapter 2 to 4, we have learned how to do make maps and do spatial operations, they are all fundamental and vital contents regarding spatial analysis. The operations we have learned could help us identify what the spatial "looks like"; however, up to now, we have no idea about "what spatial tells". Hence, this chapter would introduce the basic theory and application of quantitative geography. We would learn the point patterns and spatial auto correlation in this chapter, which are relatively simple in this field, and can also help the analysis on transportation issue. Note that there are much more to explore other than this two elements, if interested, please refer to the textbook [Spatial Data Analysis - An Introduction For Gis Users](https://vdoc.pub/documents/spatial-data-analysis-an-introduction-for-gis-users-7kgftthl78g0).  
 
-In this chapter, we need a preliminary knowledge on statistics, especially the concept of hypothetical test.  
+From chapter 2 to 4, we have learned how to do make maps and do spatial operations, they are all fundamental and vital contents regarding spatial analysis. The operations we have learned could help us identify what the space "looks like"; however, up to now, we have no idea about "what space tells". Hence, this chapter would introduce the basic theory and application of quantitative geography. We would learn the point patterns and spatial auto correlation, which are relatively simple in this field, and can also apply to the analysis on transportation issue. Note that there are much more to explore other than these two elements, if interested, please refer to the textbook [Spatial Data Analysis - An Introduction For Gis Users](https://vdoc.pub/documents/spatial-data-analysis-an-introduction-for-gis-users-7kgftthl78g0).  
+
+In this chapter, we require a preliminary knowledge on statistics, especially the concept of hypothetical test.  
 
 ## Point Patterns Analysis
+
+### **Basic measures**
+Two commonly used summary measures of point pattern analysis are the mean center and the standard distance. The mean center of a point pattern implies the central tendency of the whole points. It is simply the mean of the x and y coordinates:  
+
+$$\bar{\bf{x}}=(\frac{\sum_{i=1}^n \ {x_i}}{n}, \quad \frac{\sum_{i=1}^n \ {y_i}}{n})$$
+In the equation above, the bold letter $\bar{\bf{x}}$ represents a vector of X and Y coordinates, and the number of points is $n$. Besides mean, the other basic statistic is "standard deviation", that is, the standard distance in the spatial analysis. This standard distance can be interpreted as the dispersion around the mean center:  
+
+$${d_s}=\sqrt{\frac{\sum_{i=1}^n \ {{(x_i-\mu_x)}^2+{(y_i-\mu_y)}^2}}{n}}$$
+
+```{r center_analysis_figure, echo=F, out.width="20%", fig.align="center", dpi=200}
+include_graphics("./graph/center_analysis_figure.png")
+```
+
+As for the center analysis, we may come up with the function [`st_centroid`](#centroid). However, the function can only use on the center of polygon, it can not retrieve the center of multiple points. An easiest way is to do the summary of X and Y coordinates of the whole points. Take Taipei YouBike for instance. <font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://drive.google.com/uc?export=download&id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi) to re-download the file if it is lost.</font> First, we need to convert X and Y coordinates by using `st_coordinates()`, and then, just calculate the mean and standard deviation on the data converted.  
+
+```{r center_summary, echo=T, eval=T, warning=F}
+# import the shapefile
+taipei_youbike=read_sf("./data/taipei_youbike/taipei_youbike.shp")
+
+# retrieve the coordinated of the points
+taipei_youbike_coor=st_coordinates(taipei_youbike)
+
+# calculate mean and standard deviation
+apply(taipei_youbike_coor, 2, FUN=mean)
+apply(taipei_youbike_coor, 2, FUN=var)^0.5
+```
+
+From the results above, we can know that the mean of X is 304679.5, while the mean of Y is 2771747.9. Also the standard deviation of X and Y are 3143.041 and 3905.884 respectively. Thus, the standard distance would be $\sqrt{(3143.041^2+3905.884^2)}=5013.45$ meters. Figure below shows the center and standard distance of Taipei YouBike.  
+
+```{r center_map, echo=F, eval=T, warning=F, fig.width=5, fig.height=3, dpi=150, fig.align="center"}
+town=read_sf("./data/taipei_map/taipei_village_map.shp")
+town=group_by(town, TOWNNAME)%>%
+  summarise()
+u_center=st_sf(mutate(data.frame(t(apply(taipei_youbike_coor, 2, FUN=mean))),
+                      geometry=st_as_sfc(paste0("POINT(", X, " ", Y, ")"))), crs=3826)
+u_distance=st_buffer(u_center, 5013.45)
+ggplot()+
+  geom_sf(data=town, color="#F0F0F0", fill="#BEBEBE")+
+  geom_sf(data=u_distance, fill="#75AADB", color=NA, alpha=0.6)+
+  geom_sf(data=u_center)+
+  theme(panel.background=element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank(),
+        axis.ticks=element_blank())
+```
+
+There is another package called `aspace` that can calculate the center and standard distance directly. But very unfortunately, this package has been removed from CRAN recently. Thus, please download the zip file [**here**](https://drive.google.com/uc?export=download&id=1AxrNPRRO77zNBoeIMSKKisFDnE2PhyuN), and place it into the same directory as your R script file. The installation code from the local is as follows.  
+
+```{r aspace_install, echo=T, eval=F, warning=F}
+install.packages("devtools")
+devtools::install_local("./aspace-master.zip")
+library(aspace)
+```
+
+Now, let's again use YouBike data to retrieve its center and standard distance by function `mean_centre()` and `calc_sdd` provided by package `aspace`.  
+
+```{r center_youbike, echo=T, eval=T, warning=F}
+youbike_center=mean_centre(points=taipei_youbike_coor)
+youbike_sdd=calc_sdd(points=taipei_youbike_coor)
+``` 
+
+We can find that the result from two packages are approximately the same. Note that `$SDD.radius` represents the standard distance, and it causes only 3 meters difference from what we calculate above. In addition, there is a function called `CF()` that can identify the central feature within a set of point locations. That is, the center of the points must be one of the points.   
+
+```{r center_youbike_CF, echo=T, eval=T, warning=F}
+youbike_center_CF=CF(points=data.frame(taipei_youbike_coor))
+
+# use left_join() to find out what the station is
+left_join(youbike_center_CF, cbind(taipei_youbike, st_coordinates(taipei_youbike)), by=c("CF.x"="X", "CF.y"="Y"))%>%
+  select(StatnNm, CF.x, CF.y)
+``` 
+
+```{r center_youbike_map, echo=F, eval=T, warning=F, fig.width=5, fig.height=3, dpi=120, fig.align="center"}
+youbike_center_CF=left_join(youbike_center_CF, cbind(taipei_youbike, st_coordinates(taipei_youbike)), by=c("CF.x"="X", "CF.y"="Y"))%>%
+  select(StatnNm, CF.x, CF.y)
+
+windowsFonts(A=windowsFont("Times New Roman"))
+ggplot()+
+  geom_sf(data=town, color="#F0F0F0", fill="#BEBEBE")+
+  geom_sf(data=st_sf(mutate(youbike_center, geometry=st_as_sfc(paste0("POINT(", CENTRE.x, " ", CENTRE.y, ")"))), crs=3826), color="#2894FF")+
+  geom_sf(data=st_sf(mutate(youbike_center_CF, geometry=st_as_sfc(paste0("POINT(", CF.x, " ", CF.y, ")"))), crs=3826), color="#FF5151")+
+  geom_text(data=cbind(type="MEAN", youbike_center), aes(x=CENTRE.x, y=CENTRE.y, label=type), family="A", nudge_y=1000)+
+  geom_text(data=cbind(type="CF", youbike_center_CF), aes(x=CF.x, y=CF.y, label=type), family="A", nudge_y=-1000)+
+  theme(panel.background=element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank(),
+        axis.ticks=element_blank())
+``` 
+
+
+
+```{r center_village, echo=T, eval=T, warning=F}
+village=read_sf("./data/taipei_map/taipei_village_map.shp")
+village_center=st_centroid(village)
+village_center_coor=st_coordinates(village_center)
+
+
+
+
+
+village_center_pd=mean_centre(points=village_center_coor, weighted=T, weights=as.numeric(village$PP/st_area(village)))
+
+vil_sdd=calc_sdd(points=village_center_coor, weighted=T, weights=as.numeric(village$PP/st_area(village)))
+``` 
+
+
+
 
 
 ## Spatial Autocorrelation Analysis

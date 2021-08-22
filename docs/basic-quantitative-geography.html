@@ -55,6 +55,69 @@
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 <link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
@@ -148,7 +211,10 @@
 </ul></li>
 <li class="chapter" data-level="6" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html"><i class="fa fa-check"></i><b>6</b> <strong>Basic Quantitative Geography </strong></a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#point-patterns-analysis"><i class="fa fa-check"></i><b>6.1</b> Point Patterns Analysis</a></li>
+<li class="chapter" data-level="6.1" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#point-patterns-analysis"><i class="fa fa-check"></i><b>6.1</b> Point Patterns Analysis</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#basic-measures"><i class="fa fa-check"></i><b>6.1.1</b> <strong>Basic measures</strong></a></li>
+</ul></li>
 <li class="chapter" data-level="6.2" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#spatial-autocorrelation-analysis"><i class="fa fa-check"></i><b>6.2</b> Spatial Autocorrelation Analysis</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -173,10 +239,105 @@
             <section class="normal" id="section-">
 <div id="basic-quantitative-geography" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> <strong>Basic Quantitative Geography </strong></h1>
-<p>From chapter 2 to 4, we have learned how to do make maps and do spatial operations, they are all fundamental and vital contents regarding spatial analysis. The operations we have learned could help us identify what the spatial “looks like”; however, up to now, we have no idea about “what spatial tells.” Hence, this chapter would introduce the basic theory and application of quantitative geography. We would learn the point patterns and spatial auto correlation in this chapter, which are relatively simple in this field, and can also help the analysis on transportation issue. Note that there are much more to explore other than this two elements, if interested, please refer to the textbook <a href="https://vdoc.pub/documents/spatial-data-analysis-an-introduction-for-gis-users-7kgftthl78g0">Spatial Data Analysis - An Introduction For Gis Users</a>.</p>
-<p>In this chapter, we need a preliminary knowledge on statistics, especially the concept of hypothetical test.</p>
+<p>From chapter 2 to 4, we have learned how to do make maps and do spatial operations, they are all fundamental and vital contents regarding spatial analysis. The operations we have learned could help us identify what the space “looks like”; however, up to now, we have no idea about “what space tells.” Hence, this chapter would introduce the basic theory and application of quantitative geography. We would learn the point patterns and spatial auto correlation, which are relatively simple in this field, and can also apply to the analysis on transportation issue. Note that there are much more to explore other than these two elements, if interested, please refer to the textbook <a href="https://vdoc.pub/documents/spatial-data-analysis-an-introduction-for-gis-users-7kgftthl78g0">Spatial Data Analysis - An Introduction For Gis Users</a>.</p>
+<p>In this chapter, we require a preliminary knowledge on statistics, especially the concept of hypothetical test.</p>
 <div id="point-patterns-analysis" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Point Patterns Analysis</h2>
+<div id="basic-measures" class="section level3" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> <strong>Basic measures</strong></h3>
+<p>Two commonly used summary measures of point pattern analysis are the mean center and the standard distance. The mean center of a point pattern implies the central tendency of the whole points. It is simply the mean of the x and y coordinates:</p>
+<p><span class="math display">\[\bar{\bf{x}}=(\frac{\sum_{i=1}^n \ {x_i}}{n}, \quad \frac{\sum_{i=1}^n \ {y_i}}{n})\]</span>
+In the equation above, the bold letter <span class="math inline">\(\bar{\bf{x}}\)</span> represents a vector of X and Y coordinates, and the number of points is <span class="math inline">\(n\)</span>. Besides mean, the other basic statistic is “standard deviation,” that is, the standard distance in the spatial analysis. This standard distance can be interpreted as the dispersion around the mean center:</p>
+<p><span class="math display">\[{d_s}=\sqrt{\frac{\sum_{i=1}^n \ {{(x_i-\mu_x)}^2+{(y_i-\mu_y)}^2}}{n}}\]</span></p>
+<p><img src="graph/center_analysis_figure.png" width="20%" style="display: block; margin: auto;" /></p>
+<p>As for the center analysis, we may come up with the function <a href="spatial-operations.html#centroid"><code>st_centroid</code></a>. However, the function can only use on the center of polygon, it can not retrieve the center of multiple points. An easiest way is to do the summary of X and Y coordinates of the whole points. Take Taipei YouBike for instance. <font color="red"><em><em>Data needed has been downloaded previously. You placed the file in the same directory as the R script file.</em></em> Click <a href="https://drive.google.com/uc?export=download&amp;id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi"><strong>here</strong></a> to re-download the file if it is lost.</font> First, we need to convert X and Y coordinates by using <code>st_coordinates()</code>, and then, just calculate the mean and standard deviation on the data converted.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="basic-quantitative-geography.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import the shapefile</span></span>
+<span id="cb1-2"><a href="basic-quantitative-geography.html#cb1-2" aria-hidden="true" tabindex="-1"></a>taipei_youbike<span class="ot">=</span><span class="fu">read_sf</span>(<span class="st">&quot;./data/taipei_youbike/taipei_youbike.shp&quot;</span>)</span>
+<span id="cb1-3"><a href="basic-quantitative-geography.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="basic-quantitative-geography.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve the coordinated of the points</span></span>
+<span id="cb1-5"><a href="basic-quantitative-geography.html#cb1-5" aria-hidden="true" tabindex="-1"></a>taipei_youbike_coor<span class="ot">=</span><span class="fu">st_coordinates</span>(taipei_youbike)</span>
+<span id="cb1-6"><a href="basic-quantitative-geography.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="basic-quantitative-geography.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate mean and standard deviation</span></span>
+<span id="cb1-8"><a href="basic-quantitative-geography.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(taipei_youbike_coor, <span class="dv">2</span>, <span class="at">FUN=</span>mean)</span></code></pre></div>
+<pre><code>##         X         Y 
+##  304679.5 2771747.9</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="basic-quantitative-geography.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(taipei_youbike_coor, <span class="dv">2</span>, <span class="at">FUN=</span>var)<span class="sc">^</span><span class="fl">0.5</span></span></code></pre></div>
+<pre><code>##        X        Y 
+## 3143.041 3905.884</code></pre>
+<p>From the results above, we can know that the mean of X is 304679.5, while the mean of Y is 2771747.9. Also the standard deviation of X and Y are 3143.041 and 3905.884 respectively. Thus, the standard distance would be <span class="math inline">\(\sqrt{(3143.041^2+3905.884^2)}=5013.45\)</span> meters. Figure below shows the center and standard distance of Taipei YouBike.</p>
+<p><img src="series_files/figure-html/center_map-1.png" width="750" style="display: block; margin: auto;" /></p>
+<p>There is another package called <code>aspace</code> that can calculate the center and standard distance directly. But very unfortunately, this package has been removed from CRAN recently. Thus, please download the zip file <a href="https://drive.google.com/uc?export=download&amp;id=1AxrNPRRO77zNBoeIMSKKisFDnE2PhyuN"><strong>here</strong></a>, and place it into the same directory as your R script file. The installation code from the local is as follows.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="basic-quantitative-geography.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb5-2"><a href="basic-quantitative-geography.html#cb5-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_local</span>(<span class="st">&quot;./aspace-master.zip&quot;</span>)</span>
+<span id="cb5-3"><a href="basic-quantitative-geography.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(aspace)</span></code></pre></div>
+<p>Now, let’s again use YouBike data to retrieve its center and standard distance by function <code>mean_centre()</code> and <code>calc_sdd</code> provided by package <code>aspace</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="basic-quantitative-geography.html#cb6-1" aria-hidden="true" tabindex="-1"></a>youbike_center<span class="ot">=</span><span class="fu">mean_centre</span>(<span class="at">points=</span>taipei_youbike_coor)</span></code></pre></div>
+<pre><code>##   id CENTRE.x CENTRE.y
+## 1  1 304679.5  2771748</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="basic-quantitative-geography.html#cb8-1" aria-hidden="true" tabindex="-1"></a>youbike_sdd<span class="ot">=</span><span class="fu">calc_sdd</span>(<span class="at">points=</span>taipei_youbike_coor)</span></code></pre></div>
+<pre><code>## $id
+## [1] 1
+## 
+## $calccentre
+## [1] TRUE
+## 
+## $weighted
+## [1] FALSE
+## 
+## $CENTRE.x
+## [1] 304679.5
+## 
+## $CENTRE.y
+## [1] 2771748
+## 
+## $SDD.radius
+## [1] 5016.196
+## 
+## $SDD.area
+## [1] 79049460</code></pre>
+<p>We can find that the result from two packages are approximately the same. Note that <code>$SDD.radius</code> represents the standard distance, and it causes only 3 meters difference from what we calculate above. In addition, there is a function called <code>CF()</code> that can identify the central feature within a set of point locations. That is, the center of the points must be one of the points.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="basic-quantitative-geography.html#cb10-1" aria-hidden="true" tabindex="-1"></a>youbike_center_CF<span class="ot">=</span><span class="fu">CF</span>(<span class="at">points=</span><span class="fu">data.frame</span>(taipei_youbike_coor))</span></code></pre></div>
+<pre><code>##   id     CF.x    CF.y
+## 1  1 304864.8 2770973</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="basic-quantitative-geography.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use left_join() to find out what the station is</span></span>
+<span id="cb12-2"><a href="basic-quantitative-geography.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(youbike_center_CF, <span class="fu">cbind</span>(taipei_youbike, <span class="fu">st_coordinates</span>(taipei_youbike)), <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;CF.x&quot;</span><span class="ot">=</span><span class="st">&quot;X&quot;</span>, <span class="st">&quot;CF.y&quot;</span><span class="ot">=</span><span class="st">&quot;Y&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="basic-quantitative-geography.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(StatnNm, CF.x, CF.y)</span></code></pre></div>
+<pre><code>##                   StatnNm     CF.x    CF.y
+## 1 YouBike1.0_復興市民路口 304864.8 2770973</code></pre>
+<p><img src="series_files/figure-html/center_youbike_map-1.png" width="600" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="basic-quantitative-geography.html#cb14-1" aria-hidden="true" tabindex="-1"></a>village<span class="ot">=</span><span class="fu">read_sf</span>(<span class="st">&quot;./data/taipei_map/taipei_village_map.shp&quot;</span>)</span>
+<span id="cb14-2"><a href="basic-quantitative-geography.html#cb14-2" aria-hidden="true" tabindex="-1"></a>village_center<span class="ot">=</span><span class="fu">st_centroid</span>(village)</span>
+<span id="cb14-3"><a href="basic-quantitative-geography.html#cb14-3" aria-hidden="true" tabindex="-1"></a>village_center_coor<span class="ot">=</span><span class="fu">st_coordinates</span>(village_center)</span>
+<span id="cb14-4"><a href="basic-quantitative-geography.html#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="basic-quantitative-geography.html#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="basic-quantitative-geography.html#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="basic-quantitative-geography.html#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="basic-quantitative-geography.html#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="basic-quantitative-geography.html#cb14-9" aria-hidden="true" tabindex="-1"></a>village_center_pd<span class="ot">=</span><span class="fu">mean_centre</span>(<span class="at">points=</span>village_center_coor, <span class="at">weighted=</span>T, <span class="at">weights=</span><span class="fu">as.numeric</span>(village<span class="sc">$</span>PP<span class="sc">/</span><span class="fu">st_area</span>(village)))</span></code></pre></div>
+<pre><code>##   id CENTRE.x CENTRE.y
+## 1  1 304523.4  2771349</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="basic-quantitative-geography.html#cb16-1" aria-hidden="true" tabindex="-1"></a>vil_sdd<span class="ot">=</span><span class="fu">calc_sdd</span>(<span class="at">points=</span>village_center_coor, <span class="at">weighted=</span>T, <span class="at">weights=</span><span class="fu">as.numeric</span>(village<span class="sc">$</span>PP<span class="sc">/</span><span class="fu">st_area</span>(village)))</span></code></pre></div>
+<pre><code>## $id
+## [1] 1
+## 
+## $calccentre
+## [1] TRUE
+## 
+## $weighted
+## [1] TRUE
+## 
+## $CENTRE.x
+## [1] 304523.4
+## 
+## $CENTRE.y
+## [1] 2771349
+## 
+## $SDD.radius
+## [1] 5043.43
+## 
+## $SDD.area
+## [1] 79910134</code></pre>
+</div>
 </div>
 <div id="spatial-autocorrelation-analysis" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Spatial Autocorrelation Analysis</h2>
@@ -240,6 +401,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

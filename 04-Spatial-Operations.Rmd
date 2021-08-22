@@ -755,7 +755,7 @@ near_mrt_k3=matrix(unlist(near_mrt_k3), ncol=3,  byrow=T)
 head(near_mrt_k3)
 ```
 
-The first three nearest points are shown in the matrix above. It tells us that the first three nearest MRT station index of the first YouBike station (YouBike1.0_捷運市政府站(3號出口)) are 116 (市政府), 117 (永春), 25 (象山) respectively. The following table lists all the result according to the real station name.  
+The first three nearest points are shown in the matrix above. It tells us that the first three nearest MRT station index of the first YouBike station (YouBike1.0_捷運市政府站(3號出口)) are 104 (市政府), 105 (永春), 25 (象山) respectively. The following table lists all the result according to the real station name.  
 
 ```{r st_nn_k3_table, echo=F, eval=T, warning=F}
 near_mrt_k3=data.frame(near_mrt_k3)
@@ -785,7 +785,7 @@ youbike_union=st_union(taipei_youbike)
 youbike_convex=st_convex_hull(youbike_union)
 ```
 
-```{r convex_hull_map, echo=F, eval=T, warning=F}
+```{r convex_hull_map, echo=F, eval=T, warning=F, fig.width=6, fig.height=4, dpi=150, fig.align="center"}
 town=read_sf("./data/taipei_map/taipei_village_map.shp")
 town=group_by(town, TOWNNAME)%>%
   summarise()
@@ -882,7 +882,7 @@ In the R code above, we use `st_collection_extract()` to decompose the polygon m
 
 A practical issue may then come out. What Voronoi polygon can tell us? In fact, due to the fact that the distance between any points of the region to its object (MRT station) is the minimum, it can also imply the service area of each MRT station. However, we should remind that there is a constraint on applying Voronoi polygon to the geographical analysis. That is, if the study area is not flat and the resources are not evenly distributed, Voronoi polygon may give us a strange result. For example, the Voronoi polygon of remote area would have a very large area, which is not actually the service area. And this is why we choose only the city center in Taipei City in the example above. To sum up, there are many geographical constraints should be thoroughly considered when doing this analysis.  
 
-One more interesting issue we would like to mention is that the center of kmeans is actually the object of each region in the Voronoi polygon. That is to say, points in the same cluster would also be in the same Voronoi polygon.  
+One more interesting issue we would like to mention is that the center of kmeans is actually the object of each region in the Voronoi polygon. That is to say, points in the same cluster y kmeans would also be in the same Voronoi polygon.  
 
 In conclusion, Voronoi polygon is a practical tool for us to do the basic spatial analysis, particularly for the nearest analysis or the cluster analysis.  
 
