@@ -60,3 +60,5 @@ point-patterns-analysis
 spatial-autocorrelation-analysis
 tmap-1
 basic-measures
+quadrat-analysis
+nearest-neighbour-analysis

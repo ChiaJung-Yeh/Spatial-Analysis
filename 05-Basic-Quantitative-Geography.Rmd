@@ -5,6 +5,7 @@ library(sf)
 library(ggplot2)
 library(ggsflabel)
 library(ggspatial)
+library(ggrepel)
 library(knitr)
 library(kableExtra)
 library(spData)
@@ -21,7 +22,7 @@ sf_use_s2(FALSE)
 
 # **Basic Quantitative Geography **
 
-From chapter 2 to 4, we have learned how to do make maps and do spatial operations, they are all fundamental and vital contents regarding spatial analysis. The operations we have learned could help us identify what the space "looks like"; however, up to now, we have no idea about "what space tells". Hence, this chapter would introduce the basic theory and application of quantitative geography. We would learn the point patterns and spatial auto correlation, which are relatively simple in this field, and can also apply to the analysis on transportation issue. Note that there are much more to explore other than these two elements, if interested, please refer to the textbook [Spatial Data Analysis - An Introduction For Gis Users](https://vdoc.pub/documents/spatial-data-analysis-an-introduction-for-gis-users-7kgftthl78g0).  
+From chapter 3 to 5, we have learned how to do make maps and do spatial operations, they are all fundamental and vital contents regarding spatial analysis. The operations we have learned could help us identify what the space "looks like"; however, up to now, we have no idea about "what space tells". Hence, this chapter would introduce the basic theory and application of quantitative geography. We would learn the point patterns and spatial auto correlation, which are relatively simple in this field, and can also apply to the analysis on transportation issue. Note that there are much more to explore other than these two elements, if interested, please refer to the textbook [Spatial Data Analysis - An Introduction For Gis Users](https://vdoc.pub/documents/spatial-data-analysis-an-introduction-for-gis-users-7kgftthl78g0).  
 
 In this chapter, we require a preliminary knowledge on statistics, especially the concept of hypothetical test.  
 
@@ -85,9 +86,9 @@ Now, let's again use YouBike data to retrieve its center and standard distance b
 ```{r center_youbike, echo=T, eval=T, warning=F}
 youbike_center=mean_centre(points=taipei_youbike_coor)
 youbike_sdd=calc_sdd(points=taipei_youbike_coor)
-``` 
+```
 
-We can find that the result from two packages are approximately the same. Note that `$SDD.radius` represents the standard distance, and it causes only 3 meters difference from what we calculate above. In addition, there is a function called `CF()` that can identify the central feature within a set of point locations. That is, the center of the points must be one of the points.   
+We can find that the result from two packages are approximately the same. Note that `$SDD.radius` represents the standard distance, and it causes only 3 meters difference from what we calculate above. In addition, there is a function called `CF()` that can identify the central feature within a set of point locations. That is, the center of the points must be one of the points.  
 
 ```{r center_youbike_CF, echo=T, eval=T, warning=F}
 youbike_center_CF=CF(points=data.frame(taipei_youbike_coor))
@@ -95,9 +96,9 @@ youbike_center_CF=CF(points=data.frame(taipei_youbike_coor))
 # use left_join() to find out what the station is
 left_join(youbike_center_CF, cbind(taipei_youbike, st_coordinates(taipei_youbike)), by=c("CF.x"="X", "CF.y"="Y"))%>%
   select(StatnNm, CF.x, CF.y)
-``` 
+```
 
-```{r center_youbike_map, echo=F, eval=T, warning=F, fig.width=5, fig.height=3, dpi=120, fig.align="center"}
+```{r center_youbike_map, echo=F, eval=T, warning=F, fig.width=5, fig.height=3, dpi=150, fig.align="center"}
 youbike_center_CF=left_join(youbike_center_CF, cbind(taipei_youbike, st_coordinates(taipei_youbike)), by=c("CF.x"="X", "CF.y"="Y"))%>%
   select(StatnNm, CF.x, CF.y)
 
@@ -114,21 +115,81 @@ ggplot()+
         axis.ticks=element_blank())
 ``` 
 
+Besides the general calculation of center and standard distance, package `aspace` can also consider the weights. The general center can only represent the geographical position, but cannot reflect the one affected by the social and economic factors. Now let's move on to the shapefile of Taipei village in the downloaded data, which contains the attribute of population for each village. And our purpose is to find out the "geographical centroid" and the "center of the population density" of each district in Taipei City. Obtaining these two values, we can compare the difference of two kind of points, and explain the implications.  
 
+For the centroid of town, simply use function [`st_centroid()`](#centroid) to retrieve the center of each district. As for the calculation of weighted center, it is suggested to use `for` loop. First of all, we need to calculate the population density of each village, which equals to population divided by the area. Then, finding the centroid of each village by function `st_centroid()` to be the representative point of the village. Next, use function `mean_centre()` and set the parameters `weighted=T` and `weights=...`, to calculate the center of all the points revised by the weight of population density. And, also, apply function `calc_sdd()` to calculate the standard distance under the influence of weight. The code and result are shown below.  
 
-```{r center_village, echo=T, eval=T, warning=F}
+```{r center_village, echo=T, eval=T, warning=F, message=F, results=F}
+# import shapefile
 village=read_sf("./data/taipei_map/taipei_village_map.shp")
-village_center=st_centroid(village)
-village_center_coor=st_coordinates(village_center)
 
+weight_analysis=data.frame()
+for (i in unique(village$TOWNNAME)){
+  # filter the town
+  village_dis=filter(village, TOWNNAME==i)
+  
+  # find the centroid of town
+  town_center=st_centroid(filter(town, TOWNNAME==i))
+  town_center=st_coordinates(town_center)
 
+  # find the centroid of each village (representative points)
+  village_center=st_centroid(village_dis)
+  
+  # retrieve the coordinate of each point
+  village_center_coor=st_coordinates(village_center)
+  
+  # set the weights as population density
+  # population density = population / area
+  # st_area retrieves "unit" type data, and the unit is m^2, thus use as.numeric to convert it, and divide by 1,000,000
+  village_center_pd=mean_centre(points=village_center_coor, weighted=T, weights=(village_dis$PP/(as.numeric(st_area(village_dis))/1000000)))
+  
+  vil_sdd_pd=calc_sdd(points=village_center_coor, weighted=T, weights=(village_dis$PP/(as.numeric(st_area(village_dis))/1000000)))
+  
+  # store the result in the table
+  weight_analysis=rbind(weight_analysis, data.frame(TOWN=i, town_center, village_center_pd[2:3], vil_sdd_pd$SDD.radius))
+}
 
-
-
-village_center_pd=mean_centre(points=village_center_coor, weighted=T, weights=as.numeric(village$PP/st_area(village)))
-
-vil_sdd=calc_sdd(points=village_center_coor, weighted=T, weights=as.numeric(village$PP/st_area(village)))
+head(weight_analysis)
 ``` 
+
+
+```{r center_village_map, echo=F, eval=T, warning=F, fig.width=5, fig.height=3, dpi=150, fig.align="center"}
+head(weight_analysis)
+town=group_by(village, TOWNNAME)%>%
+  summarise()
+town_centroid=select(weight_analysis, X, Y)%>%
+  mutate(geometry=st_as_sfc(paste0("POINT(", X, " ", Y, ")")))%>%
+  st_sf(crs=3826)
+village_center_pd=select(weight_analysis, CENTRE.x, CENTRE.y, vil_sdd_pd.SDD.radius)%>%
+  mutate(geometry=st_as_sfc(paste0("POINT(", CENTRE.x, " ", CENTRE.y, ")")))%>%
+  st_sf(crs=3826)
+vil_sdd_pd=st_buffer(village_center_pd, village_center_pd$vil_sdd_pd.SDD.radius)
+
+windowsFonts(B=windowsFont("標楷體"))
+ggplot()+
+  geom_sf(data=village, color="#F0F0F0", fill="#BEBEBE", size=0.01)+
+  geom_sf(data=town, fill=NA, color="#4F4F4F")+
+  geom_sf(data=town_centroid, color="#2894FF")+
+  geom_sf(data=village_center_pd, color="#FF5151")+
+  geom_sf(data=vil_sdd_pd, fill="#FF9797", color=NA, alpha=0.5)+
+  geom_text_repel(data=data.frame(town, st_coordinates(st_centroid(town))) %>% filter(TOWNNAME %in% c("北投區","士林區","文山區", "南港區","大同區")),
+                  aes(x=X, y=Y, label=TOWNNAME), family="B", size=2, nudge_y=-0.4, nudge_x=0)+
+  theme(panel.background=element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank(),
+        axis.ticks=element_blank())
+
+``` 
+
+In the figure shown above, the blue dots represent the geographical centroid, which is the center of the polygons, while the red dots represent the centers weighted by the population density of each village in. Also, the red buffer means the weighted standard distance of each district. Take a closer look on the map. We can find that the district adjacent to the mountanious area, for instance 北投區, 士林區, 文山區, 南港區 have a larger difference between the geographical centroid and the population weighted center. Obviously, it is because people tend to live in plains with abundant living requirements. For the districts near CBD, such as 大同區, the differences between two points are slight.  
+
+This can further prove that using "geographical centroid" may not be meaningful, for it does not correspond to the real life. The weighted center can illustrate the population distribution, and even signify the land use of each district in Taipei City. To sum up, learning how to derive the weighted center may be an importaant issue in spatial analysis.  
+
+### **Quadrat Analysis**
+
+
+
+### **Nearest Neighbour Analysis**
 
 
 
