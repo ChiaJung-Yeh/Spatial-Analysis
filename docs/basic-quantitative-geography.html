@@ -24,7 +24,7 @@
 <meta name="author" content="Chia Jung, Yeh" />
 
 
-<meta name="date" content="2021-08-24" />
+<meta name="date" content="2021-08-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -241,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="basic-quantitative-geography" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> <strong>Basic Quantitative Geography </strong></h1>
-<p>From chapter 3 to 5, we have learned how to do make maps and do spatial operations, they are all fundamental and vital contents regarding spatial analysis. The operations we have learned could help us identify what the space “looks like”; however, up to now, we have no idea about “what space tells.” Hence, this chapter would introduce the basic theory and application of quantitative geography. We would learn the point patterns and spatial auto correlation, which are relatively simple in this field, and can also apply to the analysis on transportation issue. Note that there are much more to explore other than these two elements, if interested, please refer to the textbook <a href="https://vdoc.pub/documents/spatial-data-analysis-an-introduction-for-gis-users-7kgftthl78g0">Spatial Data Analysis - An Introduction For Gis Users</a>.</p>
+<p>From chapter 3 to 5, we have learned how to make maps and do spatial operations, they are all fundamental and vital contents regarding spatial analysis. The operations we have learned could help us identify what the space “looks like”; however, up to now, we have no idea about “what space tells.” Hence, this chapter would introduce the basic theory and application of quantitative geography. We would learn the point patterns and spatial auto correlation, which are relatively simple in this field, and can also apply to the analysis on transportation issue. Note that there are much more to explore other than these two elements, if interested, please refer to the textbook <a href="https://vdoc.pub/documents/spatial-data-analysis-an-introduction-for-gis-users-7kgftthl78g0">Spatial Data Analysis - An Introduction For GIS Users</a>.</p>
 <p>In this chapter, we require a preliminary knowledge on statistics, especially the concept of hypothetical test.</p>
 <div id="point-patterns-analysis" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Point Patterns Analysis</h2>
@@ -297,7 +297,7 @@ In the equation above, the bold letter <span class="math inline">\(\bar{\bf{x}}\
 ## 
 ## $SDD.area
 ## [1] 79049460</code></pre>
-<p>We can find that the result from two packages are approximately the same. Note that <code>$SDD.radius</code> represents the standard distance, and it causes only 3 meters difference from what we calculate above. In addition, there is a function called <code>CF()</code> that can identify the central feature within a set of point locations. That is, the center of the points must be one of the points.</p>
+<p>We can find that the result from two methods are approximately the same. Note that <code>$SDD.radius</code> represents the standard distance, and it causes only 3 meters difference from what we calculate above. In addition, there is a function called <code>CF()</code> that can identify the central feature within a set of point locations. That is, the center of the points must be one of the points.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="basic-quantitative-geography.html#cb10-1" aria-hidden="true" tabindex="-1"></a>youbike_center_CF<span class="ot">=</span><span class="fu">CF</span>(<span class="at">points=</span><span class="fu">data.frame</span>(taipei_youbike_coor))</span></code></pre></div>
 <pre><code>##   id     CF.x    CF.y
 ## 1  1 304864.8 2770973</code></pre>
@@ -352,6 +352,33 @@ In the equation above, the bold letter <span class="math inline">\(\bar{\bf{x}}\
 </div>
 <div id="quadrat-analysis" class="section level3" number="6.1.2">
 <h3><span class="header-section-number">6.1.2</span> <strong>Quadrat Analysis</strong></h3>
+<p>In the previous section, we have learned how to derive the centroid and the standard distance. For these two values, we can roughly realize the central tendency of the points distribution; however, we have no clear clue to tell whether the points distribution is dipersed, dense or random. Now, we would further discuss the density of the points by using a statistical method called <strong>Quadrat Analysis</strong>.</p>
+<p>Quadrat analysis is a common method of exploring spatial pattern in the number of events. Specifically, in this analysis, we should first divide the study area into several grids. Then, count the number of points fall within each grid square. After counting the points, we should find a statistical measure to assess the distribution of point counts in grids, and determine whether the distribution is dipersed (uniform distribution), dense (cluster), or random (Poisson distribution). The steps are explained in detail with an simple example.</p>
+<p>Figure below shows two cases of the point distribution. The number of points are the same (30) for two cases, but apparently the points pattern are totally different. We can easily observe that the distribution of Case A is dense, and the cluster is obvious, while the distribution of Case B is dipersed, and is approximately uniform distributed.</p>
+<p><img src="graph/quard_1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><span style="text-decoration:underline"><strong>STEP 1: Make Grids</strong></span><br />
+To do the Quadrat analysis, the initial step is to crop the study area into several grids, and count the number of points in each grid. Take Case A and B for instance. We crop the study area into 7*6=42 grids. For case A, the maximum number of points is 5, while only 2 for Case B.</p>
+<p><img src="graph/quard_2.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><span style="text-decoration:underline"><strong>STEP 2: Derive Mean &amp; Variance</strong></span><br />
+After counting the points in each grid in STEP 1, we need to further calculate the mean and variance of number of counts for all the grids. For Case A, the counts of mean is:</p>
+<p><span class="math display">\[\frac{{(0+0+0+1+0+0+0)+(0+0+0+1+0+0+0)+(0+1+4+3+3+0+0)}+...}{6*7}=0.714\]</span></p>
+<p>, and the variance is:</p>
+<p><span class="math display">\[\frac{{(0-0.714)^2+(0-0.714)^2+(0-0.714)^2+(1-0.714)^2}+...}{6*7-1}=1.770\]</span><br />
+Also, the mean and variance of Case B is 0.714 and 0.355 respectively.</p>
+<p><span style="text-decoration:underline"><strong>STEP 3: Caluculate VMR</strong></span></p>
+<p>Variance/mean ratio (VMR) is an index of dispersion, which is a common measure of assessing the degree of clustering or regularity in a point pattern.</p>
+<p><span class="math display">\[VMR=\frac{\sigma^2}{\mu}\]</span></p>
+<p>What does it mean if the variance is equal to mean (<span class="math inline">\(VMR=1\)</span>)? Remember the Poisson distribution? It is a discrete distribution that measures the probability of a given number of events happening in a specified time period (or the grid in spatial analysis). Mean and variance must be the same for this distribution!! Proof is attached <a href="https://proofwiki.org/wiki/Variance_of_Poisson_Distribution">here</a>. With this feature, we can say that the number of points are random underlying the Poisson distribution.</p>
+<p>The minimum value of VMR is 0, it occurs only if the variance is equal to 0. That is, all of the number of points in each grid is the same, and we can identify this point pattern as perfectly uniform distribution (extremely dipersed). On the contrary, if VMR is larger than 1, it implies that there is too much variation among counts, and we can say that the point pattern is clustering. Figure below summarizes the concept of VMR.</p>
+<p><img src="graph/quard_type.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Thus, VMR of Case A is <span class="math inline">\(1.770/0.714=2.479\)</span>, while VMR of case B is <span class="math inline">\(0.355/0.714=0.497\)</span>. Based on the summary in the figure above, we can find that Case A is clustering, and Case B is dipersed.</p>
+<p><span style="text-decoration:underline"><strong>STEP 4: Test Statistic</strong></span><br />
+However, here comes a question. How do we distinguish between 1.001 and 1, or 0.999 and 1? Do the two values represent random or not? To solve the problem, we should conduct the hypothetical test to examine whether the test statistic result is significant. The null hypothesis is that the points are randomly distributed (<span class="math inline">\(VMR=1\)</span>), namely, Poisson distribution, and it is chi-squared with <span class="math inline">\(N-1\)</span> degrees of freedom. The test statistic of VMR is:</p>
+<p><span class="math display">\[\chi^2=(N-1)*VMR\]</span>
+, where <span class="math inline">\(N\)</span> is the number of grid cells. After calculating <span class="math inline">\(\chi^2\)</span>, we can check for the chi-square table to examine whether to reject the null hypothesis. And note that VMR statistic test is a two-tail chi-squared test because there are two directions of deviations apart from the random distribution, that is uniform distribution, whose <span class="math inline">\(\chi^2\)</span> would be low, and the clustering, whose <span class="math inline">\(\chi^2\)</span> would be high. Thus, the acceptance of null hypothesis of an adequate fit if:</p>
+<p><span class="math display">\[\chi^2_.975\leq\chi^2_{Observed}\leq\chi^2_.025\]</span></p>
+<p>For Case A, the Chi-square is <span class="math inline">\((42-1)*2.479=101.639\)</span>. The degree of freedom is <span class="math inline">\(42-1=41\)</span>. Look up chi-square table, the critical value is 45.72 under p value is 0.025. (Or, please use <code>qchisq(0.025, 41, lower.tail=F)</code> in R to find out). Apparently, <span class="math inline">\(74.37&gt;60.56\)</span>, Case A is significant clustering. For Case B, the Chi-square is <span class="math inline">\((42-1)*0.497=20.38\)</span>. The degree of freedom is also <span class="math inline">\(42-1=41\)</span>. Look up chi-square table, the critical value is 25.21 under p value is 0.975. (<code>qchisq(0.975, 41, lower.tail=F)</code>). And because <span class="math inline">\(20.38&lt;25.21\)</span>, Case B is significant dispersed.</p>
+<p>Now, let’s use YouBike data to perform quadrat analysis. <font color="red"><em><em>Data needed has been downloaded previously. You placed the file in the same directory as the R script file.</em></em> Click <a href="https://drive.google.com/uc?export=download&amp;id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi"><strong>here</strong></a> to re-download the file if it is lost.</font></p>
 </div>
 <div id="nearest-neighbour-analysis" class="section level3" number="6.1.3">
 <h3><span class="header-section-number">6.1.3</span> <strong>Nearest Neighbour Analysis</strong></h3>
