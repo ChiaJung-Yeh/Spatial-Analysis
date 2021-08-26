@@ -33,7 +33,7 @@ The detailed concept of GIS can be derived on the textbook [*_“Introduction to
 Well-known text (WKT) is a text markup language for representing vector geometry objects. The common type of geometric objects are marked as shown in the table below.  
 
 ```{r wkt_type, echo=F, eval=T}
-wkt_type=data.frame(Type=c("**Point**","**LineString**","**Polygon**"), Graph="", WKT=c("POINT (3 3)","	LINESTRING (1 4, 3 3, 5 5)","POLYGON (1 4, 2 2, 4 1, 5 5, 1 4)"))
+wkt_type=data.frame(Type=c("**Point**","**LineString**","**Polygon**"), Graph="", WKT=c("POINT (3 3)","	LINESTRING (1 4, 3 3, 5 5)","POLYGON ((1 4, 2 2, 4 1, 5 5, 1 4))"))
 kbl(wkt_type, booktabs=T)%>%
   kable_styling(bootstrap_options=c("striped", "hover"), font_size=14)%>%
   column_spec(2, image=spec_image(c("./graph/point.png", "./graph/line.png","./graph/polygon.png"), 500, 500))
