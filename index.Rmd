@@ -1,6 +1,6 @@
 --- 
 title: "Spatial Analysis with R"
-author: "Chia Jung, Yeh"
+author: "Chia Jung, Yeh\\\n National Yang Ming Chiao Tung University, Taiwan"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 # output: bookdown::gitbook
