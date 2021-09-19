@@ -8,7 +8,7 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: openscapes/series
+github-repo: ChiaJung-Yeh/Spatial-Analysis
 description: "A bookdown book on how to conduct spatial analysis with R."
 keywords:
   - Spatial Analysis
@@ -16,17 +16,6 @@ keywords:
   - R sfz
 category: r
 ---
-
-```{r meta_add, include=FALSE}
-library(metathis)
-
-meta() %>%
-  meta_description(
-    "This book will introduce how to conduct spatial analysis with R."
-  ) %>% 
-  meta_name("github-repo" = "ChiaJung-Yeh/Spatial-Analysis")%>% 
-  meta_viewport()
-```
 
 
 # **Introduction**
