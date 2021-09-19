@@ -10,7 +10,14 @@ biblio-style: apalike
 link-citations: yes
 github-repo: openscapes/series
 description: "A bookdown book on how to conduct spatial analysis on R."
+keywords:
+  - Spatial Analysis
+  - Geocomputation
+  - R sf
+category: r
 ---
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 # **Introduction**
 
