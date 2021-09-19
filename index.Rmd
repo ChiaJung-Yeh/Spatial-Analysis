@@ -1,6 +1,6 @@
 --- 
 title: "Spatial Analysis with R"
-author: "Chia Jung, Yeh\\\n National Yang Ming Chiao Tung University, Taiwan"
+author: "Chia Jung, Yeh\\\n National Yang Ming Chiao Tung University (NYCU), Taiwan"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 # output: bookdown::gitbook
@@ -9,15 +9,25 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: openscapes/series
-description: "A bookdown book on how to conduct spatial analysis on R."
+description: "A bookdown book on how to conduct spatial analysis with R."
 keywords:
   - Spatial Analysis
   - Geocomputation
-  - R sf
+  - R sfz
 category: r
 ---
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+```{r meta_add, include=FALSE}
+library(metathis)
+
+meta() %>%
+  meta_description(
+    "This book will introduce how to conduct spatial analysis with R."
+  ) %>% 
+  meta_name("github-repo" = "ChiaJung-Yeh/Spatial-Analysis")%>% 
+  meta_viewport()
+```
+
 
 # **Introduction**
 
