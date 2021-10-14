@@ -97,3 +97,13 @@ library(dplyr)
 library(ggplot2)
 ```
 
+<font size=4> **_Data_** </font><br> 
+Data required in this book are provided [**here**](https://drive.google.com/uc?export=download&id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi), please download the data and place it in the same directory of the R script.  
+
+Besides download data directly from the link above, we can connect to Github to install the package `TWspdata` to obtain the same data set. The code is shown below.  
+
+```{r install_TWspdata, echo=T, eval=F}
+install.packages(devtools)
+devtools::install_github("ChiaJung-Yeh/TWspdata")
+library(TWspdata)
+```

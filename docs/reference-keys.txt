@@ -62,3 +62,6 @@ tmap-1
 basic-measures
 quadrat-analysis
 nearest-neighbour-analysis
+geographic-information-systems-1
+fg
+output-bookdowngitbook

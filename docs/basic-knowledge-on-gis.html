@@ -5,26 +5,26 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Basic Knowledge on GIS | Spatial Analysis with R</title>
-  <meta name="description" content="A bookdown book on how to conduct spatial analysis on R." />
+  <meta name="description" content="A bookdown book on how to conduct spatial analysis with R." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Basic Knowledge on GIS | Spatial Analysis with R" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="A bookdown book on how to conduct spatial analysis on R." />
-  <meta name="github-repo" content="openscapes/series" />
+  <meta property="og:description" content="A bookdown book on how to conduct spatial analysis with R." />
+  <meta name="github-repo" content="ChiaJung-Yeh/Spatial-Analysis" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 2 Basic Knowledge on GIS | Spatial Analysis with R" />
   
-  <meta name="twitter:description" content="A bookdown book on how to conduct spatial analysis on R." />
+  <meta name="twitter:description" content="A bookdown book on how to conduct spatial analysis with R." />
   
 
-<meta name="author" content="Chia Jung, Yeh" />
+<meta name="author" content="Chia Jung, Yeh National Yang Ming Chiao Tung University (NYCU), Taiwan" />
 
 
-<meta name="date" content="2021-08-30" />
+<meta name="date" content="2021-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -140,7 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Spatial Analysis with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> <strong>Introduction</strong></a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> output: bookdown::gitbook</a></li>
 <li class="chapter" data-level="2" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html"><i class="fa fa-check"></i><b>2</b> <strong>Basic Knowledge on GIS</strong></a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#geographic-information-systems"><i class="fa fa-check"></i><b>2.1</b> Geographic Information Systems</a></li>
@@ -438,6 +438,12 @@ EPSG:3826<br />
 <span id="cb1-4"><a href="basic-knowledge-on-gis.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-5"><a href="basic-knowledge-on-gis.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-6"><a href="basic-knowledge-on-gis.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p><font size=4> <strong><em>Data</em></strong> </font><br>
+Data required in this book are provided <a href="https://drive.google.com/uc?export=download&amp;id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi"><strong>here</strong></a>, please download the data and place it in the same directory of the R script.</p>
+<p>Besides download data directly from the link above, we can connect to Github to install the package <code>TWspdata</code> to obtain the same data set. The code is shown below.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="basic-knowledge-on-gis.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(devtools)</span>
+<span id="cb2-2"><a href="basic-knowledge-on-gis.html#cb2-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;ChiaJung-Yeh/TWspdata&quot;</span>)</span>
+<span id="cb2-3"><a href="basic-knowledge-on-gis.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TWspdata)</span></code></pre></div>
 
 </div>
 </div>

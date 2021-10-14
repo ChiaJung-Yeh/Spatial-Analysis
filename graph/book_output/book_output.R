@@ -702,7 +702,7 @@ dev.off()
 
 
 
-png("./圖 3.1.8  point123簡單圖徵向量圖示（crs設定為3826）.png", width=700*2, height=700*2, res=220)
+png("./圖 3.1.8  point123簡單圖徵向量圖示（crs設定為4326）.png", width=700*2, height=700*2, res=220)
 point123=st_sfc(point1, point2, point3, crs=4326)
 ggplot()+
   geom_sf(data=point123, size=8)+
@@ -745,6 +745,61 @@ ggplot()+
         axis.text=element_blank(),
         axis.title=element_blank(),
         axis.ticks=element_blank())
+dev.off()
+
+
+
+png("./圖 3.2.1  文字資料建構地理資料範例（新竹市區公車）.png", width=870*2, height=790*2, res=220) 
+hsinchu_bus_route=read.csv("C:/Users/ASUS/Desktop/R Transportation/R Github Project/Spatial-Analysis/data/csv_files/hsinchu_bus_route.csv")
+hsinchu_bus_route$Geometry=st_as_sfc(hsinchu_bus_route$Geometry)
+hsinchu_bus_route=st_sf(hsinchu_bus_route, crs=4326)
+ggplot()+
+  geom_sf(data=filter(taiwan_town, COUNTYNAME=="新竹市"), fill="#D0D0D0", color="#6C6C6C")+
+  geom_sf(data=hsinchu_bus_route, color="#0066CC", size=0.5)+
+  theme_void()
+dev.off()
+
+
+
+png("./圖 3.2.3  經緯度欄位建構地理資料範例（新竹市觀光景點）.png", width=870*2, height=790*2, res=220) 
+hsinchu_scenicSpot=read.csv("C:/Users/ASUS/Desktop/R Transportation/R Github Project/Spatial-Analysis/data/csv_files/hsinchu_scenicSpot.csv")
+hsinchu_scenicSpot=mutate(hsinchu_scenicSpot, Geometry=paste("POINT(", PositionLon, " ", PositionLat, ")"))
+hsinchu_scenicSpot$Geometry=st_as_sfc(hsinchu_scenicSpot$Geometry)
+hsinchu_scenicSpot=st_sf(hsinchu_scenicSpot, crs=4326)
+ggplot()+
+  geom_sf(data=filter(taiwan_town, COUNTYNAME=="新竹市"), fill="#D0D0D0", color="#6C6C6C")+
+  geom_sf(data=hsinchu_scenicSpot, color="#46A3FF", size=1)+
+  geom_sf(data=filter(hsinchu_scenicSpot, 
+                      Name %in% c("新竹都城隍廟","新竹市立動物園","十七公里海岸風景區","南寮漁港(南寮舊港)","香山溼地","十九公頃青青草原")), color="#0066CC", size=2)+
+  geom_sf_text_repel(data=filter(hsinchu_scenicSpot, 
+                                 Name %in% c("新竹都城隍廟","新竹市立動物園","十七公里海岸風景區","南寮漁港(南寮舊港)","香山溼地","十九公頃青青草原")), aes(label=Name), family="A", size=7)+
+  theme_void()
+dev.off()
+
+
+
+png("./圖 3.3.2  st_bbox()地理邊界繪圖.png", width=650*2, height=790*2, res=220) 
+ggplot()+
+  geom_sf(data=nz, color="#E0E0E0", fill="#BEBEBE", size=0.5)+
+  geom_sf(data=nz_height, color="#01814A", shape=4)+
+  geom_sf(data=st_as_sfc(st_bbox(nz_height)), alpha=0.5, fill="#99CCEF", color=NA)+
+  theme_void()
+dev.off()
+
+
+
+png("./圖 3.5.1  合併地理資料與新增屬性資料（美國COVID-19死亡率圖）.png", width=1570*2, height=790*2, res=220) 
+us_covid=read.csv("https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2Fnytimes%2Fcovid-19-data%2Fmaster%2Fus-states.csv&filename=us-states.csv")
+us_covid$date=as.Date(us_covid$date)
+us_covid=filter(us_covid, date==as.Date("2021/9/30"))
+us_states_covid=left_join(us_states, us_covid, by=c("NAME"="state"))
+us_states_covid$death_rate=us_states_covid$deaths/us_states_covid$cases
+ggplot()+
+  geom_sf(data=us_states_covid, aes(fill=death_rate*100))+
+  scale_fill_distiller(palette="YlOrRd", direction=1, name="確診死亡率 (%)")+
+  theme_void()+
+  theme(legend.text=element_text(size=18, family="B"),
+        legend.title=element_text(size=23, family="A"))
 dev.off()
 
 
