@@ -6,6 +6,7 @@ shapefile
 coordinate-reference-system-crs
 why-use-r
 required-packages
+data-visualization-with-maps
 making-maps
 attributes-of-shapefile
 labels-on-map
@@ -21,7 +22,6 @@ other-mapping-tools
 tmap
 leaflet
 practice
-data-visualization-with-maps
 geographic-data
 simple-feature-geometries-sfg
 point
@@ -57,11 +57,8 @@ voronoi-polygon
 practice-2
 basic-quantitative-geography
 point-patterns-analysis
-spatial-autocorrelation-analysis
-tmap-1
 basic-measures
 quadrat-analysis
 nearest-neighbour-analysis
-geographic-information-systems-1
-fg
+spatial-autocorrelation-analysis
 output-bookdowngitbook

@@ -217,7 +217,7 @@ But there is a drawback of `st_centroid()`. If the polygon contains many separat
 
 ```{r point_on_surface, echo=T, eval=T, fig.width=3, fig.height=5, dpi=120, fig.align="center"}
 # read the shapefile of Taiwan and filter Penghu Island
-taiwan_county=read_sf("./data/taiwan_county/taiwan_county.shp")
+taiwan_county=read_sf("./data/taiwan_map/taiwan_county.shp")
 penghu=filter(taiwan_county, COUNTYCODE==10016)
 
 # derive the centroid

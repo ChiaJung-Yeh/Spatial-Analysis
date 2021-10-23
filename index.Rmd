@@ -10,11 +10,6 @@ biblio-style: apalike
 link-citations: yes
 github-repo: ChiaJung-Yeh/Spatial-Analysis
 description: "A bookdown book on how to conduct spatial analysis with R."
-keywords:
-  - Spatial Analysis
-  - Geocomputation
-  - R sfz
-category: r
 ---
 
 
