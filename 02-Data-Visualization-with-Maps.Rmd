@@ -430,8 +430,8 @@ taipei_mrt_station=read_sf("./data/taipei_mrt/taipei_mrt_station.shp")
 
 windowsFonts(A=windowsFont("標楷體"))
 
-trans_sta=filter(taipei_mrt_station, duplicated(taipei_mrt_station$Zh_tw) | Zh_tw %in% c("七張","北投"))
-taipei_mrt_station=filter(taipei_mrt_station, !(Zh_tw %in% trans_sta$Zh_tw) , !(Zh_tw %in% c("七張","北投")))
+trans_sta=filter(taipei_mrt_station, duplicated(taipei_mrt_station$StatnNm) | StatnNm %in% c("七張","北投"))
+taipei_mrt_station=filter(taipei_mrt_station, !(StatnNm %in% trans_sta$StatnNm) , !(StatnNm %in% c("七張","北投")))
 
 ggplot(taipei_village_map)+
   geom_sf(color=NA, aes(fill=TOWNNAME), alpha=0.5)+
@@ -441,7 +441,7 @@ ggplot(taipei_village_map)+
                      name="捷運路線")+
   geom_sf(data=taipei_mrt_station, shape=19, size=1)+
   geom_sf(data=trans_sta, shape=10, size=2)+
-  geom_sf_text_repel(data=trans_sta, aes(label=Zh_tw), size=3, nudge_x=5, family="A", box.padding=0.3)+
+  geom_sf_text_repel(data=trans_sta, aes(label=StatnNm), size=3, nudge_x=5, family="A", box.padding=0.3)+
   guides(fill=guide_legend(override.aes=list(color=NA)))+
   theme(axis.text=element_blank(),
         axis.ticks=element_blank(),

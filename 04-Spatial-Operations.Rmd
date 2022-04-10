@@ -656,8 +656,11 @@ taipei_mrt_station=read_sf("./data/taipei_mrt/taipei_mrt_station.shp")
 taipei_youbike=read_sf("./data/taipei_youbike/taipei_youbike.shp")
 
 # remove the duplicated station names of transfer stations
-taipei_mrt_station=select(taipei_mrt_station, Zh_tw)%>%
+taipei_mrt_station=select(taipei_mrt_station, StatnNm)%>%
   distinct()
+
+# transform the CRS
+taipei_mrt_station=st_transform(taipei_mrt_station, crs=3826)
 
 # find the nearest feature
 near_mrt=st_nearest_feature(taipei_youbike, taipei_mrt_station)
@@ -667,7 +670,7 @@ head(near_mrt)
 
 # combine the data
 near_mrt_result=data.frame(YouBike=taipei_youbike$StatnNm,
-                           MRT=taipei_mrt_station[near_mrt,]$Zh_tw)
+                           MRT=taipei_mrt_station[near_mrt,]$StatnNm)
 # near_mrt_result
 ```
 
@@ -681,10 +684,10 @@ Now, we know how to derive the index of the nearest feature, but what if we want
 
 ```{r nearest_point, echo=T, eval=T, warning=F}
 # choose 2 MRT stations
-mrt1=filter(taipei_mrt_station, Zh_tw %in% c("台北車站", "忠孝復興"))
+mrt1=filter(taipei_mrt_station, StatnNm %in% c("台北車站", "忠孝復興"))
 
 # choose other 5 MRT stations
-mrt2=filter(taipei_mrt_station, Zh_tw %in% c("龍山寺","民權西路","台電大樓","六張犁","松山機場"))
+mrt2=filter(taipei_mrt_station, StatnNm %in% c("龍山寺","民權西路","台電大樓","六張犁","松山機場"))
 
 # draw buffers
 mrt1=st_buffer(mrt1, 500)
@@ -701,10 +704,10 @@ tm_shape(mrt1_2)+
   tm_lines()+
   tm_shape(mrt1)+
   tm_polygons(alpha=0.2, col="#75AADB")+
-  tm_text("Zh_tw")+
+  tm_text("StatnNm")+
   tm_shape(mrt2)+
   tm_dots()+
-  tm_text("Zh_tw", ymod=2)
+  tm_text("StatnNm", ymod=2)
 ```
 
 In addition, continuing on the work we have done on the nearest MRT station of each YouBike station, we can use function `st_nearest_points()` to obtain the connection line on the map. But please note that we should add parameter `pairwise=T` to ensure the function returns nearest points between subsequent pairs, instead of all pairs.  
@@ -759,9 +762,9 @@ The first three nearest points are shown in the matrix above. It tells us that t
 
 ```{r st_nn_k3_table, echo=F, eval=T, warning=F}
 near_mrt_k3=data.frame(near_mrt_k3)
-near_mrt_k3=data.frame(MRT_nn1=taipei_mrt_station[near_mrt_k3$X1,]$Zh_tw,
-                       MRT_nn2=taipei_mrt_station[near_mrt_k3$X2,]$Zh_tw,
-                       MRT_nn3=taipei_mrt_station[near_mrt_k3$X3,]$Zh_tw)
+near_mrt_k3=data.frame(MRT_nn1=taipei_mrt_station[near_mrt_k3$X1,]$StatnNm,
+                       MRT_nn2=taipei_mrt_station[near_mrt_k3$X2,]$StatnNm,
+                       MRT_nn3=taipei_mrt_station[near_mrt_k3$X3,]$StatnNm)
 near_mrt_k3=cbind(YouBike=taipei_youbike$StatnNm, near_mrt_k3)
 datatable(near_mrt_k3, options=list(pageLength=10))
 ```

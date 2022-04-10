@@ -12,6 +12,7 @@ library(tmap)
 library(leaflet)
 library(classInt)
 library(cowplot)
+library(data.table)
 ```
 
 # **Geographic Data**
@@ -380,9 +381,9 @@ TRA_line=read.csv("./data/TRA/TRA_line.csv", fileEncoding="UTF-8")
 TRA_line$Geometry=st_as_sfc(TRA_line$Geometry, crs=4326)
 TRA_line=st_sf(TRA_line, geometry=TRA_line$Geometry)
 
-TRA_station=read.csv("./data/TRA/TRA_station.csv", fileEncoding="UTF-8")
-TRA_station=mutate(TRA_station, geomety=paste("POINT (",PositionLon," ",PositionLat,")"))
-TRA_station$geomety=st_as_sfc(TRA_station$geomety)
+TRA_station=fread("./data/TRA/TRA_station.csv")
+TRA_station=mutate(TRA_station, geometry=paste("POINT (",PositionLon," ",PositionLat,")"))
+TRA_station$geometry=st_as_sfc(TRA_station$geometry)
 TRA_station=st_sf(TRA_station, crs=4326)
 
 TRA_station$StationID=as.numeric(TRA_station$StationID)
