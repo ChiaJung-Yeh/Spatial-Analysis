@@ -103,7 +103,7 @@ Data required in this book are provided [**here**](https://drive.google.com/uc?e
 Besides download data directly from the link above, we can connect to Github to install the package `TWspdata` to obtain the same data set. The code is shown below.  
 
 ```{r install_TWspdata, echo=T, eval=F}
-install.packages(devtools)
+install.packages("devtools")
 devtools::install_github("ChiaJung-Yeh/TWspdata")
 library(TWspdata)
 ```

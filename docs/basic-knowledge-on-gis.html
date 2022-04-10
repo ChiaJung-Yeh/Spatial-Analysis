@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Basic Knowledge on GIS | Spatial Analysis with R</title>
   <meta name="description" content="A bookdown book on how to conduct spatial analysis with R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Basic Knowledge on GIS | Spatial Analysis with R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="A bookdown book on how to conduct spatial analysis with R." />
   <meta name="github-repo" content="ChiaJung-Yeh/Spatial-Analysis" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Chia Jung, Yeh National Yang Ming Chiao Tung University (NYCU), Taiwan" />
 
 
-<meta name="date" content="2021-10-23" />
+<meta name="date" content="2022-04-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="data-visualization-with-maps.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -140,86 +139,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Spatial Analysis with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> <strong>Introduction</strong></a></li>
-<li class="chapter" data-level="2" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html"><i class="fa fa-check"></i><b>2</b> <strong>Basic Knowledge on GIS</strong></a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> <strong>Introduction</strong><span></span></a></li>
+<li class="chapter" data-level="2" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html"><i class="fa fa-check"></i><b>2</b> <strong>Basic Knowledge on GIS</strong><span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#geographic-information-systems"><i class="fa fa-check"></i><b>2.1</b> Geographic Information Systems</a></li>
-<li class="chapter" data-level="2.2" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#well-known-text-wkt"><i class="fa fa-check"></i><b>2.2</b> Well-Known Text (WKT)</a></li>
-<li class="chapter" data-level="2.3" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#shapefile"><i class="fa fa-check"></i><b>2.3</b> Shapefile</a></li>
-<li class="chapter" data-level="2.4" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#coordinate-reference-system-crs"><i class="fa fa-check"></i><b>2.4</b> Coordinate Reference System (CRS)</a></li>
-<li class="chapter" data-level="2.5" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#why-use-r"><i class="fa fa-check"></i><b>2.5</b> Why Use R?</a></li>
-<li class="chapter" data-level="2.6" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#required-packages"><i class="fa fa-check"></i><b>2.6</b> Required Packages</a></li>
+<li class="chapter" data-level="2.1" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#geographic-information-systems"><i class="fa fa-check"></i><b>2.1</b> Geographic Information Systems<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#well-known-text-wkt"><i class="fa fa-check"></i><b>2.2</b> Well-Known Text (WKT)<span></span></a></li>
+<li class="chapter" data-level="2.3" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#shapefile"><i class="fa fa-check"></i><b>2.3</b> Shapefile<span></span></a></li>
+<li class="chapter" data-level="2.4" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#coordinate-reference-system-crs"><i class="fa fa-check"></i><b>2.4</b> Coordinate Reference System (CRS)<span></span></a></li>
+<li class="chapter" data-level="2.5" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#why-use-r"><i class="fa fa-check"></i><b>2.5</b> Why Use R?<span></span></a></li>
+<li class="chapter" data-level="2.6" data-path="basic-knowledge-on-gis.html"><a href="basic-knowledge-on-gis.html#required-packages"><i class="fa fa-check"></i><b>2.6</b> Required Packages<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html"><i class="fa fa-check"></i><b>3</b> <strong>Data Visualization with Maps</strong></a>
+<li class="chapter" data-level="3" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html"><i class="fa fa-check"></i><b>3</b> <strong>Data Visualization with Maps</strong><span></span></a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#making-maps"><i class="fa fa-check"></i><b>3.1</b> Making Maps</a></li>
-<li class="chapter" data-level="3.2" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#attributes-of-shapefile"><i class="fa fa-check"></i><b>3.2</b> Attributes of Shapefile</a></li>
-<li class="chapter" data-level="3.3" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#labels-on-map"><i class="fa fa-check"></i><b>3.3</b> Labels on Map</a></li>
-<li class="chapter" data-level="3.4" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#graduated-symbol-map"><i class="fa fa-check"></i><b>3.4</b> Graduated Symbol Map</a></li>
-<li class="chapter" data-level="3.5" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#categorized-symbol-map"><i class="fa fa-check"></i><b>3.5</b> Categorized Symbol Map</a></li>
-<li class="chapter" data-level="3.6" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#rule-based-symbol-map"><i class="fa fa-check"></i><b>3.6</b> Rule-based Symbol Map</a></li>
-<li class="chapter" data-level="3.7" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#basic-operationselements-of-map"><i class="fa fa-check"></i><b>3.7</b> Basic Operations/Elements of Map</a>
+<li class="chapter" data-level="3.1" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#making-maps"><i class="fa fa-check"></i><b>3.1</b> Making Maps<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#attributes-of-shapefile"><i class="fa fa-check"></i><b>3.2</b> Attributes of Shapefile<span></span></a></li>
+<li class="chapter" data-level="3.3" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#labels-on-map"><i class="fa fa-check"></i><b>3.3</b> Labels on Map<span></span></a></li>
+<li class="chapter" data-level="3.4" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#graduated-symbol-map"><i class="fa fa-check"></i><b>3.4</b> Graduated Symbol Map<span></span></a></li>
+<li class="chapter" data-level="3.5" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#categorized-symbol-map"><i class="fa fa-check"></i><b>3.5</b> Categorized Symbol Map<span></span></a></li>
+<li class="chapter" data-level="3.6" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#rule-based-symbol-map"><i class="fa fa-check"></i><b>3.6</b> Rule-based Symbol Map<span></span></a></li>
+<li class="chapter" data-level="3.7" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#basic-operationselements-of-map"><i class="fa fa-check"></i><b>3.7</b> Basic Operations/Elements of Map<span></span></a>
 <ul>
-<li class="chapter" data-level="3.7.1" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#map-overlay"><i class="fa fa-check"></i><b>3.7.1</b> <strong>Map Overlay</strong></a></li>
-<li class="chapter" data-level="3.7.2" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#north-arrow-and-scale"><i class="fa fa-check"></i><b>3.7.2</b> <strong>North Arrow and Scale</strong></a></li>
-<li class="chapter" data-level="3.7.3" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#linetypeshape"><i class="fa fa-check"></i><b>3.7.3</b> <strong>Linetype/Shape</strong></a></li>
-<li class="chapter" data-level="3.7.4" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#theme"><i class="fa fa-check"></i><b>3.7.4</b> <strong>Theme</strong></a></li>
+<li class="chapter" data-level="3.7.1" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#map-overlay"><i class="fa fa-check"></i><b>3.7.1</b> <strong>Map Overlay</strong><span></span></a></li>
+<li class="chapter" data-level="3.7.2" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#north-arrow-and-scale"><i class="fa fa-check"></i><b>3.7.2</b> <strong>North Arrow and Scale</strong><span></span></a></li>
+<li class="chapter" data-level="3.7.3" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#linetypeshape"><i class="fa fa-check"></i><b>3.7.3</b> <strong>Linetype/Shape</strong><span></span></a></li>
+<li class="chapter" data-level="3.7.4" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#theme"><i class="fa fa-check"></i><b>3.7.4</b> <strong>Theme</strong><span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#other-mapping-tools"><i class="fa fa-check"></i><b>3.8</b> Other Mapping Tools</a>
+<li class="chapter" data-level="3.8" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#other-mapping-tools"><i class="fa fa-check"></i><b>3.8</b> Other Mapping Tools<span></span></a>
 <ul>
-<li class="chapter" data-level="3.8.1" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#tmap"><i class="fa fa-check"></i><b>3.8.1</b> <strong>tmap</strong></a></li>
-<li class="chapter" data-level="3.8.2" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#leaflet"><i class="fa fa-check"></i><b>3.8.2</b> <strong>leaflet</strong></a></li>
+<li class="chapter" data-level="3.8.1" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#tmap"><i class="fa fa-check"></i><b>3.8.1</b> <strong>tmap</strong><span></span></a></li>
+<li class="chapter" data-level="3.8.2" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#leaflet"><i class="fa fa-check"></i><b>3.8.2</b> <strong>leaflet</strong><span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.9" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#practice"><i class="fa fa-check"></i><b>3.9</b> <span style="border-bottom: 3px double black"><em><em>PRACTICE</em></em></span></a></li>
+<li class="chapter" data-level="3.9" data-path="data-visualization-with-maps.html"><a href="data-visualization-with-maps.html#practice"><i class="fa fa-check"></i><b>3.9</b> <span style="border-bottom: 3px double black"><em><em>PRACTICE</em></em></span><span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="geographic-data.html"><a href="geographic-data.html"><i class="fa fa-check"></i><b>4</b> <strong>Geographic Data</strong></a>
+<li class="chapter" data-level="4" data-path="geographic-data.html"><a href="geographic-data.html"><i class="fa fa-check"></i><b>4</b> <strong>Geographic Data</strong><span></span></a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="geographic-data.html"><a href="geographic-data.html#simple-feature-geometries-sfg"><i class="fa fa-check"></i><b>4.1</b> Simple Feature Geometries (sfg)</a>
+<li class="chapter" data-level="4.1" data-path="geographic-data.html"><a href="geographic-data.html#simple-feature-geometries-sfg"><i class="fa fa-check"></i><b>4.1</b> Simple Feature Geometries (sfg)<span></span></a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="geographic-data.html"><a href="geographic-data.html#point"><i class="fa fa-check"></i><b>4.1.1</b> <strong>Point</strong></a></li>
-<li class="chapter" data-level="4.1.2" data-path="geographic-data.html"><a href="geographic-data.html#linestring"><i class="fa fa-check"></i><b>4.1.2</b> <strong>Linestring</strong></a></li>
-<li class="chapter" data-level="4.1.3" data-path="geographic-data.html"><a href="geographic-data.html#polygon"><i class="fa fa-check"></i><b>4.1.3</b> <strong>Polygon</strong></a></li>
-<li class="chapter" data-level="4.1.4" data-path="geographic-data.html"><a href="geographic-data.html#multipoint"><i class="fa fa-check"></i><b>4.1.4</b> <strong>Multipoint</strong></a></li>
-<li class="chapter" data-level="4.1.5" data-path="geographic-data.html"><a href="geographic-data.html#multilinestring"><i class="fa fa-check"></i><b>4.1.5</b> <strong>Multilinestring</strong></a></li>
-<li class="chapter" data-level="4.1.6" data-path="geographic-data.html"><a href="geographic-data.html#multipolygon"><i class="fa fa-check"></i><b>4.1.6</b> <strong>Multipolygon</strong></a></li>
+<li class="chapter" data-level="4.1.1" data-path="geographic-data.html"><a href="geographic-data.html#point"><i class="fa fa-check"></i><b>4.1.1</b> <strong>Point</strong><span></span></a></li>
+<li class="chapter" data-level="4.1.2" data-path="geographic-data.html"><a href="geographic-data.html#linestring"><i class="fa fa-check"></i><b>4.1.2</b> <strong>Linestring</strong><span></span></a></li>
+<li class="chapter" data-level="4.1.3" data-path="geographic-data.html"><a href="geographic-data.html#polygon"><i class="fa fa-check"></i><b>4.1.3</b> <strong>Polygon</strong><span></span></a></li>
+<li class="chapter" data-level="4.1.4" data-path="geographic-data.html"><a href="geographic-data.html#multipoint"><i class="fa fa-check"></i><b>4.1.4</b> <strong>Multipoint</strong><span></span></a></li>
+<li class="chapter" data-level="4.1.5" data-path="geographic-data.html"><a href="geographic-data.html#multilinestring"><i class="fa fa-check"></i><b>4.1.5</b> <strong>Multilinestring</strong><span></span></a></li>
+<li class="chapter" data-level="4.1.6" data-path="geographic-data.html"><a href="geographic-data.html#multipolygon"><i class="fa fa-check"></i><b>4.1.6</b> <strong>Multipolygon</strong><span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="geographic-data.html"><a href="geographic-data.html#simple-feature-columns-sfc"><i class="fa fa-check"></i><b>4.2</b> Simple Feature Columns (sfc)</a></li>
-<li class="chapter" data-level="4.3" data-path="geographic-data.html"><a href="geographic-data.html#simple-feature-sf"><i class="fa fa-check"></i><b>4.3</b> Simple Feature (sf)</a></li>
-<li class="chapter" data-level="4.4" data-path="geographic-data.html"><a href="geographic-data.html#convert-text-file-to-shapefile"><i class="fa fa-check"></i><b>4.4</b> Convert Text File to Shapefile</a></li>
-<li class="chapter" data-level="4.5" data-path="geographic-data.html"><a href="geographic-data.html#reproject-geographic-data"><i class="fa fa-check"></i><b>4.5</b> Reproject Geographic Data</a></li>
-<li class="chapter" data-level="4.6" data-path="geographic-data.html"><a href="geographic-data.html#geographic-data-export"><i class="fa fa-check"></i><b>4.6</b> Geographic Data Export</a></li>
-<li class="chapter" data-level="4.7" data-path="geographic-data.html"><a href="geographic-data.html#geographic-data-format"><i class="fa fa-check"></i><b>4.7</b> Geographic Data Format</a></li>
-<li class="chapter" data-level="4.8" data-path="geographic-data.html"><a href="geographic-data.html#join-attribute-and-spatial-data"><i class="fa fa-check"></i><b>4.8</b> Join Attribute and Spatial Data</a></li>
-<li class="chapter" data-level="4.9" data-path="geographic-data.html"><a href="geographic-data.html#practice-1"><i class="fa fa-check"></i><b>4.9</b> <span style="border-bottom: 3px double black"><em><em>PRACTICE</em></em></span></a></li>
+<li class="chapter" data-level="4.2" data-path="geographic-data.html"><a href="geographic-data.html#simple-feature-columns-sfc"><i class="fa fa-check"></i><b>4.2</b> Simple Feature Columns (sfc)<span></span></a></li>
+<li class="chapter" data-level="4.3" data-path="geographic-data.html"><a href="geographic-data.html#simple-feature-sf"><i class="fa fa-check"></i><b>4.3</b> Simple Feature (sf)<span></span></a></li>
+<li class="chapter" data-level="4.4" data-path="geographic-data.html"><a href="geographic-data.html#convert-text-file-to-shapefile"><i class="fa fa-check"></i><b>4.4</b> Convert Text File to Shapefile<span></span></a></li>
+<li class="chapter" data-level="4.5" data-path="geographic-data.html"><a href="geographic-data.html#reproject-geographic-data"><i class="fa fa-check"></i><b>4.5</b> Reproject Geographic Data<span></span></a></li>
+<li class="chapter" data-level="4.6" data-path="geographic-data.html"><a href="geographic-data.html#geographic-data-export"><i class="fa fa-check"></i><b>4.6</b> Geographic Data Export<span></span></a></li>
+<li class="chapter" data-level="4.7" data-path="geographic-data.html"><a href="geographic-data.html#geographic-data-format"><i class="fa fa-check"></i><b>4.7</b> Geographic Data Format<span></span></a></li>
+<li class="chapter" data-level="4.8" data-path="geographic-data.html"><a href="geographic-data.html#join-attribute-and-spatial-data"><i class="fa fa-check"></i><b>4.8</b> Join Attribute and Spatial Data<span></span></a></li>
+<li class="chapter" data-level="4.9" data-path="geographic-data.html"><a href="geographic-data.html#practice-1"><i class="fa fa-check"></i><b>4.9</b> <span style="border-bottom: 3px double black"><em><em>PRACTICE</em></em></span><span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="spatial-operations.html"><a href="spatial-operations.html"><i class="fa fa-check"></i><b>5</b> <strong>Spatial Operations</strong></a>
+<li class="chapter" data-level="5" data-path="spatial-operations.html"><a href="spatial-operations.html"><i class="fa fa-check"></i><b>5</b> <strong>Spatial Operations</strong><span></span></a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-join"><i class="fa fa-check"></i><b>5.1</b> Spatial Join</a></li>
-<li class="chapter" data-level="5.2" data-path="spatial-operations.html"><a href="spatial-operations.html#attribute-aggregation"><i class="fa fa-check"></i><b>5.2</b> Attribute Aggregation</a></li>
-<li class="chapter" data-level="5.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-aggregation"><i class="fa fa-check"></i><b>5.3</b> Spatial Aggregation</a></li>
-<li class="chapter" data-level="5.4" data-path="spatial-operations.html"><a href="spatial-operations.html#interpolation"><i class="fa fa-check"></i><b>5.4</b> Interpolation</a></li>
-<li class="chapter" data-level="5.5" data-path="spatial-operations.html"><a href="spatial-operations.html#unions"><i class="fa fa-check"></i><b>5.5</b> Unions</a></li>
-<li class="chapter" data-level="5.6" data-path="spatial-operations.html"><a href="spatial-operations.html#centroid"><i class="fa fa-check"></i><b>5.6</b> Centroid</a></li>
-<li class="chapter" data-level="5.7" data-path="spatial-operations.html"><a href="spatial-operations.html#buffer"><i class="fa fa-check"></i><b>5.7</b> Buffer</a></li>
-<li class="chapter" data-level="5.8" data-path="spatial-operations.html"><a href="spatial-operations.html#boundary"><i class="fa fa-check"></i><b>5.8</b> Boundary</a></li>
-<li class="chapter" data-level="5.9" data-path="spatial-operations.html"><a href="spatial-operations.html#clipping"><i class="fa fa-check"></i><b>5.9</b> Clipping</a></li>
-<li class="chapter" data-level="5.10" data-path="spatial-operations.html"><a href="spatial-operations.html#simplification"><i class="fa fa-check"></i><b>5.10</b> Simplification</a></li>
-<li class="chapter" data-level="5.11" data-path="spatial-operations.html"><a href="spatial-operations.html#affine-transformations"><i class="fa fa-check"></i><b>5.11</b> Affine Transformations</a></li>
-<li class="chapter" data-level="5.12" data-path="spatial-operations.html"><a href="spatial-operations.html#geometric-measurement"><i class="fa fa-check"></i><b>5.12</b> Geometric Measurement</a></li>
-<li class="chapter" data-level="5.13" data-path="spatial-operations.html"><a href="spatial-operations.html#nearest-analysis"><i class="fa fa-check"></i><b>5.13</b> Nearest Analysis</a></li>
-<li class="chapter" data-level="5.14" data-path="spatial-operations.html"><a href="spatial-operations.html#convex-hull"><i class="fa fa-check"></i><b>5.14</b> Convex Hull</a></li>
-<li class="chapter" data-level="5.15" data-path="spatial-operations.html"><a href="spatial-operations.html#voronoi-polygon"><i class="fa fa-check"></i><b>5.15</b> Voronoi Polygon</a></li>
-<li class="chapter" data-level="5.16" data-path="spatial-operations.html"><a href="spatial-operations.html#practice-2"><i class="fa fa-check"></i><b>5.16</b> <span style="border-bottom: 3px double black"><em><em>PRACTICE</em></em></span></a></li>
+<li class="chapter" data-level="5.1" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-join"><i class="fa fa-check"></i><b>5.1</b> Spatial Join<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="spatial-operations.html"><a href="spatial-operations.html#attribute-aggregation"><i class="fa fa-check"></i><b>5.2</b> Attribute Aggregation<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="spatial-operations.html"><a href="spatial-operations.html#spatial-aggregation"><i class="fa fa-check"></i><b>5.3</b> Spatial Aggregation<span></span></a></li>
+<li class="chapter" data-level="5.4" data-path="spatial-operations.html"><a href="spatial-operations.html#interpolation"><i class="fa fa-check"></i><b>5.4</b> Interpolation<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="spatial-operations.html"><a href="spatial-operations.html#unions"><i class="fa fa-check"></i><b>5.5</b> Unions<span></span></a></li>
+<li class="chapter" data-level="5.6" data-path="spatial-operations.html"><a href="spatial-operations.html#centroid"><i class="fa fa-check"></i><b>5.6</b> Centroid<span></span></a></li>
+<li class="chapter" data-level="5.7" data-path="spatial-operations.html"><a href="spatial-operations.html#buffer"><i class="fa fa-check"></i><b>5.7</b> Buffer<span></span></a></li>
+<li class="chapter" data-level="5.8" data-path="spatial-operations.html"><a href="spatial-operations.html#boundary"><i class="fa fa-check"></i><b>5.8</b> Boundary<span></span></a></li>
+<li class="chapter" data-level="5.9" data-path="spatial-operations.html"><a href="spatial-operations.html#clipping"><i class="fa fa-check"></i><b>5.9</b> Clipping<span></span></a></li>
+<li class="chapter" data-level="5.10" data-path="spatial-operations.html"><a href="spatial-operations.html#simplification"><i class="fa fa-check"></i><b>5.10</b> Simplification<span></span></a></li>
+<li class="chapter" data-level="5.11" data-path="spatial-operations.html"><a href="spatial-operations.html#affine-transformations"><i class="fa fa-check"></i><b>5.11</b> Affine Transformations<span></span></a></li>
+<li class="chapter" data-level="5.12" data-path="spatial-operations.html"><a href="spatial-operations.html#geometric-measurement"><i class="fa fa-check"></i><b>5.12</b> Geometric Measurement<span></span></a></li>
+<li class="chapter" data-level="5.13" data-path="spatial-operations.html"><a href="spatial-operations.html#nearest-analysis"><i class="fa fa-check"></i><b>5.13</b> Nearest Analysis<span></span></a></li>
+<li class="chapter" data-level="5.14" data-path="spatial-operations.html"><a href="spatial-operations.html#convex-hull"><i class="fa fa-check"></i><b>5.14</b> Convex Hull<span></span></a></li>
+<li class="chapter" data-level="5.15" data-path="spatial-operations.html"><a href="spatial-operations.html#voronoi-polygon"><i class="fa fa-check"></i><b>5.15</b> Voronoi Polygon<span></span></a></li>
+<li class="chapter" data-level="5.16" data-path="spatial-operations.html"><a href="spatial-operations.html#practice-2"><i class="fa fa-check"></i><b>5.16</b> <span style="border-bottom: 3px double black"><em><em>PRACTICE</em></em></span><span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html"><i class="fa fa-check"></i><b>6</b> <strong>Basic Quantitative Geography </strong></a>
+<li class="chapter" data-level="6" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html"><i class="fa fa-check"></i><b>6</b> <strong>Basic Quantitative Geography </strong><span></span></a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#point-patterns-analysis"><i class="fa fa-check"></i><b>6.1</b> Point Patterns Analysis</a>
+<li class="chapter" data-level="6.1" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#point-patterns-analysis"><i class="fa fa-check"></i><b>6.1</b> Point Patterns Analysis<span></span></a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#basic-measures"><i class="fa fa-check"></i><b>6.1.1</b> <strong>Basic measures</strong></a></li>
-<li class="chapter" data-level="6.1.2" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#quadrat-analysis"><i class="fa fa-check"></i><b>6.1.2</b> <strong>Quadrat Analysis</strong></a></li>
-<li class="chapter" data-level="6.1.3" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#nearest-neighbour-analysis"><i class="fa fa-check"></i><b>6.1.3</b> <strong>Nearest Neighbour Analysis</strong></a></li>
+<li class="chapter" data-level="6.1.1" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#basic-measures"><i class="fa fa-check"></i><b>6.1.1</b> <strong>Basic measures</strong><span></span></a></li>
+<li class="chapter" data-level="6.1.2" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#quadrat-analysis"><i class="fa fa-check"></i><b>6.1.2</b> <strong>Quadrat Analysis</strong><span></span></a></li>
+<li class="chapter" data-level="6.1.3" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#nearest-neighbour-analysis"><i class="fa fa-check"></i><b>6.1.3</b> <strong>Nearest Neighbour Analysis</strong><span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#spatial-autocorrelation-analysis"><i class="fa fa-check"></i><b>6.2</b> Spatial Autocorrelation Analysis</a></li>
+<li class="chapter" data-level="6.2" data-path="basic-quantitative-geography.html"><a href="basic-quantitative-geography.html#spatial-autocorrelation-analysis"><i class="fa fa-check"></i><b>6.2</b> Spatial Autocorrelation Analysis<span></span></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
@@ -241,10 +240,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="basic-knowledge-on-gis" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> <strong>Basic Knowledge on GIS</strong></h1>
-<div id="geographic-information-systems" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Geographic Information Systems</h2>
+<div id="basic-knowledge-on-gis" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> <strong>Basic Knowledge on GIS</strong><a href="basic-knowledge-on-gis.html#basic-knowledge-on-gis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="geographic-information-systems" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Geographic Information Systems<a href="basic-knowledge-on-gis.html#geographic-information-systems" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Geographic Information Systems (GIS) store, analyze, and visualize data for geographic positions on Earth’s surface. The four major features of GIS are listed below.</p>
 <ul>
 <li>Create geographic data.</li>
@@ -255,8 +254,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this notebook, we would focus on the issue about spaitial analysis and making visualized maps.</p>
 <p>The detailed concept of GIS can be derived on the textbook <a href="https://www.academia.edu/28691712/Introduction_to_GIS_Kang_Tsung_Chang_pdf?email_work_card=title"><em><em>“Introduction to Geographic Information Systems (Kang Tsung Chang)”</em></em></a>.</p>
 </div>
-<div id="well-known-text-wkt" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Well-Known Text (WKT)</h2>
+<div id="well-known-text-wkt" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Well-Known Text (WKT)<a href="basic-knowledge-on-gis.html#well-known-text-wkt" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Well-known text (WKT) is a text markup language for representing vector geometry objects. The common type of geometric objects are marked as shown in the table below.</p>
 <table class="table table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
 <thead>
@@ -323,8 +322,8 @@ POLYGON ((1 4, 2 2, 4 1, 5 5, 1 4))
 <p>The WKT types illustrated above are single geometry. However, sometimes we want to mark all the geometry together to signify the same attribute, single geometry may seem to be difficult to express. For instance, there are five campuses in NCTU. If we want to combine all the points into one single geometry, in order to represent “NCTU,” it is hard to express by POINT text. Thus, we need multi geometries to mark it.</p>
 <p>Multi geometries are available to represent more than one geometry of the same dimension in a single object, including MultiPoint, MultiLineString, MultiPolygon. Geometry Collection is the geometries of different dimensions.</p>
 </div>
-<div id="shapefile" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Shapefile</h2>
+<div id="shapefile" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Shapefile<a href="basic-knowledge-on-gis.html#shapefile" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The shapefile format is a universal geospatial vector data format. It is developed and regulated by <a href="https://www.wikiwand.com/en/Esri">Esri</a>, which is an international supplier of GIS software. The shapefile format can illustrate the vector features: points, lines, and polygons. In fact, shapefile is not a single file, but a collection containing four mandatory files. Each file is briefly introduced as the following.</p>
 <table class="table table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
 <thead>
@@ -373,8 +372,8 @@ shape index format; a positional index of the feature geometry to allow seeking 
 </tbody>
 </table>
 </div>
-<div id="coordinate-reference-system-crs" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Coordinate Reference System (CRS)</h2>
+<div id="coordinate-reference-system-crs" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Coordinate Reference System (CRS)<a href="basic-knowledge-on-gis.html#coordinate-reference-system-crs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Geometric data is not geospatial unless it is accompanied by coordinate reference system (CRS) information, which allows GIS to display and operate the data accurately. It includes two major components, datum and projection. Datum is a model of the shape of the earth. It has angular units (degrees) and defines the starting point (0,0), and hence the coordinate can represent a specific spot on the earth. Projection is a mathematical transformation of the angular measurements on a round earth to a flat surface. The units associated with a given projection are usually linear (feet, meters, etc.).</p>
 <p>There are two common types of coordinate systems:</p>
 <table class="table table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
@@ -422,13 +421,13 @@ EPSG:3826<br />
 <font size="1"><b>Something interesting… The center of NCTU (Guangfu Campus) is very close to standard line (249964.105 m ~ 250 km). In fact 121°E traverses the campus!</b></font></p>
 <p><img src="graph/CRS_taiwan.png" width="60%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="why-use-r" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Why Use R?</h2>
+<div id="why-use-r" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Why Use R?<a href="basic-knowledge-on-gis.html#why-use-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R is a programming language mainly for statistical computing and graphics. With a wide range of packages, R supports advanced geospatial statistics, modeling and visualization. In addition, integrated development environments such as RStudio have made it more user-friendly, allowing us to easily analyze spatial data and make maps.</p>
 <p>Using R to do analysis, we need first to download the <a href="https://cran.csie.ntu.edu.tw/">software</a> and its development environments (<a href="https://rstudio.com/products/rstudio/download/">RStudio</a>).</p>
 </div>
-<div id="required-packages" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Required Packages</h2>
+<div id="required-packages" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Required Packages<a href="basic-knowledge-on-gis.html#required-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To conduct the geocomputation in R, it is required to download <code>sf</code> package.</p>
 <p>To analyze the data more efficiently, it is suggested to take advantage of <code>dplyr</code> package.</p>
 <p>To display the map, <code>ggplot2</code> package is strongly recommended. (There are other packages to make the map as well; nonetheless, <code>ggplot2</code> is more powerful and easier to learn.)</p>
@@ -441,7 +440,7 @@ EPSG:3826<br />
 <p><font size=4> <strong><em>Data</em></strong> </font><br>
 Data required in this book are provided <a href="https://drive.google.com/uc?export=download&amp;id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi"><strong>here</strong></a>, please download the data and place it in the same directory of the R script.</p>
 <p>Besides download data directly from the link above, we can connect to Github to install the package <code>TWspdata</code> to obtain the same data set. The code is shown below.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="basic-knowledge-on-gis.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(devtools)</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="basic-knowledge-on-gis.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
 <span id="cb2-2"><a href="basic-knowledge-on-gis.html#cb2-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;ChiaJung-Yeh/TWspdata&quot;</span>)</span>
 <span id="cb2-3"><a href="basic-knowledge-on-gis.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TWspdata)</span></code></pre></div>
 
@@ -457,7 +456,6 @@ Data required in this book are provided <a href="https://drive.google.com/uc?exp
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -497,6 +495,10 @@ gitbook.start({
 "text": null
 },
 "download": ["series.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
