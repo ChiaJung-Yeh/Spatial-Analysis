@@ -348,7 +348,7 @@ But, how to connect to shapefile of Taipei map? There is no package like "us_sta
 * [EGIS](https://egis.moea.gov.tw/opendata)
 * [Government Open data](https://data.gov.tw/)
 
-<font color="red">For convenience, please download the data [**here**](https://drive.google.com/uc?export=download&id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi) directly. This zip file contains all data needed in the notebook. Please unzip the file first, and make sure that you place the file in the same directory as your R script file.</font>  
+<font color="red">For convenience, please download the data [**here**](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/data.zip) directly. This zip file contains all data needed in the notebook. Please unzip the file first, and make sure that you place the file in the same directory as your R script file.</font>  
 
 Here, we use Taipei village map (polygon), cycle path map (line), MRT routes (line) and stations (point) map, and YouBike map (point), to practice plotting maps.  
 <br/>

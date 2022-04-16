@@ -179,7 +179,7 @@ point_ex=st_point(c(3,2))
 st_as_text(point_ex)
 ```
 
-Knowing the skills of `st_as_sfc`, let's take two example data downloaded from government open data, to practice this skill. <font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://drive.google.com/uc?export=download&id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi) to re-download the file if it is lost.</font>  
+Knowing the skills of `st_as_sfc`, let's take two example data downloaded from government open data, to practice this skill. <font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/data.zip) to re-download the file if it is lost.</font>  
 
 Let's use the CSV data named "hsinchu_bus_route" in "csv_files" to produce the bus route map of Hsinchu. There are four columns in this data, including "geometry" columns, which records in WKT format. Use function `read.csv()` to import the CSV data first.    
 
@@ -343,7 +343,7 @@ In this chapter, we have learned the concept of the spatial features as well as 
 * Join the spatial and attribute data.  
 * Plot the map. (Review previous chapter)  
 
-<font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://drive.google.com/uc?export=download&id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi) to re-download the file if it is lost.</font>  
+<font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/data.zip) to re-download the file if it is lost.</font>  
 
 Three data needed in the example is stored in the file "TRA". "TRA_line" records the name of railway line and its geometry (WKT format), whereas "TRA_station" records the name of train station and its longitude and latitude. Ridership data of November, 2020, is stored in "TRA_ridership". We want to plot the map of the route and station of Taiwan Railway Administration (TRA). The data provided is not in shapefile format, but the CSV files. You should convert it to the simple features in advance based on the skills you have learned. Additionally, please join the data of train station and ridership of each station. Last, plot the map, and the size of point of station should be based on the number of ridership, that is, the station with more ridership should be larger point.  
 
