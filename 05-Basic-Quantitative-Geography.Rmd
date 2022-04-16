@@ -40,7 +40,7 @@ $${d_s}=\sqrt{\frac{\sum_{i=1}^n \ {{(x_i-\mu_x)}^2+{(y_i-\mu_y)}^2}}{n}}$$
 include_graphics("./graph/center_analysis_figure.png")
 ```
 
-As for the center analysis, we may come up with the function [`st_centroid`](#centroid). However, the function can only use on the center of polygon, it can not retrieve the center of multiple points. An easiest way is to do the summary of X and Y coordinates of the whole points. Take Taipei YouBike for instance. <font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://drive.google.com/uc?export=download&id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi) to re-download the file if it is lost.</font> First, we need to convert X and Y coordinates by using `st_coordinates()`, and then, just calculate the mean and standard deviation on the data converted.  
+As for the center analysis, we may come up with the function [`st_centroid`](#centroid). However, the function can only use on the center of polygon, it can not retrieve the center of multiple points. An easiest way is to do the summary of X and Y coordinates of the whole points. Take Taipei YouBike for instance. <font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/data.zip) to re-download the file if it is lost.</font> First, we need to convert X and Y coordinates by using `st_coordinates()`, and then, just calculate the mean and standard deviation on the data converted.  
 
 ```{r center_summary, echo=T, eval=T, warning=F}
 # import the shapefile
@@ -73,7 +73,7 @@ ggplot()+
         axis.ticks=element_blank())
 ```
 
-There is another package called `aspace` that can calculate the center and standard distance directly. But very unfortunately, this package has been removed from CRAN recently. Thus, please download the zip file [**here**](https://drive.google.com/uc?export=download&id=1AxrNPRRO77zNBoeIMSKKisFDnE2PhyuN), and place it into the same directory as your R script file. The installation code from the local is as follows.  
+There is another package called `aspace` that can calculate the center and standard distance directly. But very unfortunately, this package has been removed from CRAN recently. Thus, please download the zip file [**here**](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/data.zip), and place it into the same directory as your R script file. The installation code from the local is as follows.  
 
 ```{r aspace_install, echo=T, eval=F, warning=F}
 install.packages("devtools")
@@ -240,7 +240,7 @@ $$\chi^2_.975\leq\chi^2_{Observed}\leq\chi^2_.025$$
 
 For Case A, the Chi-square is $(42-1)*2.479=101.639$. The degree of freedom is $42-1=41$. Look up chi-square table, the critical value is 45.72 under p value is 0.025. (Or, please use `qchisq(0.025, 41, lower.tail=F)` in R to find out). Apparently, $74.37>60.56$, Case A is significant clustering. For Case B, the Chi-square is $(42-1)*0.497=20.38$. The degree of freedom is also $42-1=41$. Look up chi-square table, the critical value is 25.21 under p value is 0.975. (`qchisq(0.975, 41, lower.tail=F)`). And because $20.38<25.21$, Case B is significant dispersed.  
 
-Now, let's use YouBike data to perform quadrat analysis. <font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://drive.google.com/uc?export=download&id=1TSavur6YcaJO5DCCb5Hsb0HICdwZpeXi) to re-download the file if it is lost.</font>  
+Now, let's use YouBike data to perform quadrat analysis. <font color="red">*_Data needed has been downloaded previously. You placed the file in the same directory as the R script file._* Click [**here**](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/data.zip) to re-download the file if it is lost.</font>  
 
 
 
