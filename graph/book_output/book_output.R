@@ -27,28 +27,28 @@ library(TDX)
 sf_use_s2(FALSE)
 
 tmap_mode("view")
-windowsFonts(A=windowsFont("¼Ğ·¢Åé"))
+windowsFonts(A=windowsFont("æ¨™æ¥·é«”"))
 windowsFonts(B=windowsFont("Times New Roman"))
 windowsFonts(C=windowsFont("Consolas"))
 
 
-png("./¹Ï 1.1.4  ÂI¤l¹Ï¥Ü¨Ò¡]»O¥_¥«¾Ç®Õ¤À¥¬ÂI¤l¹Ï¡^.png", width=840*2, height=790*2, res=200)
-school_taipei=school[grepl(paste("»O¥_¥«", "¥x¥_¥«", sep="|"), school$address),]
+png("./åœ– 1.1.4  é»å­åœ–ç¤ºä¾‹ï¼ˆè‡ºåŒ—å¸‚å­¸æ ¡åˆ†å¸ƒé»å­åœ–ï¼‰.png", width=840*2, height=790*2, res=200)
+school_taipei=school[grepl(paste("è‡ºåŒ—å¸‚", "å°åŒ—å¸‚", sep="|"), school$address),]
 school_taipei=mutate(school_taipei, type=case_when(
-  grepl(paste("°ê¤p", "¤p¾Ç", "ªş¤p", "¹ê¤p", sep="|"), name) ~ "°ê¤p",
-  grepl(paste("°ê¤¤", "¨p¥ß¥ß¤H", sep="|"), name) ~ "°ê¤¤",
-  grepl(paste("°ª¤u", "°ª¤¤", "¤¤¾Ç", "°ª°Ó", "®a°Ó", "¤u¹A", "Å@®a", "À\¶¼", "¤u°Ó", "ªş¤¤", "¤k¤¤", sep="|"), name) ~ "°ª¤¤Â¾",
-  grepl(paste("¤j¾Ç", "±M¬ì¾Ç®Õ", "ÃÀ®Õ", "¾Ç°|", sep="|"), name) ~ "¤j±M°|®Õ",
-  grepl(paste("¯S®í±Ğ¨|¾Ç®Õ", "±ÒÁo¾Ç®Õ", "±Ò©ú¾Ç®Õ", sep="|"), name) ~ "¯S®í±Ğ¨|¾Ç®Õ"
+  grepl(paste("åœ‹å°", "å°å­¸", "é™„å°", "å¯¦å°", sep="|"), name) ~ "åœ‹å°",
+  grepl(paste("åœ‹ä¸­", "ç§ç«‹ç«‹äºº", sep="|"), name) ~ "åœ‹ä¸­",
+  grepl(paste("é«˜å·¥", "é«˜ä¸­", "ä¸­å­¸", "é«˜å•†", "å®¶å•†", "å·¥è¾²", "è­·å®¶", "é¤é£²", "å·¥å•†", "é™„ä¸­", "å¥³ä¸­", sep="|"), name) ~ "é«˜ä¸­è·",
+  grepl(paste("å¤§å­¸", "å°ˆç§‘å­¸æ ¡", "è—æ ¡", "å­¸é™¢", sep="|"), name) ~ "å¤§å°ˆé™¢æ ¡",
+  grepl(paste("ç‰¹æ®Šæ•™è‚²å­¸æ ¡", "å•Ÿè°å­¸æ ¡", "å•Ÿæ˜å­¸æ ¡", sep="|"), name) ~ "ç‰¹æ®Šæ•™è‚²å­¸æ ¡"
 ))
 temp=group_by(taipei_village_map, TOWNNAME)%>%
   summarise()
-school_taipei$type=factor(school_taipei$type, levels=c("°ê¤p","°ê¤¤","°ª¤¤Â¾","¤j±M°|®Õ","¯S®í±Ğ¨|¾Ç®Õ"))
+school_taipei$type=factor(school_taipei$type, levels=c("åœ‹å°","åœ‹ä¸­","é«˜ä¸­è·","å¤§å°ˆé™¢æ ¡","ç‰¹æ®Šæ•™è‚²å­¸æ ¡"))
 ggplot()+
   geom_sf(data=temp, fill="#D9D9D9", color="#F5F5F5")+
   geom_sf(data=school_taipei, aes(color=type, shape=type, stroke=1.2))+
-  scale_color_brewer(palette="Set2", name="¾Ç®Õ¯Å§O")+
-  scale_shape_manual(values=c(15:(15+length(unique(school_taipei$type)))), name="¾Ç®Õ¯Å§O")+
+  scale_color_brewer(palette="Set2", name="å­¸æ ¡ç´šåˆ¥")+
+  scale_shape_manual(values=c(15:(15+length(unique(school_taipei$type)))), name="å­¸æ ¡ç´šåˆ¥")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -60,10 +60,10 @@ dev.off()
 
 
 
-png("./¹Ï 1.1.5  ­±¶q¹Ï¥Ü¨Ò¡]»O¥_¥«¤H¤f¼Æ­±¶q¹Ï¡^.png", width=840*2, height=790*2, res=200)
+png("./åœ– 1.1.5  é¢é‡åœ–ç¤ºä¾‹ï¼ˆè‡ºåŒ—å¸‚äººå£æ•¸é¢é‡åœ–ï¼‰.png", width=840*2, height=790*2, res=200)
 ggplot()+
   geom_sf(data=taipei_village_map, aes(fill=PP), color=NA)+
-  scale_fill_distiller(palette="Reds", direction=1, name="¤H¤f¼Æ")+
+  scale_fill_distiller(palette="Reds", direction=1, name="äººå£æ•¸")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -74,7 +74,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.1.1  ggplot2¬ü°ê¦a¹Ï²£¥Xµ²ªG.png", width=1060*2, height=630*2, res=200)
+png("./åœ– 2.1.1  ggplot2ç¾åœ‹åœ°åœ–ç”¢å‡ºçµæœ.png", width=1060*2, height=630*2, res=200)
 ggplot()+
   geom_sf(data=us_states)+
   theme(axis.text=element_text(size=15))
@@ -82,7 +82,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.1.2  ¦a¹ÏÃC¦â»P¤j¤p­×¥¿.png", width=1060*2, height=630*2, res=200)
+png("./åœ– 2.1.2  åœ°åœ–é¡è‰²èˆ‡å¤§å°ä¿®æ­£.png", width=1060*2, height=630*2, res=200)
 ggplot()+
   geom_sf(data=us_states, size=2, color="red", fill="blue")+
   theme(axis.text=element_text(size=15))
@@ -90,7 +90,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.3.1  ¬ü°ê¦a¹Ï¦{¦W¼Ğ°O.png", width=1060*2, height=630*2, res=200)
+png("./åœ– 2.3.1  ç¾åœ‹åœ°åœ–å·åæ¨™è¨˜.png", width=1060*2, height=630*2, res=200)
 ggplot()+
   geom_sf(data=us_states)+
   geom_sf_text(data=us_states, mapping=aes(label=NAME))+
@@ -100,7 +100,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.3.2  ¬ü°ê¦a¹Ï¦{¦W¼Ğ°O¡]­×¥¿¡^.png", width=1060*2, height=630*2, res=180)
+png("./åœ– 2.3.2  ç¾åœ‹åœ°åœ–å·åæ¨™è¨˜ï¼ˆä¿®æ­£ï¼‰.png", width=1060*2, height=630*2, res=180)
 ggplot()+
   geom_sf(data=us_states)+
   geom_sf_text_repel(data=us_states, aes(label=NAME), nudge_x=-0.1, nudge_y=0.4, size=4, color="blue")+
@@ -110,7 +110,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.4.1  ¤H¤f¼Æ¶qº¥¼h¦a¹Ï.png", width=1060*2, height=630*2, res=180)
+png("./åœ– 2.4.1  äººå£æ•¸é‡æ¼¸å±¤åœ°åœ–.png", width=1060*2, height=630*2, res=180)
 ggplot()+
   geom_sf(data=us_states, aes(fill=total_pop_15))+
   theme(axis.text=element_text(size=13),
@@ -121,7 +121,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.4.2  ¤H¤f¼Æ¶qº¥¼h¦a¹Ï¡]­×¥¿¡^.png", width=1060*2, height=630*2, res=180)
+png("./åœ– 2.4.2  äººå£æ•¸é‡æ¼¸å±¤åœ°åœ–ï¼ˆä¿®æ­£ï¼‰.png", width=1060*2, height=630*2, res=180)
 ggplot()+
   geom_sf(data=us_states, aes(fill=total_pop_15))+
   scale_fill_continuous(low="#D2E9FF", high="#004B97")+
@@ -133,7 +133,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.4.3  ¤H¤f¼Æ¶qº¥¼h¦a¹Ï¡]¤T¬qº¥¼h¡^.png", width=1060*2, height=630*2, res=180)
+png("./åœ– 2.4.3  äººå£æ•¸é‡æ¼¸å±¤åœ°åœ–ï¼ˆä¸‰æ®µæ¼¸å±¤ï¼‰.png", width=1060*2, height=630*2, res=180)
 ggplot()+
   geom_sf(data=us_states, aes(fill=total_pop_15))+
   scale_fill_gradient2(low="red", mid="orange", high="green")+
@@ -145,13 +145,13 @@ dev.off()
 
 
 
-png("./¹Ï 2.4.4  RColorBrewer®M¥ó¶¥¼hÃC¦â.png", width=1000*2, height=800*2, res=220)
+png("./åœ– 2.4.4  RColorBrewerå¥—ä»¶éšå±¤é¡è‰².png", width=1000*2, height=800*2, res=220)
 display.brewer.all()
 dev.off()
 
 
 
-png("./¹Ï 2.4.5   ¤H¤f¼Æ¶qº¥¼h¦a¹Ï¡]¶¥¼hÃC¦â¡^.png", width=1060*2, height=630*2, res=220)
+png("./åœ– 2.4.5   äººå£æ•¸é‡æ¼¸å±¤åœ°åœ–ï¼ˆéšå±¤é¡è‰²ï¼‰.png", width=1060*2, height=630*2, res=220)
 ggplot()+
   geom_sf(data=us_states, aes(fill=total_pop_15))+
   scale_fill_distiller(palette="YlOrRd", direction=1)+
@@ -163,7 +163,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.5.1  ¬ü°ê°Ï°ìÃş§O¦a¹Ï.png", width=1060*2, height=580*2, res=220)
+png("./åœ– 2.5.1  ç¾åœ‹å€åŸŸé¡åˆ¥åœ°åœ–.png", width=1060*2, height=580*2, res=220)
 ggplot()+
   geom_sf(data=us_states, aes(fill=REGION))+
   theme(axis.text=element_text(size=13),
@@ -174,7 +174,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.5.2  ¬ü°ê°Ï°ìÃş§O¦a¹Ï¡]«È»s¤ÆÃC¦â½Õ¾ã¡^.png", width=1060*2, height=580*2, res=220)
+png("./åœ– 2.5.2  ç¾åœ‹å€åŸŸé¡åˆ¥åœ°åœ–ï¼ˆå®¢è£½åŒ–é¡è‰²èª¿æ•´ï¼‰.png", width=1060*2, height=580*2, res=220)
 ggplot()+
   geom_sf(data=us_states, aes(fill=REGION))+
   scale_fill_manual(values=c("Norteast"="#FFC1E0", "Midwest"="#97CBFF", "South"="#A6FFA6", "West"="#FFFFE0"))+
@@ -186,7 +186,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.5.3  ¬ü°ê°Ï°ìÃş§O¦a¹Ï¡]½Õ¦âªO¡^.png", width=1060*2, height=580*2, res=220)
+png("./åœ– 2.5.3  ç¾åœ‹å€åŸŸé¡åˆ¥åœ°åœ–ï¼ˆèª¿è‰²æ¿ï¼‰.png", width=1060*2, height=580*2, res=220)
 ggplot()+
   geom_sf(data=us_states, aes(fill=REGION))+
   scale_fill_brewer(palette="Set2")+
@@ -198,7 +198,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.6.1  ¨Ì¦{¦W¶}ÀY¦r¥ÀÃ¸»s³W«h¦a¹Ï.png", width=1060*2, height=580*2, res=220)
+png("./åœ– 2.6.1  ä¾å·åé–‹é ­å­—æ¯ç¹ªè£½è¦å‰‡åœ°åœ–.png", width=1060*2, height=580*2, res=220)
 us_states_rule1=us_states
 us_states_rule1$CLASS=""
 us_states_rule1$CLASS=ifelse(substr(us_states_rule1$NAME, 1, 1) %in% LETTERS[1:9], "A~I",
@@ -214,14 +214,14 @@ dev.off()
 
 
 
-png("./¹Ï 2.6.2  ¦hÄİ©Ê³W«h¼Ğ°O·N¹Ï.png", width=1060*2, height=580*2, res=220)
+png("./åœ– 2.6.2  å¤šå±¬æ€§è¦å‰‡æ¨™è¨˜æ„åœ–.png", width=1060*2, height=580*2, res=220)
 pop_mean=mean(us_states$total_pop_15)
 area_mean=mean(us_states$AREA)
 us_states_rule3=mutate(us_states,CLASS=case_when(
-  total_pop_15>pop_mean & AREA>area_mean ~ "HPHA",   #¤H¤f¦h¡B­±¿n¤j
-  total_pop_15>pop_mean & AREA<area_mean ~ "HPLA",   #¤H¤f¦h¡B­±¿n¤p
-  total_pop_15<pop_mean & AREA>area_mean ~ "LPHA",   #¤H¤f¤Ö¡B­±¿n¤j
-  total_pop_15<pop_mean & AREA<area_mean ~ "LPLA"    #¤H¤f¤Ö¡B­±¿n¤p
+  total_pop_15>pop_mean & AREA>area_mean ~ "HPHA",   #äººå£å¤šã€é¢ç©å¤§
+  total_pop_15>pop_mean & AREA<area_mean ~ "HPLA",   #äººå£å¤šã€é¢ç©å°
+  total_pop_15<pop_mean & AREA>area_mean ~ "LPHA",   #äººå£å°‘ã€é¢ç©å¤§
+  total_pop_15<pop_mean & AREA<area_mean ~ "LPLA"    #äººå£å°‘ã€é¢ç©å°
 ))
 ggplot()+
   geom_sf(data=us_states_rule3, aes(fill=CLASS))+
@@ -233,7 +233,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.7.1  ¯Ã¦èÄõ°ª®pÅ|¹Ï.png", width=650*2, height=790*2, res=220)
+png("./åœ– 2.7.1  ç´è¥¿è˜­é«˜å³°ç–Šåœ–.png", width=650*2, height=790*2, res=220)
 ggplot()+
   geom_sf(data=nz)+
   geom_sf(data=nz_height, color="red")+
@@ -245,7 +245,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.7.2  ¯Ã¦èÄõ°ª®pÅ|¹Ï¡]«ü¥_°w»P¤ñ¨Ò¤Ø¡^.png", width=650*2, height=790*2, res=220)
+png("./åœ– 2.7.2  ç´è¥¿è˜­é«˜å³°ç–Šåœ–ï¼ˆæŒ‡åŒ—é‡èˆ‡æ¯”ä¾‹å°ºï¼‰.png", width=650*2, height=790*2, res=220)
 ggplot()+
   geom_sf(data=nz)+
   geom_sf(data=nz_height, color="red")+
@@ -259,7 +259,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.7.3  ¯Ã¦èÄõ°ª®pÅ|¹Ï¡]¼ĞÃD¡^.png", width=650*2, height=790*2, res=220)
+png("./åœ– 2.7.3  ç´è¥¿è˜­é«˜å³°ç–Šåœ–ï¼ˆæ¨™é¡Œï¼‰.png", width=650*2, height=790*2, res=220)
 ggplot()+
   geom_sf(data=nz)+
   geom_sf(data=nz_height, color="red")+
@@ -275,7 +275,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.8.2  ­×¥¿¦a¹ÏÂI»P½u¼Ë¦¡.png", width=650*2, height=790*2, res=220)
+png("./åœ– 2.8.2  ä¿®æ­£åœ°åœ–é»èˆ‡ç·šæ¨£å¼.png", width=650*2, height=790*2, res=220)
 ggplot()+
   geom_sf(data=nz, color="blue", linetype="dashed")+
   geom_sf(data=nz_height, color="red", size=2, shape=4)+
@@ -288,7 +288,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.8.3  ­×¥¿¹Ï¨Ò¦WºÙ.png", width=1060*2, height=580*2, res=220)
+png("./åœ– 2.8.3  ä¿®æ­£åœ–ä¾‹åç¨±.png", width=1060*2, height=580*2, res=220)
 ggplot()+
   geom_sf(data=us_states, aes(fill=total_pop_15))+
   scale_fill_distiller(palette="YlOrRd", direction=1, name="Population")+
@@ -300,7 +300,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.8.4  ½Õ¾ã¹Ï¨Ò¶¶§Ç.png", width=1060*2, height=580*2, res=220)
+png("./åœ– 2.8.4  èª¿æ•´åœ–ä¾‹é †åº.png", width=1060*2, height=580*2, res=220)
 us_states_rule3$CLASS=factor(us_states_rule3$CLASS, levels=c("LPLA", "LPHA", "HPLA", "HPHA"))
 ggplot()+
   geom_sf(data=us_states_rule3, aes(fill=CLASS))+
@@ -312,10 +312,10 @@ dev.off()
 
 
 
-png("./¹Ï 2.8.5  ¦a¹Ï¥DÃD½Õ¾ã.png", width=1060*2, height=580*2, res=220)
+png("./åœ– 2.8.5  åœ°åœ–ä¸»é¡Œèª¿æ•´.png", width=1060*2, height=580*2, res=220)
 ggplot()+
   geom_sf(data=us_states, aes(fill=REGION))+
-  ggtitle("¬ü°ê¦a¹Ï")+
+  ggtitle("ç¾åœ‹åœ°åœ–")+
   theme(panel.border=element_rect(color="black", fill=NA),
         panel.background=element_rect(fill="#A3B3C1"),
         panel.grid.major=element_line(color="#808080", linetype=2),
@@ -332,7 +332,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.8.6  ¦a¹Ï½d³ò½Õ¾ã.png", width=685*2, height=790*2, res=220)
+png("./åœ– 2.8.6  åœ°åœ–ç¯„åœèª¿æ•´.png", width=685*2, height=790*2, res=220)
 nz_wc=filter(nz, Name=="West Coast")
 st_bbox(nz_wc)
 ggplot()+
@@ -349,7 +349,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.8.7  ¦a¹ÏÁY³ò.png", width=685*2, height=790*2, res=220)
+png("./åœ– 2.8.7  åœ°åœ–ç¸®åœ.png", width=685*2, height=790*2, res=220)
 p1=ggplot()+
   geom_sf(data=nz)+
   geom_sf(data=filter(nz, Name=="West Coast"), fill="#B5B5B5")+
@@ -372,10 +372,10 @@ dev.off()
 
 
 
-png("./¹Ï 2.8.9  ¦X¨Ö¦h±i¦a¹Ï.png", width=930*2, height=660*2, res=220)
+png("./åœ– 2.8.9  åˆä½µå¤šå¼µåœ°åœ–.png", width=930*2, height=660*2, res=220)
 p1=ggplot()+
   geom_sf(data=us_states, aes(fill=total_pop_15))+
-  ggtitle("¤H¤f¼Æ¶qº¥¼h¦a¹Ï")+
+  ggtitle("äººå£æ•¸é‡æ¼¸å±¤åœ°åœ–")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -386,7 +386,7 @@ p1=ggplot()+
 p2=ggplot()+
   geom_sf(data=us_states, aes(fill=total_pop_15))+
   scale_fill_continuous(low="#D2E9FF", high="#004B97")+
-  ggtitle("¤H¤f¼Æ¶qº¥¼h¦a¹Ï¡]­×¥¿¡^")+
+  ggtitle("äººå£æ•¸é‡æ¼¸å±¤åœ°åœ–ï¼ˆä¿®æ­£ï¼‰")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -397,7 +397,7 @@ p2=ggplot()+
 p3=ggplot()+
   geom_sf(data=us_states, aes(fill=total_pop_15))+
   scale_fill_gradient2(low="red", mid="orange", high="green")+
-  ggtitle("¤H¤f¼Æ¶qº¥¼h¦a¹Ï¡]¤T¬qº¥¼h¡^")+
+  ggtitle("äººå£æ•¸é‡æ¼¸å±¤åœ°åœ–ï¼ˆä¸‰æ®µæ¼¸å±¤ï¼‰")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -408,7 +408,7 @@ p3=ggplot()+
 p4=ggplot()+
   geom_sf(data=us_states, aes(fill=total_pop_15))+
   scale_fill_distiller(palette="YlOrRd", direction=1)+
-  ggtitle("¤H¤f¼Æ¶qº¥¼h¦a¹Ï¡]¶¥¼hÃC¦â¡^")+
+  ggtitle("äººå£æ•¸é‡æ¼¸å±¤åœ°åœ–ï¼ˆéšå±¤é¡è‰²ï¼‰")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -417,13 +417,13 @@ p4=ggplot()+
         legend.title=element_text(size=10, family="B"),
         legend.text=element_text(size=8, family="B"))
 plot_grid(p1, p2, p3, p4, ncol=2, nrow=2)+
-  draw_label("¦X¨Ö¦h±i¦a¹Ï", fontface='bold', fontfamily="A", 
+  draw_label("åˆä½µå¤šå¼µåœ°åœ–", fontface='bold', fontfamily="A", 
              size=20, x=0.5, y=0.97)
 dev.off()
 
 
 
-png("./¹Ï 2.8.10  ¦X¨Ö¦h±i¦a¹Ï¡]¦@¥Î¹Ï¨Ò¡^.png", width=700*2, height=790*2, res=220)
+png("./åœ– 2.8.10  åˆä½µå¤šå¼µåœ°åœ–ï¼ˆå…±ç”¨åœ–ä¾‹ï¼‰.png", width=700*2, height=790*2, res=220)
 nz_revised=nz
 maxmin=function(x) (x - min(x))/(max(x)-min(x))
 nz_revised$Land_area=maxmin(nz_revised$Land_area)
@@ -433,8 +433,8 @@ nz_revised$Sex_ratio=maxmin(nz_revised$Sex_ratio)
 
 p1=ggplot()+
   geom_sf(data=nz_revised, aes(fill=Land_area))+
-  scale_fill_distiller(palette="YlOrRd", direction=1, name="Âk¤@¤Æ¼Æ­È")+
-  ggtitle("¤g¦a­±¿n")+
+  scale_fill_distiller(palette="YlOrRd", direction=1, name="æ­¸ä¸€åŒ–æ•¸å€¼")+
+  ggtitle("åœŸåœ°é¢ç©")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -444,8 +444,8 @@ p1=ggplot()+
         legend.text=element_text(size=12, family="B"))
 p2=ggplot()+
   geom_sf(data=nz_revised, aes(fill=Population))+
-  scale_fill_distiller(palette="YlOrRd", direction=1, name="Âk¤@¤Æ¼Æ­È")+
-  ggtitle("¤H¤f¼Æ")+
+  scale_fill_distiller(palette="YlOrRd", direction=1, name="æ­¸ä¸€åŒ–æ•¸å€¼")+
+  ggtitle("äººå£æ•¸")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -455,8 +455,8 @@ p2=ggplot()+
         legend.text=element_text(size=12, family="B"))
 p3=ggplot()+
   geom_sf(data=nz_revised, aes(fill=Median_income))+
-  scale_fill_distiller(palette="YlOrRd", direction=1, name="Âk¤@¤Æ¼Æ­È")+
-  ggtitle("¦¬¤J¤¤¦ì¼Æ")+
+  scale_fill_distiller(palette="YlOrRd", direction=1, name="æ­¸ä¸€åŒ–æ•¸å€¼")+
+  ggtitle("æ”¶å…¥ä¸­ä½æ•¸")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -466,8 +466,8 @@ p3=ggplot()+
         legend.text=element_text(size=12, family="B"))
 p4=ggplot()+
   geom_sf(data=nz_revised, aes(fill=Sex_ratio))+
-  scale_fill_distiller(palette="YlOrRd", direction=1, name="Âk¤@¤Æ¼Æ­È")+
-  ggtitle("©Ê§O¤ñ")+
+  scale_fill_distiller(palette="YlOrRd", direction=1, name="æ­¸ä¸€åŒ–æ•¸å€¼")+
+  ggtitle("æ€§åˆ¥æ¯”")+
   theme(panel.background=element_blank(),
         axis.text=element_blank(),
         axis.title=element_blank(),
@@ -480,7 +480,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.8.11  ¨Ï¥Î¦h­«¦a²z¸ê®ÆÃC¦â½Õ¾ã¤§¿ù»~.png", width=685*2, height=790*2, res=220)
+png("./åœ– 2.8.11  ä½¿ç”¨å¤šé‡åœ°ç†è³‡æ–™é¡è‰²èª¿æ•´ä¹‹éŒ¯èª¤.png", width=685*2, height=790*2, res=220)
 ggplot()+
   geom_sf(data=nz, aes(color=Land_area))+
   scale_color_distiller(palette="YlOrRd", direction=1)+
@@ -491,7 +491,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.8.12  ggnewscale®M¥ó­×¥¿¦h­«ÃC¦â³]©w.png", width=685*2, height=790*2, res=220)
+png("./åœ– 2.8.12  ggnewscaleå¥—ä»¶ä¿®æ­£å¤šé‡é¡è‰²è¨­å®š.png", width=685*2, height=790*2, res=220)
 ggplot()+
   geom_sf(data=nz, aes(color=Land_area))+
   scale_color_distiller(palette="YlOrRd", direction=1)+
@@ -503,70 +503,70 @@ dev.off()
 
 
 
-png("./¹Ï 2.9.1  ¯Ã¦èÄõ°òÂ¦¦a¹ÏÃ¸»s.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.1  ç´è¥¿è˜­åŸºç¤åœ°åœ–ç¹ªè£½.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="blue", border.col="red", lty="dashed")
 dev.off()
 
 
 
-png("./¹Ï 2.9.2  ¨ÌÄİ©ÊÃ¸»s¦a¹Ï.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.2  ä¾å±¬æ€§ç¹ªè£½åœ°åœ–.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population")
 dev.off()
 
 
 
-png("./¹Ï 2.9.3_A  ¨ÌÄİ©ÊÃ¸»s¦a¹Ï¡]­×¥¿¡^.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.3_A  ä¾å±¬æ€§ç¹ªè£½åœ°åœ–ï¼ˆä¿®æ­£ï¼‰.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", n=5, style="pretty", palette="Reds")
 dev.off()
 
 
 
-png("./¹Ï 2.9.3_B  ¨ÌÄİ©ÊÃ¸»s¦a¹Ï¡]­×¥¿¡^.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.3_B  ä¾å±¬æ€§ç¹ªè£½åœ°åœ–ï¼ˆä¿®æ­£ï¼‰.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", n=5, style="equal")
 dev.off()
 
 
 
-png("./¹Ï 2.9.3_C  ¨ÌÄİ©ÊÃ¸»s¦a¹Ï¡]­×¥¿¡^.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.3_C  ä¾å±¬æ€§ç¹ªè£½åœ°åœ–ï¼ˆä¿®æ­£ï¼‰.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", n=4, style="quantile")
 dev.off()
 
 
 
-png("./¹Ï 2.9.3_D  ¨ÌÄİ©ÊÃ¸»s¦a¹Ï¡]­×¥¿¡^.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.3_D  ä¾å±¬æ€§ç¹ªè£½åœ°åœ–ï¼ˆä¿®æ­£ï¼‰.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", n=5, style="jenks")
 dev.off()
 
 
 
-png("./¹Ï 2.9.3_E  ¨ÌÄİ©ÊÃ¸»s¦a¹Ï¡]­×¥¿¡^.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.3_E  ä¾å±¬æ€§ç¹ªè£½åœ°åœ–ï¼ˆä¿®æ­£ï¼‰.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", style="cont")
 dev.off()
 
 
 
-png("./¹Ï 2.9.3_F  ¨ÌÄİ©ÊÃ¸»s¦a¹Ï¡]­×¥¿¡^.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.3_F  ä¾å±¬æ€§ç¹ªè£½åœ°åœ–ï¼ˆä¿®æ­£ï¼‰.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", style="cat")
 dev.off()
 
 
 
-png("./¹Ï 2.9.4  tm_fill()Ã¸»s¦a¹Ï.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.4  tm_fill()ç¹ªè£½åœ°åœ–.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_fill(col="Population", n=5, style="jenks")
 dev.off()
 
 
 
-png("./¹Ï 2.9.5  tm_symbols()Ã¸»s¦a¹Ï.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.5  tm_symbols()ç¹ªè£½åœ°åœ–.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons()+
   tm_shape(nz_height)+
@@ -575,7 +575,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.9.6  ¦a¹Ï¤å¦r¼Ğ°O.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.6  åœ°åœ–æ–‡å­—æ¨™è¨˜.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", n=5, style="jenks")+
   tm_text(text="Name", size=1, fontfamily="B")
@@ -583,7 +583,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.9.7  «ü¥_°w»P¤ñ¨Ò¤ØÃ¸»s.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.7  æŒ‡åŒ—é‡èˆ‡æ¯”ä¾‹å°ºç¹ªè£½.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", n=5, style="jenks")+
   tm_compass(north=0, type="rose", size=4, position=c(0.83, 0.89))+
@@ -592,14 +592,14 @@ dev.off()
 
 
 
-png("./¹Ï 2.9.8  ¦a¹Ï¥DÃD³]©w.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.8  åœ°åœ–ä¸»é¡Œè¨­å®š.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", n=5, style="jenks")+
   tm_shape(nz)+
   tm_text(text="Name", size=1, fontfamily="B")+
   tm_compass(north=0, type="rose", size=4, position=c(0.83, 0.89))+
   tm_scale_bar(breaks=c(0, 50, 100, 150, 200), text.size=1, position=c(0.7, 0.02))+
-  tm_layout(title="¯Ã¦èÄõ¤H¤f¦a¹Ï", title.fontfamily="A", title.size=2,
+  tm_layout(title="ç´è¥¿è˜­äººå£åœ°åœ–", title.fontfamily="A", title.size=2,
             legend.title.size=1.7, legend.title.fontfamily="B", legend.title.fontface="bold",
             legend.text.size=1, legend.text.fontfamily="B",
             legend.frame=T, legend.frame.lwd=1, legend.bg.color="#CCCCFF", legend.bg.alpha=0.4,
@@ -608,7 +608,7 @@ dev.off()
 
 
 
-png("./¹Ï 2.9.9  tm_style()¸g¨å¦a¹ÏÃ¸»s.png", width=550*2, height=790*2, res=220)
+png("./åœ– 2.9.9  tm_style()ç¶“å…¸åœ°åœ–ç¹ªè£½.png", width=550*2, height=790*2, res=220)
 tm_shape(nz)+
   tm_polygons(col="Population", n=5, style="jenks")+
   tm_style("classic")
@@ -620,14 +620,14 @@ dev.off()
 # p=tm_shape(nz)+
 #   tm_polygons(col="Population", n=5, style="jenks")
 # tmap_save(p, "temp.html", selfcontained=F)
-# webshot("./temp.html", file="./¹Ï 2.9.10  tmap®M¥ó°ÊºA¦a¹Ï§e²{.png", cliprect="viewport")
+# webshot("./temp.html", file="./åœ– 2.9.10  tmapå¥—ä»¶å‹•æ…‹åœ°åœ–å‘ˆç¾.png", cliprect="viewport")
 
 
 
 p=leaflet()%>%
   addTiles()
 saveWidget(p, "temp.html", selfcontained=F)
-webshot("./temp.html", file="./¹Ï 2.9.11  leaflet®M¥óÃ¸»s¥@¬É°ÊºA¦a¹Ï.png", cliprect="viewport")
+webshot("./temp.html", file="./åœ– 2.9.11  leafletå¥—ä»¶ç¹ªè£½ä¸–ç•Œå‹•æ…‹åœ°åœ–.png", cliprect="viewport")
 
 
 
@@ -635,7 +635,7 @@ for (i in c("Stamen","Esri","Wikimedia","CartoDB")){
   p=leaflet()%>%
     addProviderTiles(i)
   saveWidget(p, "temp.html", selfcontained=F)
-  webshot("./temp.html", file=paste0("./¹Ï 2.9.12  ­×¥¿¤¶±µ½u¤W¦a¹Ï_", i, ".png"), cliprect="viewport")
+  webshot("./temp.html", file=paste0("./åœ– 2.9.12  ä¿®æ­£ä»‹æ¥ç·šä¸Šåœ°åœ–_", i, ".png"), cliprect="viewport")
 }
 
 
@@ -645,11 +645,11 @@ p=leaflet()%>%
   addPolygons(data=st_transform(nz, 4326), color="red", fillColor="#CCCCFF", weight=2, label=~Name)%>%
   addCircleMarkers(data=st_transform(nz_height, 4326), stroke=F, radius=8, fillOpacity=0.2, label=~elevation)
 saveWidget(p, "temp.html", selfcontained=F)
-webshot("./temp.html", file="./¹Ï 2.9.12  °ÊºA¦a¹ÏÃ¸»s½d¨Ò.png", cliprect="viewport")
+webshot("./temp.html", file="./åœ– 2.9.12  å‹•æ…‹åœ°åœ–ç¹ªè£½ç¯„ä¾‹.png", cliprect="viewport")
 
 
 
-png("./¹Ï 3.1.1  ÂIªºÂ²³æ¹Ï¼x´X¦ó¤¸¯À¹Ï¥Ü.png", width=680*2, height=660*2, res=220)
+png("./åœ– 3.1.1  é»çš„ç°¡å–®åœ–å¾µå¹¾ä½•å…ƒç´ åœ–ç¤º.png", width=680*2, height=660*2, res=220)
 point_eg=st_point(c(2,3))
 ggplot()+
   geom_sf(data=point_eg, size=8)+
@@ -660,7 +660,7 @@ dev.off()
 
 
 
-png("./¹Ï 3.1.2  ½uªºÂ²³æ¹Ï¼x´X¦ó¤¸¯À¹Ï¥Ü.png", width=835*2, height=660*2, res=220)
+png("./åœ– 3.1.2  ç·šçš„ç°¡å–®åœ–å¾µå¹¾ä½•å…ƒç´ åœ–ç¤º.png", width=835*2, height=660*2, res=220)
 linestring_eg=st_linestring(rbind(c(2,3), c(4,4), c(3,5), c(1,4)))
 ggplot()+
   geom_sf(data=linestring_eg)+
@@ -671,7 +671,7 @@ dev.off()
 
 
 
-png("./¹Ï 3.1.3  ­±ªºÂ²³æ¹Ï¼x´X¦ó¤¸¯À¹Ï¥Ü.png", width=835*2, height=660*2, res=220)
+png("./åœ– 3.1.3  é¢çš„ç°¡å–®åœ–å¾µå¹¾ä½•å…ƒç´ åœ–ç¤º.png", width=835*2, height=660*2, res=220)
 polygon_eg=st_polygon(list(rbind(c(2,3), c(4,4), c(3,5), c(1,4), c(2,3))))
 ggplot()+
   geom_sf(data=polygon_eg, fill="#99CCEF")+
@@ -682,7 +682,7 @@ dev.off()
 
 
 
-png("./¹Ï 3.1.4  ¦hÂIªºÂ²³æ¹Ï¼x´X¦ó¤¸¯À¹Ï¥Ü.png", width=835*2, height=660*2, res=220)
+png("./åœ– 3.1.4  å¤šé»çš„ç°¡å–®åœ–å¾µå¹¾ä½•å…ƒç´ åœ–ç¤º.png", width=835*2, height=660*2, res=220)
 mpoint_eg=st_multipoint(rbind(c(2,3), c(4,4), c(3,5), c(1,4)))
 ggplot()+
   geom_sf(data=mpoint_eg, size=8)+
@@ -693,7 +693,7 @@ dev.off()
 
 
 
-png("./¹Ï 3.1.5  ¦h½uªºÂ²³æ¹Ï¼x´X¦ó¤¸¯À¹Ï¥Ü.png", width=835*2, height=660*2, res=220)
+png("./åœ– 3.1.5  å¤šç·šçš„ç°¡å–®åœ–å¾µå¹¾ä½•å…ƒç´ åœ–ç¤º.png", width=835*2, height=660*2, res=220)
 mlinestring_eg=st_multilinestring(list(rbind(c(2,3), c(4,4), c(3,5)), rbind(c(2,5), c(1,2))))
 ggplot()+
   geom_sf(data=mlinestring_eg)+
@@ -704,7 +704,7 @@ dev.off()
 
 
 
-png("./¹Ï 3.1.6  ¦h­±ªºÂ²³æ¹Ï¼x´X¦ó¤¸¯À¹Ï¥Ü.png", width=835*2, height=660*2, res=220)
+png("./åœ– 3.1.6  å¤šé¢çš„ç°¡å–®åœ–å¾µå¹¾ä½•å…ƒç´ åœ–ç¤º.png", width=835*2, height=660*2, res=220)
 mpolygon_eg=st_multipolygon(list(list(rbind(c(2,3), c(4,4), c(3,5), c(1,4), c(2,3))),
                                  list(rbind(c(1,5), c(2,5), c(3,6), c(1,5)))))
 ggplot()+
@@ -716,7 +716,7 @@ dev.off()
 
 
 
-png("./¹Ï 3.1.7  point123Â²³æ¹Ï¼x¦V¶q¹Ï¥Ü.png", width=700*2, height=700*2, res=220)
+png("./åœ– 3.1.7  point123ç°¡å–®åœ–å¾µå‘é‡åœ–ç¤º.png", width=700*2, height=700*2, res=220)
 point1=st_point(c(3, 5))
 point2=st_point(c(2, 6))
 point3=st_point(c(1, 4))
@@ -730,7 +730,7 @@ dev.off()
 
 
 
-png("./¹Ï 3.1.8  point123Â²³æ¹Ï¼x¦V¶q¹Ï¥Ü¡]crs³]©w¬°4326¡^.png", width=700*2, height=700*2, res=220)
+png("./åœ– 3.1.8  point123ç°¡å–®åœ–å¾µå‘é‡åœ–ç¤ºï¼ˆcrsè¨­å®šç‚º4326ï¼‰.png", width=700*2, height=700*2, res=220)
 point123=st_sfc(point1, point2, point3, crs=4326)
 ggplot()+
   geom_sf(data=point123, size=8)+
@@ -741,31 +741,31 @@ dev.off()
 
 
 
-png("./¹Ï 3.1.10  Â²³æ¹Ï¼x«Øºc½d¨Ò¡]·s¦Ë¥«°Ï¤½©Ò¡^.png", width=870*2, height=790*2, res=220) 
+png("./åœ– 3.1.10  ç°¡å–®åœ–å¾µå»ºæ§‹ç¯„ä¾‹ï¼ˆæ–°ç«¹å¸‚å€å…¬æ‰€ï¼‰.png", width=870*2, height=790*2, res=220) 
 office_geom=st_sfc(
-  st_point(c(120.973255, 24.805162)),  # ªF°Ï°Ï¤½©Ò¸g½n«×
-  st_point(c(120.970314, 24.816374)),   # ¥_°Ï°Ï¤½©Ò¸g½n«×
-  st_point(c(120.942268, 24.794044)),   # ­»¤s°Ï°Ï¤½©Ò¸g½n«×
-  crs=4326)                                             # ³]©w®y¼Ğ°Ñ¦Ò¨t²Î
+  st_point(c(120.973255, 24.805162)),  # æ±å€å€å…¬æ‰€ç¶“ç·¯åº¦
+  st_point(c(120.970314, 24.816374)),   # åŒ—å€å€å…¬æ‰€ç¶“ç·¯åº¦
+  st_point(c(120.942268, 24.794044)),   # é¦™å±±å€å€å…¬æ‰€ç¶“ç·¯åº¦
+  crs=4326)                                             # è¨­å®šåº§æ¨™åƒè€ƒç³»çµ±
 office=data.frame(
-  name=c("ªF°Ï","¥_°Ï","­»¤s°Ï"),                         # °Ï°ì¦WºÙ
-  address=c("¥Á±Ú¸ô40¸¹","°êµØµó69¸¹","¨|¼wµó188¸¹"),     # °Ï¤½©Ò¦a§}
-  phone=c("03-5218231","03-5152525","03-5307105"),        # °Ï¤½©Ò¹q¸Ü
-  office_geom                                             # ©ñ¤JªÅ¶¡¸ê®Æ
+  name=c("æ±å€","åŒ—å€","é¦™å±±å€"),                         # å€åŸŸåç¨±
+  address=c("æ°‘æ—è·¯40è™Ÿ","åœ‹è¯è¡—69è™Ÿ","è‚²å¾·è¡—188è™Ÿ"),     # å€å…¬æ‰€åœ°å€
+  phone=c("03-5218231","03-5152525","03-5307105"),        # å€å…¬æ‰€é›»è©±
+  office_geom                                             # æ”¾å…¥ç©ºé–“è³‡æ–™
 )
 office=st_sf(office)
-# # Â^¨ú·s¦Ë¤½¸ô¸ê®Æ
-# road=opq(bbox=st_bbox(st_transform(filter(taiwan_town, COUNTYNAME=="·s¦Ë¥«"), crs=4326)))%>%
+# # æ“·å–æ–°ç«¹å…¬è·¯è³‡æ–™
+# road=opq(bbox=st_bbox(st_transform(filter(taiwan_town, COUNTYNAME=="æ–°ç«¹å¸‚"), crs=4326)))%>%
 #   add_osm_feature(key="highway")%>%
 #   osmdata_sf()
 # road=st_sf(road$osm_lines)%>%
 #   select(name.en, osm_id, highway)%>%
 #   filter(highway %in% c("motorway_link","secondary","trunk_link","primary","tertiary","motorway","tertiary_link","trunk","secondary_link","primary_link"))%>%
-#   st_intersection(st_transform(filter(taiwan_town, COUNTYNAME=="·s¦Ë¥«"), crs=4326)$geometry)
+#   st_intersection(st_transform(filter(taiwan_town, COUNTYNAME=="æ–°ç«¹å¸‚"), crs=4326)$geometry)
 ggplot()+
-  geom_sf(data=filter(taiwan_town, COUNTYNAME=="·s¦Ë¥«"), fill="#D0D0D0", color="#6C6C6C")+
+  geom_sf(data=filter(taiwan_town, COUNTYNAME=="æ–°ç«¹å¸‚"), fill="#D0D0D0", color="#6C6C6C")+
   geom_sf(data=road, color="#99CCEF", size=0.1)+
-  geom_sf(data=st_boundary(filter(taiwan_town, COUNTYNAME=="·s¦Ë¥«")), color="#6C6C6C")+
+  geom_sf(data=st_boundary(filter(taiwan_town, COUNTYNAME=="æ–°ç«¹å¸‚")), color="#6C6C6C")+
   geom_sf(data=office)+
   geom_sf_text(data=office, aes(label=name), size=7, family="A", vjust=1.2)+
   geom_sf_text(data=office, aes(label=phone), size=5, family="B", hjust=-0.5, color="red", vjust=1.5)+
@@ -777,36 +777,36 @@ dev.off()
 
 
 
-png("./¹Ï 3.2.1  ¤å¦r¸ê®Æ«Øºc¦a²z¸ê®Æ½d¨Ò¡]·s¦Ë¥«°Ï¤½¨®¡^.png", width=870*2, height=790*2, res=220) 
+png("./åœ– 3.2.1  æ–‡å­—è³‡æ–™å»ºæ§‹åœ°ç†è³‡æ–™ç¯„ä¾‹ï¼ˆæ–°ç«¹å¸‚å€å…¬è»Šï¼‰.png", width=870*2, height=790*2, res=220) 
 hsinchu_bus_route=read.csv("C:/Users/ASUS/Desktop/R Transportation/R Github Project/Spatial-Analysis/data/csv_files/hsinchu_bus_route.csv")
 hsinchu_bus_route$Geometry=st_as_sfc(hsinchu_bus_route$Geometry)
 hsinchu_bus_route=st_sf(hsinchu_bus_route, crs=4326)
 ggplot()+
-  geom_sf(data=filter(taiwan_town, COUNTYNAME=="·s¦Ë¥«"), fill="#D0D0D0", color="#6C6C6C")+
+  geom_sf(data=filter(taiwan_town, COUNTYNAME=="æ–°ç«¹å¸‚"), fill="#D0D0D0", color="#6C6C6C")+
   geom_sf(data=hsinchu_bus_route, color="#0066CC", size=0.5)+
   theme_void()
 dev.off()
 
 
 
-png("./¹Ï 3.2.3  ¸g½n«×Äæ¦ì«Øºc¦a²z¸ê®Æ½d¨Ò¡]·s¦Ë¥«Æ[¥ú´ºÂI¡^.png", width=870*2, height=790*2, res=220) 
+png("./åœ– 3.2.3  ç¶“ç·¯åº¦æ¬„ä½å»ºæ§‹åœ°ç†è³‡æ–™ç¯„ä¾‹ï¼ˆæ–°ç«¹å¸‚è§€å…‰æ™¯é»ï¼‰.png", width=870*2, height=790*2, res=220) 
 hsinchu_scenicSpot=read.csv("C:/Users/ASUS/Desktop/R Transportation/R Github Project/Spatial-Analysis/data/csv_files/hsinchu_scenicSpot.csv")
 hsinchu_scenicSpot=mutate(hsinchu_scenicSpot, Geometry=paste("POINT(", PositionLon, " ", PositionLat, ")"))
 hsinchu_scenicSpot$Geometry=st_as_sfc(hsinchu_scenicSpot$Geometry)
 hsinchu_scenicSpot=st_sf(hsinchu_scenicSpot, crs=4326)
 ggplot()+
-  geom_sf(data=filter(taiwan_town, COUNTYNAME=="·s¦Ë¥«"), fill="#D0D0D0", color="#6C6C6C")+
+  geom_sf(data=filter(taiwan_town, COUNTYNAME=="æ–°ç«¹å¸‚"), fill="#D0D0D0", color="#6C6C6C")+
   geom_sf(data=hsinchu_scenicSpot, color="#46A3FF", size=1)+
   geom_sf(data=filter(hsinchu_scenicSpot, 
-                      Name %in% c("·s¦Ë³£«°¶ª¼q","·s¦Ë¥«¥ß°Êª«¶é","¤Q¤C¤½¨½®ü©¤­·´º°Ï","«n¼dº®´ä(«n¼dÂÂ´ä)","­»¤s·Ã¦a","¤Q¤E¤½³¼«C«C¯ó­ì")), color="#0066CC", size=2)+
+                      Name %in% c("æ–°ç«¹éƒ½åŸéšå»Ÿ","æ–°ç«¹å¸‚ç«‹å‹•ç‰©åœ’","åä¸ƒå…¬é‡Œæµ·å²¸é¢¨æ™¯å€","å—å¯®æ¼æ¸¯(å—å¯®èˆŠæ¸¯)","é¦™å±±æº¼åœ°","åä¹å…¬é ƒé’é’è‰åŸ")), color="#0066CC", size=2)+
   geom_sf_text_repel(data=filter(hsinchu_scenicSpot, 
-                                 Name %in% c("·s¦Ë³£«°¶ª¼q","·s¦Ë¥«¥ß°Êª«¶é","¤Q¤C¤½¨½®ü©¤­·´º°Ï","«n¼dº®´ä(«n¼dÂÂ´ä)","­»¤s·Ã¦a","¤Q¤E¤½³¼«C«C¯ó­ì")), aes(label=Name), family="A", size=7)+
+                                 Name %in% c("æ–°ç«¹éƒ½åŸéšå»Ÿ","æ–°ç«¹å¸‚ç«‹å‹•ç‰©åœ’","åä¸ƒå…¬é‡Œæµ·å²¸é¢¨æ™¯å€","å—å¯®æ¼æ¸¯(å—å¯®èˆŠæ¸¯)","é¦™å±±æº¼åœ°","åä¹å…¬é ƒé’é’è‰åŸ")), aes(label=Name), family="A", size=7)+
   theme_void()
 dev.off()
 
 
 
-png("./¹Ï 3.3.2  st_bbox()¦a²zÃä¬ÉÃ¸¹Ï.png", width=650*2, height=790*2, res=220) 
+png("./åœ– 3.3.2  st_bbox()åœ°ç†é‚Šç•Œç¹ªåœ–.png", width=650*2, height=790*2, res=220) 
 ggplot()+
   geom_sf(data=nz, color="#E0E0E0", fill="#BEBEBE", size=0.5)+
   geom_sf(data=nz_height, color="#01814A", shape=4)+
@@ -816,7 +816,7 @@ dev.off()
 
 
 
-png("./¹Ï 3.5.1  ¦X¨Ö¦a²z¸ê®Æ»P·s¼WÄİ©Ê¸ê®Æ¡]¬ü°êCOVID-19¦º¤`²v¹Ï¡^.png", width=1570*2, height=790*2, res=220) 
+png("./åœ– 3.5.1  åˆä½µåœ°ç†è³‡æ–™èˆ‡æ–°å¢å±¬æ€§è³‡æ–™ï¼ˆç¾åœ‹COVID-19æ­»äº¡ç‡åœ–ï¼‰.png", width=1570*2, height=790*2, res=220) 
 us_covid=read.csv("https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2Fnytimes%2Fcovid-19-data%2Fmaster%2Fus-states.csv&filename=us-states.csv")
 us_covid$date=as.Date(us_covid$date)
 us_covid=filter(us_covid, date==as.Date("2021/9/30"))
@@ -824,7 +824,7 @@ us_states_covid=left_join(us_states, us_covid, by=c("NAME"="state"))
 us_states_covid$death_rate=us_states_covid$deaths/us_states_covid$cases
 ggplot()+
   geom_sf(data=us_states_covid, aes(fill=death_rate*100))+
-  scale_fill_distiller(palette="YlOrRd", direction=1, name="½T¶E¦º¤`²v (%)")+
+  scale_fill_distiller(palette="YlOrRd", direction=1, name="ç¢ºè¨ºæ­»äº¡ç‡ (%)")+
   theme_void()+
   theme(legend.text=element_text(size=18, family="B"),
         legend.title=element_text(size=23, family="A"))
@@ -832,7 +832,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.2.1  ªÅ¶¡»PÄİ©Ê»E¦X¥X¹Ïµ²ªG.png", width=1060*2, height=580*2, res=220) 
+png("./åœ– 4.2.1  ç©ºé–“èˆ‡å±¬æ€§èšåˆå‡ºåœ–çµæœ.png", width=1060*2, height=580*2, res=220) 
 # aggregate(taipei_village_map["PP"], by=list(taipei_village_map$TOWNNAME), FUN=sum, na.rm=T)
 # aggregate(world["pop"], by=list(world$continent), FUN=sum, na.rm=T)
 us_states_sf=aggregate(us_states["total_pop_15"], by=list(us_states$REGION), FUN=sum, na.rm=T)
@@ -847,7 +847,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.2.2  ªÅ¶¡»PÄİ©Ê»E¦X¥X¹Ïµ²ªG.png", width=650*2, height=790*2, res=220) 
+png("./åœ– 4.2.2  ç©ºé–“èˆ‡å±¬æ€§èšåˆå‡ºåœ–çµæœ.png", width=650*2, height=790*2, res=220) 
 nz_ave_ele=aggregate(x=nz_height["elevation"], by=nz, FUN=mean)
 ggplot()+
   geom_sf(data=nz_ave_ele, aes(fill=elevation))+
@@ -859,13 +859,13 @@ dev.off()
 
 
 
-png("./¹Ï 4.3.2  ªÅ¶¡´¡­È­pºâµ²ªG¡]¤H¤f±K«×¹Ï¡^.png", width=1069*2, height=790*2, res=220) 
+png("./åœ– 4.3.2  ç©ºé–“æ’å€¼è¨ˆç®—çµæœï¼ˆäººå£å¯†åº¦åœ–ï¼‰.png", width=1069*2, height=790*2, res=220) 
 PPDENS_interpo=st_interpolate_aw(taipei_village_map["PPDENS"], taipei_mrt_station_buf, extensive=F, keep_NA=T)
 PPDENS_interpo=cbind(Station=taipei_mrt_station_buf$Zh_tw, PPDENS_interpo)
 ggplot()+
   geom_sf(data=taipei_village_map, color="#F0F0F0", fill="#D0D0D0")+
   geom_sf(data=PPDENS_interpo, aes(fill=PPDENS))+
-  scale_fill_distiller(palette="Reds", direction=1, name="±¶¹B¯¸Àô°ì200¤½¤Ø\n¤H¤f±K«×\n(¤H/¥­¤è¤½¨½)")+
+  scale_fill_distiller(palette="Reds", direction=1, name="æ·é‹ç«™ç’°åŸŸ200å…¬å°º\näººå£å¯†åº¦\n(äºº/å¹³æ–¹å…¬é‡Œ)")+
   theme_void()+
   theme(legend.title=element_text(size=20, family="A"),
         legend.text=element_text(size=15, family="B"))
@@ -873,24 +873,24 @@ dev.off()
 
 
 
-png("./¹Ï 4.4.1  ¦a²z¸ê®ÆÁp¶°¡]»O¥_¥«¦U§ø¨½Áp¶°¡^.png", width=1069*2, height=790*2, res=220)
+png("./åœ– 4.4.1  åœ°ç†è³‡æ–™è¯é›†ï¼ˆè‡ºåŒ—å¸‚å„æ‘é‡Œè¯é›†ï¼‰.png", width=1069*2, height=790*2, res=220)
 vil_uni=st_union(taipei_village_map)
 p1=ggplot()+
   geom_sf(data=taipei_village_map, color="#F0F0F0", fill="#D0D0D0")+
-  ggtitle("­ì§ø¨½­±¹Ï¼h")+
+  ggtitle("åŸæ‘é‡Œé¢åœ–å±¤")+
   theme_void()+
   theme(plot.title=element_text(hjust=0.5, family="A", size=20, face="bold"))
 p2=ggplot()+
   geom_sf(data=vil_uni, color="#F0F0F0", fill="#D0D0D0")+
-  ggtitle("Áp¶°«á§ø¨½­±¹Ï¼h")+
+  ggtitle("è¯é›†å¾Œæ‘é‡Œé¢åœ–å±¤")+
   theme_void()+
   theme(plot.title=element_text(hjust=0.5, family="A", size=20, face="bold"))
 ggarrange(p1, p2, ncol=2, nrow=1)
 dev.off()
-  
 
 
-png("./¹Ï 4.4.2  ¨â¦a²z¸ê®Æ¦U§OÁp¶°¤§Áp¶°.png", width=810*2, height=790*2, res=220)
+
+png("./åœ– 4.4.2  å…©åœ°ç†è³‡æ–™å„åˆ¥è¯é›†ä¹‹è¯é›†.png", width=810*2, height=790*2, res=220)
 vil_mrt_uni=st_union(st_union(taipei_village_map), st_union(taipei_mrt_station))
 ggplot()+
   geom_sf(data=vil_mrt_uni, color="#6C6C6C", fill="#6C6C6C")+
@@ -899,7 +899,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.5.4  »O¥_±¶¹B¯¸»P»O¥_¥«§ø¨½¹Ï¼h¨ú¥æ¶°µ²ªG¤§¦a¹Ï.png", width=1222*2, height=650*2, res=220)
+png("./åœ– 4.5.4  è‡ºåŒ—æ·é‹ç«™èˆ‡è‡ºåŒ—å¸‚æ‘é‡Œåœ–å±¤å–äº¤é›†çµæœä¹‹åœ°åœ–.png", width=1222*2, height=650*2, res=220)
 mrt_clip=st_intersection(taipei_mrt_station, taipei_village_map$geometry)
 p1=ggplot()+
   geom_sf(data=taipei_village_map, color=NA, fill="#D0D0D0")+
@@ -914,7 +914,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.5.5  ¦a²z¾Ş§@¤§¶°¦X¾Ş§@¤¸¥ó¥Ü·N¹Ï.png", width=1370*2, height=770*2, res=220)
+png("./åœ– 4.5.5  åœ°ç†æ“ä½œä¹‹é›†åˆæ“ä½œå…ƒä»¶ç¤ºæ„åœ–.png", width=1370*2, height=770*2, res=220)
 X=st_buffer(st_point(c(1,1)), dist=1)
 Y=st_buffer(st_point(c(2,1)), dist=1)
 intersection_XY=st_intersection(X, Y)
@@ -987,15 +987,15 @@ dev.off()
 
 
 
-png("./¹Ï 4.5.6  ·s¦Ë¬ì¾Ç¶é°Ï»P·s¦Ë¿¤Ä_¤s¶m¬Û¹ï¦ì¸m¹Ï.png", width=1238*2, height=788*2, res=200)
-sipa=filter(taiwan_factory, FNAME=="¦Ë¬ì·s¦Ë¶é°Ï")
-baoshan=filter(taiwan_town, TOWNNAME=="Ä_¤s¶m")
+png("./åœ– 4.5.6  æ–°ç«¹ç§‘å­¸åœ’å€èˆ‡æ–°ç«¹ç¸£å¯¶å±±é„‰ç›¸å°ä½ç½®åœ–.png", width=1238*2, height=788*2, res=200)
+sipa=filter(taiwan_factory, FNAME=="ç«¹ç§‘æ–°ç«¹åœ’å€")
+baoshan=filter(taiwan_town, TOWNNAME=="å¯¶å±±é„‰")
 st_crs(sipa)$epsg
 st_crs(baoshan)$epsg
 sipa=st_transform(sipa, crs=3826)
 baoshan=st_transform(baoshan, crs=3826)
 sipa_bao=st_intersection(sipa, baoshan)
-# Â²¤¶¹Ï
+# ç°¡ä»‹åœ–
 ggplot()+
   annotation_map_tile("cartolight", zoom=13)+
   geom_sf(data=baoshan, fill="#C4E1FF", color=NA)+
@@ -1003,18 +1003,18 @@ ggplot()+
   geom_sf(data=sipa_bao, fill="#B7FF4A", color=NA)+
   geom_sf(data=st_boundary(baoshan), color="#4F4F4F", linetype=5, size=1)+
   geom_sf(data=st_boundary(sipa), color="#4F4F4F")+
-  geom_sf_text_repel(data=sipa, aes(label="·s¦Ë¬ì¾Ç¶é°Ï"), family="A", nudge_y=0.02, size=9)+
+  geom_sf_text_repel(data=sipa, aes(label="æ–°ç«¹ç§‘å­¸åœ’å€"), family="A", nudge_y=0.02, size=9)+
   geom_sf_text_repel(data=baoshan, aes(label=paste0(COUNTYNAME, "\n", TOWNNAME)), family="A", size=10, nudge_x=-0.03)+
   theme_void()
 dev.off()
 
 
-png("./¹Ï 4.5.7  ¶°¦X½×¤§¥Ü½d¡]¥H·s¦Ë¬ì¾Ç¶é°Ï¬°¨Ò¡^.png", width=1180*2, height=780*2, res=200)
+png("./åœ– 4.5.7  é›†åˆè«–ä¹‹ç¤ºç¯„ï¼ˆä»¥æ–°ç«¹ç§‘å­¸åœ’å€ç‚ºä¾‹ï¼‰.png", width=1180*2, height=780*2, res=200)
 ggplot()+
   geom_sf(data=baoshan, fill="#C4E1FF", color=NA)+
   geom_sf(data=sipa, fill="#F9F900", alpha=0.6, color=NA)+
   geom_sf(data=sipa_bao, fill="#B7FF4A", color=NA)+
-  geom_sf_text_repel(data=sipa, aes(label="·s¦Ë¬ì¾Ç¶é°Ï"), family="A", nudge_y=0.02, size=9)+
+  geom_sf_text_repel(data=sipa, aes(label="æ–°ç«¹ç§‘å­¸åœ’å€"), family="A", nudge_y=0.02, size=9)+
   geom_sf_text_repel(data=baoshan, aes(label=paste0(COUNTYNAME, "\n", TOWNNAME)), family="A", size=10, nudge_x=-0.03)+
   theme_void()
 dev.off()
@@ -1036,7 +1036,7 @@ st_area(st_intersection(sipa, baoshan))/st_area(sipa)
 
 
 
-png("./¹Ï 4.6.1  st_buffer()¨ç¦¡endCapStyle=°Ñ¼Æ¼Ë¦¡¥Ü·N¹Ï.png", width=1180*2, height=150*2, res=200)
+png("./åœ– 4.6.1  st_buffer()å‡½å¼endCapStyle=åƒæ•¸æ¨£å¼ç¤ºæ„åœ–.png", width=1180*2, height=150*2, res=200)
 p1=ggplot()+
   geom_sf(data=st_buffer(st_linestring(rbind(c(1,1), c(2,1))), 0.1, endCapStyle="ROUND"), color="#004B97", fill="#C4E1FF")+
   geom_sf(data=st_linestring(rbind(c(1,1), c(2,1))), color="#CE0000", size=4)+
@@ -1060,7 +1060,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.6.2  cycle_hire 100¤½¤ØÀô°ì¹Ï¡]¤@¡^.png", width=918*2, height=552*2, res=200)
+png("./åœ– 4.6.2  cycle_hire 100å…¬å°ºç’°åŸŸåœ–ï¼ˆä¸€ï¼‰.png", width=918*2, height=552*2, res=200)
 ggplot()+
   annotation_map_tile("cartolight", zoom=12)+
   geom_sf(data=st_buffer(cycle_hire, 0.0009), color="#003D79", fill="#C4E1FF")+
@@ -1071,7 +1071,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.6.3  cycle_hire 100¤½¤ØÀô°ì¹Ï¡]¤G¡^.png", width=918*2, height=552*2, res=200)
+png("./åœ– 4.6.3  cycle_hire 100å…¬å°ºç’°åŸŸåœ–ï¼ˆäºŒï¼‰.png", width=918*2, height=552*2, res=200)
 ggplot()+
   annotation_map_tile("cartolight", zoom=12)+
   geom_sf(data=st_buffer(st_transform(cycle_hire, 27700), 100), color="#003D79", fill="#C4E1FF")+
@@ -1082,7 +1082,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.6.4  »O¥_¥«¦U±¶¹B¯¸300¤½¤ØÀô°ì¤ºYouBike³õ¯¸¼Æ.png", width=720*2, height=790*2, res=200)
+png("./åœ– 4.6.4  è‡ºåŒ—å¸‚å„æ·é‹ç«™300å…¬å°ºç’°åŸŸå…§YouBikeå ´ç«™æ•¸.png", width=720*2, height=790*2, res=200)
 mrt_station=st_intersection(taipei_mrt_station, taipei_village_map$geometry)
 mrt_station=mrt_station[!(duplicated(mrt_station$Zh_tw)),]
 mrt_station_buf=st_buffer(mrt_station, 300)
@@ -1094,13 +1094,13 @@ mrt_station_buf=left_join(mrt_station_buf, ubike_mrt_buf_count)
 mrt_station_buf$ubike_count[is.na(mrt_station_buf$ubike_count)]=0
 temp=st_intersection(taipei_mrt_route, taipei_village_map$geometry)
 ggplot()+
-  geom_sf(data=filter(taiwan_town, COUNTYNAME=="»O¥_¥«"), color="#F0F0F0", fill="#D0D0D0")+
+  geom_sf(data=filter(taiwan_town, COUNTYNAME=="è‡ºåŒ—å¸‚"), color="#F0F0F0", fill="#D0D0D0")+
   geom_sf(data=temp, aes(color=RAILNAME), show.legend=F, size=1)+
-  scale_color_manual(values=c("²H¤ô«H¸q½u"="#d90023", "ªO«n½u"="#0a59ae", "ªQ¤s·s©±½u"="#107547",
-                              "¤¤©M·sÄª½u"="#f5a818", "¤å´ò½u"="#b57a25", "Àôª¬½u"="#fedb00"),
-                     name="¸ô½u")+
+  scale_color_manual(values=c("æ·¡æ°´ä¿¡ç¾©ç·š"="#d90023", "æ¿å—ç·š"="#0a59ae", "æ¾å±±æ–°åº—ç·š"="#107547",
+                              "ä¸­å’Œæ–°è˜†ç·š"="#f5a818", "æ–‡æ¹–ç·š"="#b57a25", "ç’°ç‹€ç·š"="#fedb00"),
+                     name="è·¯ç·š")+
   geom_sf(data=mrt_station_buf, color=NA, aes(fill=ubike_count))+
-  scale_fill_distiller(palette="YlOrRd", direction=1, name="Àô°ì¤º\nYouBike\n³õ¯¸¼Æ")+
+  scale_fill_distiller(palette="YlOrRd", direction=1, name="ç’°åŸŸå…§\nYouBike\nå ´ç«™æ•¸")+
   theme_void()+
   theme(legend.title=element_text(size=20, family="A"),
         legend.text=element_text(size=15, family="B"))
@@ -1108,7 +1108,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.7.3  »O¥_¥«¦U§ø¨½¤¤¤ßÂI.png", width=620*2, height=790*2, res=200)
+png("./åœ– 4.7.3  è‡ºåŒ—å¸‚å„æ‘é‡Œä¸­å¿ƒé».png", width=620*2, height=790*2, res=200)
 ggplot()+
   geom_sf(data=taipei_village_map, color="#F0F0F0", fill="#BEBEBE")+
   geom_sf(data=st_centroid(taipei_village_map), color="red", size=1)+
@@ -1117,21 +1117,21 @@ dev.off()
 
 
 
-png("./¹Ï 4.7.4  »O¥_¥«±¶¹B¸ô½u¦U¸ô¬q¤¤¤ßÂI.png", width=730*2, height=780*2, res=200)
+png("./åœ– 4.7.4  è‡ºåŒ—å¸‚æ·é‹è·¯ç·šå„è·¯æ®µä¸­å¿ƒé».png", width=730*2, height=780*2, res=200)
 ggplot()+
   geom_sf(data=taipei_village_map, color="#F0F0F0", fill="#D0D0D0")+
   geom_sf(data=taipei_mrt_route, aes(color=RAILNAME), show.legend=F, size=0.1)+
-  scale_color_manual(values=c("²H¤ô«H¸q½u"="#d90023", "ªO«n½u"="#0a59ae", "ªQ¤s·s©±½u"="#107547",
-                              "¤¤©M·sÄª½u"="#f5a818", "¤å´ò½u"="#b57a25", "Àôª¬½u"="#fedb00"),
-                     name="¸ô½u")+
+  scale_color_manual(values=c("æ·¡æ°´ä¿¡ç¾©ç·š"="#d90023", "æ¿å—ç·š"="#0a59ae", "æ¾å±±æ–°åº—ç·š"="#107547",
+                              "ä¸­å’Œæ–°è˜†ç·š"="#f5a818", "æ–‡æ¹–ç·š"="#b57a25", "ç’°ç‹€ç·š"="#fedb00"),
+                     name="è·¯ç·š")+
   geom_sf(data=taipei_mrt_station)+
   geom_sf(data=st_centroid(taipei_mrt_route), color="red", shape=18)+
   theme_void()
 dev.off()
 
 
-png("./¹Ï 4.7.5  °ª¶¯¥«¦U°Ï¤¤¤ßÂI.png", width=1134*2, height=774*2, res=200)
-temp=filter(taiwan_town, COUNTYNAME=="°ª¶¯¥«")%>%
+png("./åœ– 4.7.5  é«˜é›„å¸‚å„å€ä¸­å¿ƒé».png", width=1134*2, height=774*2, res=200)
+temp=filter(taiwan_town, COUNTYNAME=="é«˜é›„å¸‚")%>%
   st_transform(crs=4326)%>%
   st_intersection(st_as_sfc(st_bbox(c(xmin=116.70691, xmax=121.04903, ymin=20.287904, ymax=23.47171), crs=4326)))
 ggplot()+
@@ -1143,8 +1143,8 @@ dev.off()
 
 
 
-png("./¹Ï 4.7.6  °ª¶¯¥«ºX¬z°Ï­×¥¿«e«á¤§¤¤¤ßÂI.png", width=1134*2, height=780*2, res=200)
-temp=filter(taiwan_town, TOWNNAME=="ºX¬z°Ï")%>%
+png("./åœ– 4.7.6  é«˜é›„å¸‚æ——æ´¥å€ä¿®æ­£å‰å¾Œä¹‹ä¸­å¿ƒé».png", width=1134*2, height=780*2, res=200)
+temp=filter(taiwan_town, TOWNNAME=="æ——æ´¥å€")%>%
   st_transform(crs=4326)%>%
   st_intersection(st_as_sfc(st_bbox(c(xmin=116.70691, xmax=121.04903, ymin=20.287904, ymax=23.47171), crs=4326)))
 ggplot()+
@@ -1157,8 +1157,8 @@ dev.off()
 
 
 
-png("./¹Ï 4.7.7  ¼ê´ò¤¤¤ßÂI»P­±¤WÂI¦a¹Ï.png", width=584*3, height=780*3, res=200)
-penghu=filter(taiwan_county, COUNTYNAME=="¼ê´ò¿¤")
+png("./åœ– 4.7.7  æ¾æ¹–ä¸­å¿ƒé»èˆ‡é¢ä¸Šé»åœ°åœ–.png", width=584*3, height=780*3, res=200)
+penghu=filter(taiwan_county, COUNTYNAME=="æ¾æ¹–ç¸£")
 ggplot()+
   geom_sf(data=penghu, color="#F0F0F0", fill="#D0D0D0")+
   geom_sf(data=st_centroid(penghu), color="red", size=6, shape=18)+
@@ -1172,7 +1172,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.8.1  ¬ü°ê¦U¦{Ãä¬É¦a¹Ï.png", width=1060*2, height=580*2, res=200)
+png("./åœ– 4.8.1  ç¾åœ‹å„å·é‚Šç•Œåœ°åœ–.png", width=1060*2, height=580*2, res=200)
 ggplot()+
   geom_sf(data=us_states)+
   geom_sf(data=st_boundary(us_states), color="red")+
@@ -1181,7 +1181,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.8.2  ¬ü°ê¥ş°êÃä¬É¦a¹Ï.png", width=1060*2, height=580*2, res=200)
+png("./åœ– 4.8.2  ç¾åœ‹å…¨åœ‹é‚Šç•Œåœ°åœ–.png", width=1060*2, height=580*2, res=200)
 ggplot()+
   geom_sf(data=us_states)+
   geom_sf(data=st_boundary(st_union(us_states)), color="red", size=1)+
@@ -1190,7 +1190,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.9.1  ¶ë¯Çªe»P¬ü°ê¦a¹ÏÂ²¤Æ.png", width=1000*2, height=550*2, res=200)
+png("./åœ– 4.9.1  å¡ç´æ²³èˆ‡ç¾åœ‹åœ°åœ–ç°¡åŒ–.png", width=1000*2, height=550*2, res=200)
 p1=ggplot()+
   geom_sf(data=seine, size=1)+
   ggtitle("seine\ndTolerance=0")+
@@ -1226,7 +1226,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.10.1  ²¾°Ê¬ü°ê¦a¹Ï.png", width=1000*2, height=550*2, res=200)
+png("./åœ– 4.10.1  ç§»å‹•ç¾åœ‹åœ°åœ–.png", width=1000*2, height=550*2, res=200)
 us_states_2163=st_transform(us_states, crs=2163)
 us_states_shift=us_states_2163$geometry+c(500000,-300000)
 us_states_shift=st_sf(us_states_shift, crs=2163)
@@ -1240,7 +1240,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.10.3  ¬ü°ê¦a¹ÏÁY©ñ.png", width=1530*2, height=500*2, res=200)
+png("./åœ– 4.10.3  ç¾åœ‹åœ°åœ–ç¸®æ”¾.png", width=1530*2, height=500*2, res=200)
 us_states_global=us_states_2163
 us_states_global$geometry=us_states_global$geometry*0.8
 us_states_local=us_states_2163
@@ -1250,7 +1250,7 @@ us_states_local=st_sf(us_states_local, crs=2163)
 p1=ggplot()+
   geom_sf(data=us_states_2163, color=NA, fill="#BEBEBE")+
   geom_sf(data=us_states_global, fill="#75AADB", color=NA, alpha=0.6)+
-  ggtitle("¥ş°ìÁY©ñ")+
+  ggtitle("å…¨åŸŸç¸®æ”¾")+
   theme(plot.title=element_text(hjust=0.5, family="A", size=25, face="bold"),
         axis.text=element_text(family="B", size=15),
         axis.ticks=element_blank(),
@@ -1258,7 +1258,7 @@ p1=ggplot()+
 p2=ggplot()+
   geom_sf(data=us_states_2163, color=NA, fill="#BEBEBE")+
   geom_sf(data=us_states_local, fill="#75AADB", color=NA, alpha=0.6)+
-  ggtitle("°Ï°ìÁY©ñ")+
+  ggtitle("å€åŸŸç¸®æ”¾")+
   theme(plot.title=element_text(hjust=0.5, family="A", size=25, face="bold"),
         axis.text=element_text(family="B", size=15),
         axis.ticks=element_blank(),
@@ -1268,7 +1268,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.10.4  ¬ü°ê¦a¹Ï±ÛÂà.png", width=838*2, height=500*2, res=200)
+png("./åœ– 4.10.4  ç¾åœ‹åœ°åœ–æ—‹è½‰.png", width=838*2, height=500*2, res=200)
 rotation=function(x){
   r=x*pi/180
   ro=matrix(c(cos(r), sin(r), -sin(r), cos(r)), nrow=2, ncol=2)
@@ -1289,13 +1289,13 @@ dev.off()
 
 
 
-png("./¹Ï 4.11.1  »O¥_±¶¹B¸ô½u¦U¸ô¬qªø«×.png", width=873*2, height=750*2, res=200)
+png("./åœ– 4.11.1  è‡ºåŒ—æ·é‹è·¯ç·šå„è·¯æ®µé•·åº¦.png", width=873*2, height=750*2, res=200)
 mrt_route_length=cbind(taipei_mrt_route, mrt_length=as.numeric(st_length(taipei_mrt_route)))
 ggplot()+
   geom_sf(data=mrt_route_length, aes(size=mrt_length, color=RAILNAME))+
-  scale_color_manual(values=c("²H¤ô«H¸q½u"="#d90023", "ªO«n½u"="#0a59ae", "ªQ¤s·s©±½u"="#107547",
-                              "¤¤©M·sÄª½u"="#f5a818", "¤å´ò½u"="#b57a25", "Àôª¬½u"="#fedb00"),
-                     name="±¶¹B¸ô½u")+
+  scale_color_manual(values=c("æ·¡æ°´ä¿¡ç¾©ç·š"="#d90023", "æ¿å—ç·š"="#0a59ae", "æ¾å±±æ–°åº—ç·š"="#107547",
+                              "ä¸­å’Œæ–°è˜†ç·š"="#f5a818", "æ–‡æ¹–ç·š"="#b57a25", "ç’°ç‹€ç·š"="#fedb00"),
+                     name="æ·é‹è·¯ç·š")+
   scale_size_continuous(range=c(0,3))+
   guides(size=F)+
   theme_void()+
@@ -1305,7 +1305,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.11.2  ¶ZÂ÷­pºâ¥Ü·N¹Ï.png", width=1250*2, height=550*2, res=200)
+png("./åœ– 4.11.2  è·é›¢è¨ˆç®—ç¤ºæ„åœ–.png", width=1250*2, height=550*2, res=200)
 temp1=st_linestring(rbind(c(1,2), c(3,4)))
 temp2=st_linestring(rbind(c(1,6), c(6,6)))
 st_distance(temp1, temp2)
@@ -1354,16 +1354,16 @@ dev.off()
 
 
 
-png("./¹Ï 4.12.3  st_nearest_points()¨ç¦¡½d¨Òµ²ªG¦a¹Ï.png", width=583*2, height=614*2, res=200)
-mrt1=filter(taipei_mrt_station, Zh_tw %in% c("µ½¾É¦x", "©¾§µ´°¤Æ"))
+png("./åœ– 4.12.3  st_nearest_points()å‡½å¼ç¯„ä¾‹çµæœåœ°åœ–.png", width=583*2, height=614*2, res=200)
+mrt1=filter(taipei_mrt_station, Zh_tw %in% c("å–„å°å¯º", "å¿ å­æ•¦åŒ–"))
 mrt1=st_buffer(mrt1, 300)
-mrt2=filter(taipei_mrt_station, Zh_tw %in% c("Às¤s¦x","¶ê¤s","¥x¹q¤j¼Ó","¤»±i²p","ªQ¤s¾÷³õ"))
+mrt2=filter(taipei_mrt_station, Zh_tw %in% c("é¾å±±å¯º","åœ“å±±","å°é›»å¤§æ¨“","å…­å¼µçŠ","æ¾å±±æ©Ÿå ´"))
 mrt12_near=st_nearest_points(mrt1, mrt2)
 ggplot()+
   geom_sf(data=taipei_mrt_route, aes(color=RAILNAME), show.legend=F, size=1.5)+
-  scale_color_manual(values=c("²H¤ô«H¸q½u"="#d90023", "ªO«n½u"="#0a59ae", "ªQ¤s·s©±½u"="#107547",
-                              "¤¤©M·sÄª½u"="#f5a818", "¤å´ò½u"="#b57a25", "Àôª¬½u"="#fedb00"),
-                     name="¸ô½u")+
+  scale_color_manual(values=c("æ·¡æ°´ä¿¡ç¾©ç·š"="#d90023", "æ¿å—ç·š"="#0a59ae", "æ¾å±±æ–°åº—ç·š"="#107547",
+                              "ä¸­å’Œæ–°è˜†ç·š"="#f5a818", "æ–‡æ¹–ç·š"="#b57a25", "ç’°ç‹€ç·š"="#fedb00"),
+                     name="è·¯ç·š")+
   geom_sf(data=mrt1, color=NA, fill="#7B7B7B", alpha=0.7)+
   geom_sf(data=mrt12_near, size=1, color="#6C6C6C", linetype=6)+
   geom_sf(data=st_startpoint(mrt12_near), color="red")+
@@ -1376,16 +1376,16 @@ dev.off()
 
 
 
-png("./¹Ï 4.12.4  ¦UYouBike³õ¯¸»P³Ìªñ»O¥_±¶¹B¯¸ÂI¤§³s½u.png", width=710*2, height=790*2, res=200)
+png("./åœ– 4.12.4  å„YouBikeå ´ç«™èˆ‡æœ€è¿‘è‡ºåŒ—æ·é‹ç«™é»ä¹‹é€£ç·š.png", width=710*2, height=790*2, res=200)
 nearest_mrt=st_nearest_feature(taipei_youbike, taipei_mrt_station)
 nearest_mrt=taipei_mrt_station[nearest_mrt,]
 mrt_ubike_line=st_nearest_points(nearest_mrt, taipei_youbike, pairwise=T)
 ggplot()+
   # geom_sf(data=st_boundary(st_union(taipei_village_map)))+
   geom_sf(data=taipei_mrt_route, aes(color=RAILNAME), show.legend=F, size=0.5)+
-  scale_color_manual(values=c("²H¤ô«H¸q½u"="#d90023", "ªO«n½u"="#0a59ae", "ªQ¤s·s©±½u"="#107547",
-                              "¤¤©M·sÄª½u"="#f5a818", "¤å´ò½u"="#b57a25", "Àôª¬½u"="#fedb00"),
-                     name="¸ô½u")+
+  scale_color_manual(values=c("æ·¡æ°´ä¿¡ç¾©ç·š"="#d90023", "æ¿å—ç·š"="#0a59ae", "æ¾å±±æ–°åº—ç·š"="#107547",
+                              "ä¸­å’Œæ–°è˜†ç·š"="#f5a818", "æ–‡æ¹–ç·š"="#b57a25", "ç’°ç‹€ç·š"="#fedb00"),
+                     name="è·¯ç·š")+
   geom_sf(data=taipei_mrt_station)+
   geom_sf(data=mrt_ubike_line, size=0.1, color="#6C6C6C")+
   geom_sf(data=taipei_youbike, color="#F6570E", size=0.3)+
@@ -1394,7 +1394,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.13.2  »O¥_¥«©Ò¦³YouBike³õ¯¸¤§¥Y¥].png", width=610*2, height=790*2, res=200)
+png("./åœ– 4.13.2  è‡ºåŒ—å¸‚æ‰€æœ‰YouBikeå ´ç«™ä¹‹å‡¸åŒ….png", width=610*2, height=790*2, res=200)
 ggplot()+
   geom_sf(data=taipei_village_map, color="#F0F0F0", fill="#D0D0D0")+
   geom_sf(data=st_convex_hull(st_union(taipei_youbike)), color=NA, fill="#75AADB", alpha=0.7)+
@@ -1404,7 +1404,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.13.3  ³Ìªñ±¶¹B¯¸¬Û¦P¤§YouBike¯¸ÂI¥Y¥].png", width=610*2, height=790*2, res=200)
+png("./åœ– 4.13.3  æœ€è¿‘æ·é‹ç«™ç›¸åŒä¹‹YouBikeç«™é»å‡¸åŒ….png", width=610*2, height=790*2, res=200)
 mrt_station=st_intersection(taipei_mrt_station, taipei_village_map$geometry)
 nearest_mrt=st_nearest_feature(taipei_youbike, mrt_station)
 nearest_mrt=mrt_station[nearest_mrt,]
@@ -1416,9 +1416,9 @@ ggplot()+
   geom_sf(data=taipei_village_map, color="#F0F0F0", fill="#D0D0D0")+
   geom_sf(data=mrt_ubike_nearest_convex, color=NA, fill="#75AADB", alpha=0.7)+
   geom_sf(data=st_intersection(taipei_mrt_route, taipei_village_map$geometry), aes(color=RAILNAME), show.legend=F, size=0.5)+
-  scale_color_manual(values=c("²H¤ô«H¸q½u"="#d90023", "ªO«n½u"="#0a59ae", "ªQ¤s·s©±½u"="#107547",
-                              "¤¤©M·sÄª½u"="#f5a818", "¤å´ò½u"="#b57a25", "Àôª¬½u"="#fedb00"),
-                     name="¸ô½u")+
+  scale_color_manual(values=c("æ·¡æ°´ä¿¡ç¾©ç·š"="#d90023", "æ¿å—ç·š"="#0a59ae", "æ¾å±±æ–°åº—ç·š"="#107547",
+                              "ä¸­å’Œæ–°è˜†ç·š"="#f5a818", "æ–‡æ¹–ç·š"="#b57a25", "ç’°ç‹€ç·š"="#fedb00"),
+                     name="è·¯ç·š")+
   geom_sf(data=mrt_station)+
   geom_sf(data=taipei_youbike, color="#F6570E", size=0.3)+
   theme_void()
@@ -1426,32 +1426,32 @@ dev.off()
 
 
 
-png("./¹Ï 4.14.3  »O¥_¥«¤º±¶¹B¯¸ÂI¨UÃ¹¿Õ¥ì¹Ï.png", width=654*2, height=680*2, res=200)
+png("./åœ– 4.14.3  è‡ºåŒ—å¸‚å…§æ·é‹ç«™é»æ²ƒç¾…è«¾ä¼Šåœ–.png", width=654*2, height=680*2, res=200)
 tp_union=st_union(taipei_village_map)
 mrt_station=st_intersection(taipei_mrt_station, tp_union)
 mrt_vor=st_voronoi(st_union(mrt_station))
 mrt_vor=st_collection_extract(mrt_vor)
 ggplot()+
-  geom_sf(data=filter(taipei_metropolitian, COUNTYNAME=="»O¥_¥«"), color=NA, fill="#D0D0D0")+
+  geom_sf(data=filter(taipei_metropolitian, COUNTYNAME=="è‡ºåŒ—å¸‚"), color=NA, fill="#D0D0D0")+
   geom_sf(data=mrt_vor, fill=NA, size=0.5)+
   theme_void()
 dev.off()
 
 
 
-png("./¹Ï 4.14.4  »O¥_¥«¤º±¶¹B¯¸ÂI¨UÃ¹¿Õ¥ì¹Ï¡]­×¥¿¡^.png", width=680*2, height=740*2, res=200)
+png("./åœ– 4.14.4  è‡ºåŒ—å¸‚å…§æ·é‹ç«™é»æ²ƒç¾…è«¾ä¼Šåœ–ï¼ˆä¿®æ­£ï¼‰.png", width=680*2, height=740*2, res=200)
 tp_union=st_union(taipei_village_map)
 mrt_station=st_intersection(taipei_mrt_station, tp_union)
 mrt_vor=st_voronoi(st_union(mrt_station))
 mrt_vor=st_collection_extract(mrt_vor)
 mrt_vor=st_intersection(mrt_vor, tp_union)
 ggplot()+
-  geom_sf(data=filter(taipei_metropolitian, COUNTYNAME=="»O¥_¥«"), color=NA, aes(fill=TOWNNAME), alpha=0.3)+
-  scale_fill_brewer(palette="Paired", name="¦æ¬F°Ï")+
+  geom_sf(data=filter(taipei_metropolitian, COUNTYNAME=="è‡ºåŒ—å¸‚"), color=NA, aes(fill=TOWNNAME), alpha=0.3)+
+  scale_fill_brewer(palette="Paired", name="è¡Œæ”¿å€")+
   geom_sf(data=mrt_vor, fill=NA, size=0.5)+
   geom_sf(data=st_intersection(taipei_mrt_route, taipei_village_map$geometry), aes(color=RAILNAME), show.legend=F, size=0.8)+
-  scale_color_manual(values=c("²H¤ô«H¸q½u"="#d90023", "ªO«n½u"="#0a59ae", "ªQ¤s·s©±½u"="#107547",
-                              "¤¤©M·sÄª½u"="#f5a818", "¤å´ò½u"="#b57a25", "Àôª¬½u"="#fedb00"))+
+  scale_color_manual(values=c("æ·¡æ°´ä¿¡ç¾©ç·š"="#d90023", "æ¿å—ç·š"="#0a59ae", "æ¾å±±æ–°åº—ç·š"="#107547",
+                              "ä¸­å’Œæ–°è˜†ç·š"="#f5a818", "æ–‡æ¹–ç·š"="#b57a25", "ç’°ç‹€ç·š"="#fedb00"))+
   geom_sf(data=mrt_station)+
   theme_void()+
   theme(legend.title=element_text(size=20, family="A"),
@@ -1460,7 +1460,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.14.5  »O¥_¥«¤º±¶¹B¯¸ÂIkmeans¤À¸s»P¨UÃ¹¿Õ¥ì¹Ï.png", width=680*2, height=740*2, res=200)
+png("./åœ– 4.14.5  è‡ºåŒ—å¸‚å…§æ·é‹ç«™é»kmeansåˆ†ç¾¤èˆ‡æ²ƒç¾…è«¾ä¼Šåœ–.png", width=680*2, height=740*2, res=200)
 mrt_kmeans=kmeans(st_coordinates(mrt_station), 5)
 taipei_mrt_kmeans=cbind(mrt_station, cluster=factor(mrt_kmeans$cluster))
 mrt_center=data.frame(mrt_kmeans$centers)%>%
@@ -1472,7 +1472,7 @@ mrt_center_vor=st_intersection(mrt_center_vor, tp_union)
 ggplot()+
   geom_sf(data=st_intersection(taipei_mrt_route, taipei_village_map$geometry), color="#8E8E8E", show.legend=F, size=1)+
   geom_sf(data=taipei_mrt_kmeans, aes(color=cluster), size=2)+
-  scale_color_brewer(palette="Set2", name="¸s¶°")+
+  scale_color_brewer(palette="Set2", name="ç¾¤é›†")+
   geom_sf(data=mrt_center_vor, fill=NA, size=0.5, color="#AFAF61")+
   theme_void()+
   theme(legend.title=element_text(size=20, family="A"),
@@ -1481,7 +1481,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.15.1  ºô®æ½d¨Ò¥Ü·N¹Ï.png", width=800*2, height=800*2, res=200)
+png("./åœ– 4.15.1  ç¶²æ ¼ç¯„ä¾‹ç¤ºæ„åœ–.png", width=800*2, height=800*2, res=200)
 grid=st_polygon(list(rbind(c(0,0), c(10,0), c(10,10), c(0,10), c(0,0))))
 ggplot()+
   geom_sf(data=st_make_grid(grid, cellsize=2, what="polygons"), fill="#ECF5FF")+
@@ -1493,7 +1493,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.15.2  ºô®æ½d¨Ò¥Ü·N¹Ï¡]³]©w°Ñ¼Æn=¡^.png", width=800*2, height=800*2, res=200)
+png("./åœ– 4.15.2  ç¶²æ ¼ç¯„ä¾‹ç¤ºæ„åœ–ï¼ˆè¨­å®šåƒæ•¸n=ï¼‰.png", width=800*2, height=800*2, res=200)
 ggplot()+
   geom_sf(data=st_make_grid(grid, n=c(2,5), what="polygons"), fill="#ECF5FF")+
   theme_minimal()+
@@ -1502,7 +1502,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.15.3  »O¥_¥«500¤½¤Øºô®æ.png", width=670*2, height=730*2, res=200)
+png("./åœ– 4.15.3  è‡ºåŒ—å¸‚500å…¬å°ºç¶²æ ¼.png", width=670*2, height=730*2, res=200)
 tp_union=st_union(taipei_village_map)
 tp_grid=st_make_grid(tp_union, cellsize=500)
 ggplot()+
@@ -1513,7 +1513,7 @@ dev.off()
 
 
 
-png("./¹Ï 4.15.4  »O¥_¥«500¤½¤Øºô®æYouBike³õ¯¸¼Æ¤À¥¬¹Ï.png", width=670*2, height=730*2, res=200)
+png("./åœ– 4.15.4  è‡ºåŒ—å¸‚500å…¬å°ºç¶²æ ¼YouBikeå ´ç«™æ•¸åˆ†å¸ƒåœ–.png", width=670*2, height=730*2, res=200)
 tp_union=st_union(taipei_village_map)
 tp_grid=st_make_grid(tp_union, cellsize=500)
 tp_grid=st_intersection(tp_grid, tp_union)
@@ -1523,7 +1523,7 @@ grid_youbike=st_intersects(tp_grid, taipei_youbike)
 tp_grid=cbind(tp_grid, youbike=lengths(grid_youbike))
 ggplot()+
   geom_sf(data=tp_grid, aes(fill=log(youbike)),)+
-  scale_fill_distiller(palette="YlOrRd", direction=1, breaks=c(0:2, max(log(tp_grid$youbike))), label=c(round(c(apply(t(0:2), 1, exp)), 0), max(tp_grid$youbike)), name="<span style='font-family:B;'>YouBike<br></span>¯¸ÂI¼Æ")+
+  scale_fill_distiller(palette="YlOrRd", direction=1, breaks=c(0:2, max(log(tp_grid$youbike))), label=c(round(c(apply(t(0:2), 1, exp)), 0), max(tp_grid$youbike)), name="<span style='font-family:B;'>YouBike<br></span>ç«™é»æ•¸")+
   theme_void()+
   theme(legend.title=element_markdown(size=20, family="A"),
         legend.text=element_text(size=15, family="B"))
@@ -1531,16 +1531,16 @@ dev.off()
 
 
 
-png("./¹Ï 5.2.1  »O¥_±¶¹B¸ôºô»P¯¸ÂI¦a¹Ï.png", width=816*2, height=755*2, res=200)
+png("./åœ– 5.2.1  è‡ºåŒ—æ·é‹è·¯ç¶²èˆ‡ç«™é»åœ°åœ–.png", width=816*2, height=755*2, res=200)
 TRTC_railshape=Rail_Shape(app_id, app_key, "TRTC", dtype="sf")
 TRTC_station=Rail_Station(app_id, app_key, "TRTC", dtype="sf")
 
-TRTC_railshape$LineName=substr(TRTC_railshape$LineName, 1, regexpr("½u", TRTC_railshape$LineName))
+TRTC_railshape$LineName=substr(TRTC_railshape$LineName, 1, regexpr("ç·š", TRTC_railshape$LineName))
 ggplot()+
   geom_sf(data=TRTC_railshape, aes(color=LineName), show.legend="line", size=1)+
-  scale_color_manual(values=c("²H¤ô«H¸q½u"="#d90023", "ªO«n½u"="#0a59ae", "ªQ¤s·s©±½u"="#107547",
-                              "¤¤©M·sÄª½u"="#f5a818", "¤å´ò½u"="#b57a25", "Àôª¬½u"="#fedb00"),
-                     name="¸ô½u")+
+  scale_color_manual(values=c("æ·¡æ°´ä¿¡ç¾©ç·š"="#d90023", "æ¿å—ç·š"="#0a59ae", "æ¾å±±æ–°åº—ç·š"="#107547",
+                              "ä¸­å’Œæ–°è˜†ç·š"="#f5a818", "æ–‡æ¹–ç·š"="#b57a25", "ç’°ç‹€ç·š"="#fedb00"),
+                     name="è·¯ç·š")+
   geom_sf(data=TRTC_station, size=1)+
   theme_void()+
   theme(legend.title=element_text(family="A", size=20),
@@ -1549,14 +1549,14 @@ dev.off()
 
 
 
-png("./¹Ï 5.3.2  ·s¦Ë¥«¥«°Ï¤½¨®¸ô½u»P¯¸ÂI¦a¹Ï.png", width=1060*2, height=700*2, res=200)
+png("./åœ– 5.3.2  æ–°ç«¹å¸‚å¸‚å€å…¬è»Šè·¯ç·šèˆ‡ç«™é»åœ°åœ–.png", width=1060*2, height=700*2, res=200)
 Hsinchu_bus_shape=Bus_Shape(app_id, app_key, "Hsinchu", dtype="sf")
 Hsinchu_bus_station=Bus_StopOfRoute(app_id, app_key, "Hsinchu", dtype="sf")
 coul=brewer.pal(12, "Paired")
 coul=colorRampPalette(coul)(length(unique(Hsinchu_bus_station$RouteName)))
 ggplot()+
   geom_sf(data=Hsinchu_bus_station, aes(color=RouteName))+
-  scale_color_manual(values=coul, name="·s¦Ë¥«¥«°Ï¤½¨®¸ô½u")+
+  scale_color_manual(values=coul, name="æ–°ç«¹å¸‚å¸‚å€å…¬è»Šè·¯ç·š")+
   geom_sf(data=Hsinchu_bus_shape, aes(color=RouteName))+
   theme_void()+
   theme(legend.title=element_text(family="A", size=18),
@@ -1570,14 +1570,14 @@ Taipei_bike_station=Bike_Station(app_id, app_key, "Taipei", dtype="sf")
 head(Taipei_bike_station)
 tmap_mode("view")
 p=tm_shape(Taipei_bike_station)+
-  tm_dots(col="ServiceType", size="BikesCapacity", title="YouBike ¨t²Î", labels=c("YouBike 1.0","YouBike 2.0"),
-          popup.vars=c("¯¸ÂI¦WºÙ"="StationName","YouBike ¨t²Î"="ServiceType","¯¸ÂI¨®¼Î¼Æ"="BikesCapacity"))
+  tm_dots(col="ServiceType", size="BikesCapacity", title="YouBike ç³»çµ±", labels=c("YouBike 1.0","YouBike 2.0"),
+          popup.vars=c("ç«™é»åç¨±"="StationName","YouBike ç³»çµ±"="ServiceType","ç«™é»è»Šæ¨æ•¸"="BikesCapacity"))
 tmap_save(p, "temp.html", selfcontained=F)
-webshot("./temp.html", file="./¹Ï 5.4.1  YouBike½u¤W¦a¹Ï.png", cliprect="viewport")
+webshot("./temp.html", file="./åœ– 5.4.1  YouBikeç·šä¸Šåœ°åœ–.png", cliprect="viewport")
 
 
 
-png("./¹Ï 5.4.2  »O¥_¥«¦Û¦æ¨®½u«¬¦a¹Ï.png", width=662*2, height=740*2, res=200)
+png("./åœ– 5.4.2  è‡ºåŒ—å¸‚è‡ªè¡Œè»Šç·šå‹åœ°åœ–.png", width=662*2, height=740*2, res=200)
 Taipei_bike_shape=Bike_Shape(app_id, app_key, "Taipei", dtype="sf")
 ggplot()+
   annotation_map_tile("cartolight", zoom=12)+
@@ -1587,10 +1587,10 @@ dev.off()
 
 
 
-png("./¹Ï 5.5.1  ªá½¬¿¤Æ[¥ú´ºÂI¤À¥¬¹Ï.png", width=600*2, height=790*2, res=200)
+png("./åœ– 5.5.1  èŠ±è“®ç¸£è§€å…‰æ™¯é»åˆ†å¸ƒåœ–.png", width=600*2, height=790*2, res=200)
 Hualien_scenicspot=ScenicSpot(app_id, app_key, county="HualienCounty", dtype="sf")
 Hualien_scenicspot=st_transform(Hualien_scenicspot, crs=3826)
-hualien=filter(TWspdata::taiwan_town, COUNTYNAME=="ªá½¬¿¤")
+hualien=filter(TWspdata::taiwan_town, COUNTYNAME=="èŠ±è“®ç¸£")
 hualien=st_transform(hualien, crs=3826)
 Hualien_scenicspot_count=st_intersection(Hualien_scenicspot, hualien[, c("TOWNNAME")])%>%
   st_drop_geometry()%>%
@@ -1600,7 +1600,7 @@ Hualien_scenicspot_count=st_intersection(Hualien_scenicspot, hualien[, c("TOWNNA
 hualien=left_join(hualien, Hualien_scenicspot_count)
 ggplot()+
   geom_sf(data=hualien, aes(fill=count), color="#F0F0F0")+
-  scale_fill_distiller(palette="YlOrRd", direction=1, name="Æ[¥ú´ºÂI¼Æ")+
+  scale_fill_distiller(palette="YlOrRd", direction=1, name="è§€å…‰æ™¯é»æ•¸")+
   geom_sf(data=Hualien_scenicspot, color="#75AADB")+
   annotation_scale(location="br", text_family="B", text_size=18, pad_y=unit(1.5, "cm"))+
   annotation_north_arrow(location="tl", style=north_arrow_fancy_orienteering(text_family="B", text_size=12), pad_x=unit(1.5, "cm"))+
@@ -1613,11 +1613,11 @@ dev.off()
 
 
 
-png("./¹Ï 5.5.2  »O¤¤¥«¤½¸ô¸ôºô¦a¹Ï.png", width=1320*2, height=650*2, res=200)
+png("./åœ– 5.5.2  è‡ºä¸­å¸‚å…¬è·¯è·¯ç¶²åœ°åœ–.png", width=1320*2, height=650*2, res=200)
 Taichung_road=Road_Network(county="Taichung", roadclass="ALL", dtype="sf")
-Taichung_road$RoadClassName[Taichung_road$RoadClassName=="¬Ù¹D¤@¯ë¹D¸ô"]="¬Ù¹D¤@¯ë¤½¸ô"
-Taichung_road$RoadClassName=factor(Taichung_road$RoadClassName, c("°ê¹D","¬Ù¹D§Ö³t¤½¸ô","¬Ù¹D¤@¯ë¤½¸ô"))
-taichung_city=filter(TWspdata::taiwan_town, COUNTYNAME=="»O¤¤¥«")
+Taichung_road$RoadClassName[Taichung_road$RoadClassName=="çœé“ä¸€èˆ¬é“è·¯"]="çœé“ä¸€èˆ¬å…¬è·¯"
+Taichung_road$RoadClassName=factor(Taichung_road$RoadClassName, c("åœ‹é“","çœé“å¿«é€Ÿå…¬è·¯","çœé“ä¸€èˆ¬å…¬è·¯"))
+taichung_city=filter(TWspdata::taiwan_town, COUNTYNAME=="è‡ºä¸­å¸‚")
 Taichung_road=group_by(Taichung_road, RoadName)%>%
   summarise()%>%
   left_join(distinct(st_drop_geometry(Taichung_road)[, c("RoadName","RoadClassName")]))
@@ -1625,7 +1625,7 @@ ggplot()+
   geom_sf(data=taichung_city, color="#F0F0F0", fill="#D0D0D0")+
   geom_sf(data=Taichung_road, aes(color=RoadClassName), show.legend="line")+
   geom_sf_text_repel(data=Taichung_road, aes(label=RoadName, color=RoadClassName), family="A", size=4, fontface="bold", show.legend=F)+
-  scale_color_manual(values=c("°ê¹D"="#00923F", "¬Ù¹D§Ö³t¤½¸ô"="#9B0D15", "¬Ù¹D¤@¯ë¤½¸ô"="#003876"), name="¹D¸ôµ¥¯Å")+
+  scale_color_manual(values=c("åœ‹é“"="#00923F", "çœé“å¿«é€Ÿå…¬è·¯"="#9B0D15", "çœé“ä¸€èˆ¬å…¬è·¯"="#003876"), name="é“è·¯ç­‰ç´š")+
   theme_void()+
   theme(legend.title=element_text(family="A", size=25),
         legend.text=element_text(family="A", size=20),
@@ -1635,22 +1635,22 @@ dev.off()
 
 
 
-png("./¹Ï 5.5.4  ©Ğ»ù¸ê®Æ¦a²z½s½Xµ²ªG.png", width=815*2, height=768*2, res=200)
+png("./åœ– 5.5.4  æˆ¿åƒ¹è³‡æ–™åœ°ç†ç·¨ç¢¼çµæœ.png", width=815*2, height=768*2, res=200)
 # house_price_geocode=Geocoding(house_price$ADDRESS, dtype="sf")
 # house_price_geocode=left_join(house_price_geocode, house_price, by=c("AddressOriginal"="ADDRESS"))
 # TRTC_railshape=Rail_Shape(app_id, app_key, "TRTC", dtype="sf")
-# TRTC_railshape$LineName=substr(TRTC_railshape$LineName, 1, regexpr("½u", TRTC_railshape$LineName))
+# TRTC_railshape$LineName=substr(TRTC_railshape$LineName, 1, regexpr("ç·š", TRTC_railshape$LineName))
 ggplot()+
-  geom_sf(data=TRTC_railshape)+  #½T«O«á­±ªº¦a¹Ï¬O3826
+  geom_sf(data=TRTC_railshape)+  #ç¢ºä¿å¾Œé¢çš„åœ°åœ–æ˜¯3826
   annotation_map_tile("cartolight", zoom=14, alpha=0.9)+
-  geom_sf(data=filter(taiwan_town, COUNTYNAME=="·s¥_¥«"), fill=NA, color="#5B5B5B", linetype=5)+
+  geom_sf(data=filter(taiwan_town, COUNTYNAME=="æ–°åŒ—å¸‚"), fill=NA, color="#5B5B5B", linetype=5)+
   geom_sf(data=house_price_geocode, aes(color=PRICE/10000), size=3)+
-  scale_color_distiller(palette="YlOrRd", direction=1, name="Á`©Ğ»ù¡]¸U¡^")+
+  scale_color_distiller(palette="YlOrRd", direction=1, name="ç¸½æˆ¿åƒ¹ï¼ˆè¬ï¼‰")+
   new_scale("color")+
   geom_sf(data=TRTC_railshape, aes(color=LineName), show.legend=F, size=1)+
-  scale_color_manual(values=c("²H¤ô«H¸q½u"="#d90023", "ªO«n½u"="#0a59ae", "ªQ¤s·s©±½u"="#107547",
-                              "¤¤©M·sÄª½u"="#f5a818", "¤å´ò½u"="#b57a25", "Àôª¬½u"="#fedb00"))+
-  geom_sf_text_repel(data=filter(taiwan_town, COUNTYNAME=="·s¥_¥«", TOWNNAME %in% c("ªO¾ô°Ï","·s²ø°Ï","¾ğªL°Ï","¤¤©M°Ï","¤g«°°Ï")), aes(label=TOWNNAME), family="A", size=5, fontface="bold")+
+  scale_color_manual(values=c("æ·¡æ°´ä¿¡ç¾©ç·š"="#d90023", "æ¿å—ç·š"="#0a59ae", "æ¾å±±æ–°åº—ç·š"="#107547",
+                              "ä¸­å’Œæ–°è˜†ç·š"="#f5a818", "æ–‡æ¹–ç·š"="#b57a25", "ç’°ç‹€ç·š"="#fedb00"))+
+  geom_sf_text_repel(data=filter(taiwan_town, COUNTYNAME=="æ–°åŒ—å¸‚", TOWNNAME %in% c("æ¿æ©‹å€","æ–°èŠå€","æ¨¹æ—å€","ä¸­å’Œå€","åœŸåŸå€")), aes(label=TOWNNAME), family="A", size=5, fontface="bold")+
   coord_sf(xlim=c(st_bbox(house_price_geocode)[1], st_bbox(house_price_geocode)[3]),
            ylim=c(st_bbox(house_price_geocode)[2], st_bbox(house_price_geocode)[4]))+
   theme_void()+
@@ -1659,15 +1659,6 @@ ggplot()+
         legend.background=element_rect(fill=alpha("#D4DADC", 0.9), color=NA),
         legend.position=c(0.9, 0.11))
 dev.off()
-
-
-
-school_taipei=school[grepl(paste("»O¥_¥«", "¥x¥_¥«", sep="|"), school$address),]
-school_taipei=filter(school_taipei, grepl(paste("¤j¾Ç", "±M¬ì¾Ç®Õ", "ÃÀ®Õ", "¾Ç°|", sep="|"), name),
-                     !(grepl(paste("ªş¤¤", "ªş¤p", sep="|"), name)))
-
-
-
 
 
 
