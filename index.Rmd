@@ -13,6 +13,13 @@ description: "A bookdown book on how to conduct spatial analysis with R."
 
 <meta name="google-site-verification" content="i4Iib3GevuN2t_jtsNp0YabkQRXcrER03lw4OKVffco" />
 
+
+```{r setup0, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(kableExtra)
+```
+
 # **Introduction**
 
 This book would introduce the basic skills of spatial analysis with R. Spatial analysis is vital in terms of transportation study. For instance, when conducting the transport planning analysis, we need to collect the data of the study area, and dig into the issue about geographic characteristic, socioeconomic factors, to further do research on the traffic zone, trip distribution and so forth. Here we need the skills of spatial analysis before executing the transport planning process. In fact, there are more powerful and more user-experience based tools such as ArcGIS, CUBE and many other transport planning software to do spatial analysis. However, these software are not easily accessible due to high-cost. Hence, we can use R to do some simple spatial analysis instead. In the notebook, we would acquire the skills listed below.  
@@ -27,10 +34,19 @@ This book would focus on the transportation spatial issue. If you are major in [
 
 In addition, the slides (Chinese version) of this book can be downloaded here. These slides are used in Public Transport course delivered by [_Professor Barbara T.H. Yen_](https://tlm.nycu.edu.tw/en/faculty/%e9%96%bb%e5%a7%bf%e6%85%a7/) in National Yang Ming Chiao Tung University.  
 
-* [地理資訊系統與地圖繪製](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E8%B3%87%E8%A8%8A%E7%B3%BB%E7%B5%B1%E8%88%87%E5%9C%B0%E5%9C%96%E7%B9%AA%E8%A3%BD.pptx)  
-* [地理資料建立及編修](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E8%B3%87%E6%96%99%E5%BB%BA%E7%AB%8B%E5%8F%8A%E7%B7%A8%E4%BF%AE.pptx)  
-* [地理空間運算](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E7%A9%BA%E9%96%93%E9%81%8B%E7%AE%97.pptx)  
 
-Any suggestions and questions please contact <a href="mailto:1328robert@gmail.com"><u>here</u></a>.
+```{r ppt_file, echo=F, eval=T}
+shape_file=data.frame(Semester=c("2021 Autumn","2022 Autumn"), Slides=c(" [地理資訊系統與地圖繪製](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E8%B3%87%E8%A8%8A%E7%B3%BB%E7%B5%B1%E8%88%87%E5%9C%B0%E5%9C%96%E7%B9%AA%E8%A3%BD.pptx)\n
+[地理資料建立及編修](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E8%B3%87%E6%96%99%E5%BB%BA%E7%AB%8B%E5%8F%8A%E7%B7%A8%E4%BF%AE.pptx)\n
+[地理空間運算](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E7%A9%BA%E9%96%93%E9%81%8B%E7%AE%97.pptx)","[單元一 地理資訊系統與地圖繪製](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E4%B8%80%20%E5%9C%B0%E7%90%86%E8%B3%87%E8%A8%8A%E7%B3%BB%E7%B5%B1%E8%88%87%E5%9C%B0%E5%9C%96%E7%B9%AA%E8%A3%BD.pptx)\n
+[單元二 地理資料建立及編修](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E4%BA%8C%20%E5%9C%B0%E7%90%86%E8%B3%87%E6%96%99%E5%BB%BA%E7%AB%8B%E5%8F%8A%E7%B7%A8%E4%BF%AE.pptx)\n
+[單元三 運輸資料介接](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E4%B8%89%20%E9%81%8B%E8%BC%B8%E8%B3%87%E6%96%99%E4%BB%8B%E6%8E%A5.pptx)\n
+[單元四 地理空間運算](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E5%9B%9B%20%E5%9C%B0%E7%90%86%E7%A9%BA%E9%96%93%E9%81%8B%E7%AE%97.pptx)"))
+kbl(shape_file, booktabs=T)%>%
+  kable_styling(bootstrap_options=c("striped", "hover"), font_size=14)%>%
+  column_spec(1, bold=T)
+```
+
+Any suggestions and questions please contact <a href="mailto:robert1328.mg10@nycu.edu.tw"><u>here</u></a>.
 <br/>
 
