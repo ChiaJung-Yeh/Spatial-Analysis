@@ -50,3 +50,12 @@ kbl(shape_file, booktabs=T)%>%
 Any suggestions and questions please contact <a href="mailto:robert1328.mg10@nycu.edu.tw"><u>here</u></a>.
 <br/>
 
+
+<script src="https://utteranc.es/client.js"
+        repo="ChiaJung-Yeh/Spatial-Analysis"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+

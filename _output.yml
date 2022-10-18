@@ -4,6 +4,7 @@ bookdown::gitbook:
     - lib/css/style.css
     - lib/css/lesson.css
   includes:
+    after_body: docs/utterances.html 
   config:
     toc:
       before: |
