@@ -47,7 +47,7 @@ kbl(shape_file, booktabs=T)%>%
   column_spec(1, bold=T)
 ```
 
-Any suggestions and questions please contact <a href="mailto:robert1328.mg10@nycu.edu.tw"><u>here</u></a>.
+Any suggestions and questions please contact <a href="mailto:robert1328.mg10@nycu.edu.tw"><u>here</u></a> or comment below.
 <br/>
 
 
