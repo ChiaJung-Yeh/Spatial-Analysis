@@ -36,15 +36,16 @@ In addition, the slides (Chinese version) of this book can be downloaded here. T
 
 
 ```{r ppt_file, echo=F, eval=T}
-shape_file=data.frame(Semester=c("2021 Autumn","2022 Autumn"), Slides=c(" [地理資訊系統與地圖繪製](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E8%B3%87%E8%A8%8A%E7%B3%BB%E7%B5%B1%E8%88%87%E5%9C%B0%E5%9C%96%E7%B9%AA%E8%A3%BD.pptx)\n
-[地理資料建立及編修](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E8%B3%87%E6%96%99%E5%BB%BA%E7%AB%8B%E5%8F%8A%E7%B7%A8%E4%BF%AE.pptx)\n
-[地理空間運算](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E7%A9%BA%E9%96%93%E9%81%8B%E7%AE%97.pptx)","[單元一 地理資訊系統與地圖繪製](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E4%B8%80%20%E5%9C%B0%E7%90%86%E8%B3%87%E8%A8%8A%E7%B3%BB%E7%B5%B1%E8%88%87%E5%9C%B0%E5%9C%96%E7%B9%AA%E8%A3%BD.pptx)\n
-[單元二 地理資料建立及編修](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E4%BA%8C%20%E5%9C%B0%E7%90%86%E8%B3%87%E6%96%99%E5%BB%BA%E7%AB%8B%E5%8F%8A%E7%B7%A8%E4%BF%AE.pptx)\n
-[單元三 運輸資料介接](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E4%B8%89%20%E9%81%8B%E8%BC%B8%E8%B3%87%E6%96%99%E4%BB%8B%E6%8E%A5.pptx)\n
-[單元四 地理空間運算](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E5%9B%9B%20%E5%9C%B0%E7%90%86%E7%A9%BA%E9%96%93%E9%81%8B%E7%AE%97.pptx)"))
+shape_file=data.frame(Semester=c(rep("2021 Autumn", 3),rep("2022 Autumn", 4)), Slides=c(" [地理資訊系統與地圖繪製](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E8%B3%87%E8%A8%8A%E7%B3%BB%E7%B5%B1%E8%88%87%E5%9C%B0%E5%9C%96%E7%B9%AA%E8%A3%BD.pptx)","
+[地理資料建立及編修](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E8%B3%87%E6%96%99%E5%BB%BA%E7%AB%8B%E5%8F%8A%E7%B7%A8%E4%BF%AE.pptx)","
+[地理空間運算](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%9C%B0%E7%90%86%E7%A9%BA%E9%96%93%E9%81%8B%E7%AE%97.pptx)","[單元一 地理資訊系統與地圖繪製](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E4%B8%80%20%E5%9C%B0%E7%90%86%E8%B3%87%E8%A8%8A%E7%B3%BB%E7%B5%B1%E8%88%87%E5%9C%B0%E5%9C%96%E7%B9%AA%E8%A3%BD.pptx)","
+[單元二 地理資料建立及編修](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E4%BA%8C%20%E5%9C%B0%E7%90%86%E8%B3%87%E6%96%99%E5%BB%BA%E7%AB%8B%E5%8F%8A%E7%B7%A8%E4%BF%AE.pptx)","
+[單元三 運輸資料介接](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E4%B8%89%20%E9%81%8B%E8%BC%B8%E8%B3%87%E6%96%99%E4%BB%8B%E6%8E%A5.pptx)","
+[單元四 地理空間運算](https://github.com/ChiaJung-Yeh/Spatial-Analysis/raw/master/ppt/%E5%96%AE%E5%85%83%E5%9B%9B%20%E5%9C%B0%E7%90%86%E7%A9%BA%E9%96%93%E9%81%8B%E7%AE%97.pptx)"), Videos=c(rep("-", 3), "[單元一](https://www.youtube.com/watch?v=hvA0o8l49Z8&feature=youtu.be&ab_channel=%E8%91%89%E5%AE%B6%E6%A6%AE)", rep("[單元二~四](https://www.youtube.com/watch?v=iexl9ROd5yQ&feature=youtu.be&ab_channel=%E8%91%89%E5%AE%B6%E6%A6%AE)", 3)))
 kbl(shape_file, booktabs=T)%>%
   kable_styling(bootstrap_options=c("striped", "hover"), font_size=14)%>%
-  column_spec(1, bold=T)
+  column_spec(c(1), bold=T)%>%
+  collapse_rows(columns=c(1,3))
 ```
 
 Any suggestions and questions please contact <a href="mailto:robert1328.mg10@nycu.edu.tw"><u>here</u></a> or comment below.
