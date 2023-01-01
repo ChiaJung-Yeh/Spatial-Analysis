@@ -275,6 +275,18 @@ write_sf(ScenicSpot, "./ScenicSpot.shp", layer_options="ENCODING=UTF-8")
 
 Successfully export the shapefile now? If yes, please check the directory you export to. You may find five files. The file extension includes `*.shp`, `*.shx`, `*.dbf`, `*.prj`, and `*.cpg`. The first four files have been introduced in the [previous chapter](#shapefile). The last one; however, is in fact not necessary. It is used to specify the code page for identifying the character encoding to be used.  
 
+Practically, we may export the data without the geometry information, and only retain the attribute of the shapefile. In this situation, we need to first use function `st_drop_geometry()` to retrieve the attribute data of a simple feature, and simply use function function `write.csv()` to export it. Take data `us_states` for example. It is originally a simple feature with geometric information. The code to export the attribute information is shown below.  
+
+```{r attribute_export, echo=T, eval=T}
+# get rid of the geometry first
+us_states_attr=st_drop_geometry(us_states)
+
+head(us_states_attr)
+
+# export the attribute
+write.csv(us_states_attr, "./us_states_attr.csv")
+```
+
 ## Geographic Data Format
 Up to now, we learn how to import and export the shapefile. But is it true that R can only cope with the shapefile format? Apparently not! There are in fact several formats we have not discussed in the past section. Here, we would like to introduce some important geographic data formats that are commonly used in spatial analysis.  
 
