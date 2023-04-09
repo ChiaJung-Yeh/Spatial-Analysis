@@ -160,5 +160,17 @@ dev.off()
 
 
 
+png("./圖 4.3.2  空間插值計算結果（人口密度圖）.png", width=1069*2, height=790*2, res=220) 
+PPDENS_interpo=st_interpolate_aw(taipei_village_map["PPDENS"], taipei_mrt_station_buf, extensive=F, keep_NA=T)
+PPDENS_interpo=cbind(Station=taipei_mrt_station_buf$Zh_tw, PPDENS_interpo)
+ggplot()+
+  geom_sf(data=taipei_village_map, color="#F0F0F0", fill="#D0D0D0")+
+  geom_sf(data=PPDENS_interpo, aes(fill=PPDENS))+
+  scale_fill_distiller(palette="Greys", direction=1, name="捷運站環域200公尺\n人口密度\n(人/平方公里)", na.value="black")+
+  theme_void()+
+  theme(legend.title=element_text(size=20, family="A"),
+        legend.text=element_text(size=15, family="B"))
+dev.off()
+
 
 

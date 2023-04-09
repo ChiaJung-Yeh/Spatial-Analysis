@@ -1432,7 +1432,7 @@ mrt_station=st_intersection(taipei_mrt_station, tp_union)
 mrt_vor=st_voronoi(st_union(mrt_station))
 mrt_vor=st_collection_extract(mrt_vor)
 ggplot()+
-  geom_sf(data=filter(taipei_metropolitian, COUNTYNAME=="臺北市"), color=NA, fill="#D0D0D0")+
+  geom_sf(data=filter(taipei_village_map, COUNTYNAME=="臺北市"), color=NA, fill="#D0D0D0")+
   geom_sf(data=mrt_vor, fill=NA, size=0.5)+
   theme_void()
 dev.off()
@@ -1446,7 +1446,7 @@ mrt_vor=st_voronoi(st_union(mrt_station))
 mrt_vor=st_collection_extract(mrt_vor)
 mrt_vor=st_intersection(mrt_vor, tp_union)
 ggplot()+
-  geom_sf(data=filter(taipei_metropolitian, COUNTYNAME=="臺北市"), color=NA, aes(fill=TOWNNAME), alpha=0.3)+
+  geom_sf(data=filter(taipei_village_map, COUNTYNAME=="臺北市"), color=NA, aes(fill=TOWNNAME), alpha=0.3)+
   scale_fill_brewer(palette="Paired", name="行政區")+
   geom_sf(data=mrt_vor, fill=NA, size=0.5)+
   geom_sf(data=st_intersection(taipei_mrt_route, taipei_village_map$geometry), aes(color=RAILNAME), show.legend=F, size=0.8)+
