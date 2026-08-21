@@ -1575,7 +1575,7 @@ code {
 
 
 <h1>
-Spatial Predicate Relationships
+Spatial Relationships
 </h1>
 
 
